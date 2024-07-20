@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:50:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/10 06:57:34 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 09:27:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@ char	*trim_quotes(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\"')
-		{
-			output[j] = '\"';
 			skip_quotes(str, &i);
-			j++;
-		}
 		else
 			output[j++] = str[i++];
 	}

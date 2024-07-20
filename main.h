@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 09:04:29 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 09:18:58 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ typedef enum e_tokenType
 	PIPE
 }	e_tokenType;
 
+typedef struct		s_token
+{
+	e_tokenType		type;
+	char			*value;
+	struct s_token	*next;
+}					t_token;
+
 typedef struct		s_opp
 {
 	e_tokenType		operator;
@@ -41,7 +48,7 @@ typedef struct		s_com
 {
 	char			**command;
 	t_opp			*operator;
-	struct s_com 	*next;
+	struct s_com	*next;
 }					t_com;
 
 // utils
