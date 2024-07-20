@@ -6,15 +6,15 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/16 06:19:23 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 09:05:02 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void	add_lstback(t_opperator *operators, t_opperator *to_add)
+void	add_lstback(t_opp *operators, t_opp *to_add)
 {
-	t_opperator *current;
+	t_opp *current;
 
 	current = operators;
 	if (!operators)

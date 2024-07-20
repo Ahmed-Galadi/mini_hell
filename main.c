@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:07 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 08:52:09 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
 		input = readline("\n$> ");
 		if (ft_strcmp(input, "exit"))
 			exit(0);
-		print_commands(input);
+		if (ft_strcmp(input, ""))
+			write(1, "", 0);
 	}
 	return (0);
 }

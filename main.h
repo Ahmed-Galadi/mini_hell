@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/18 15:26:54 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 09:04:29 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,45 +21,38 @@
 
 typedef enum e_tokenType
 {
-	red_in,
-	red_out,
-	append_out,
-	here_doc,
+	RED_IN,
+	RED_OUT,
+	APPEND,
+	HERE_DOC,
+	COMMAND,
+	STRING,
+	PIPE
 }	e_tokenType;
 
-typedef struct	s_opperator
+typedef struct		s_opp
 {
-	e_tokenType	type;
-	char		*file;
-	char		*delimiter;
-	struct s_opperator *next;
-} 				t_opperator;
+	e_tokenType		operator;
+	char			*arg;
+	struct s_opp	*next;
+}					t_opp;
 
-typedef struct	s_command
+typedef struct		s_com
 {
-	char		*command;
-	char		**flag;
-	t_opperator	*operator;
-	char		**options;
-}				t_command;
-
-typedef struct s_exec
-{
-	struct s_exec *prev;
-	t_command		*command;
-	struct s_exec	*next;
-}	t_exec;
+	char			**command;
+	t_opp			*operator;
+	struct s_com 	*next;
+}					t_com;
 
 // utils
 int			ft_strlen(char *str);
 int			ft_strcmp(char *str1, char *str2);
 char		**ft_split(char const *s, char c);
-void		add_lstback(t_opperator *operators, t_opperator *to_add);
+void		ft_putstr(char *str);
+void		add_lstback(t_opp *operators, t_opp *to_add);
 // tokenizer
 int			is_quote(char *str);
 int			is_rederection(char *str);
-int			is_command(char *str);
-int			is_flag(char *str);
 char		*trim_quotes(char *str);
 char		*add_spaces(char *str);
 void		switch_char(char *str, char to_find, char character);

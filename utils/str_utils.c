@@ -6,11 +6,17 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/13 01:39:59 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 08:54:12 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
+
+void	ft_putstr(char *str)
+{
+	while (*str)
+		write(1, str++, 1);
+}
 
 int	ft_strlen(char *str)
 {
