@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:07 by agaladi          ###   ########.fr       */
+/*   Created: 2024/07/10 06:40:34 by agaladi           #+#    #+#             */
+/*   Updated: 2024/07/10 06:42:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../../main.h"
 
-
-int main(int argc, char *argv[])
+void	error()
 {
-	(void)argc;
-	(void)argv;
-	char *input;
-	while (1)
-	{
-		input = readline("\n$> ");
-		if (ft_strcmp(input, "exit"))
-			exit(0);
-		print_commands(input);
-	}
-	return (0);
+	exit(EXIT_FAILURE);
 }

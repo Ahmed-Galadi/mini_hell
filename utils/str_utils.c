@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:07 by agaladi          ###   ########.fr       */
+/*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
+/*   Updated: 2024/07/13 01:39:59 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../main.h"
 
-
-int main(int argc, char *argv[])
+int	ft_strlen(char *str)
 {
-	(void)argc;
-	(void)argv;
-	char *input;
-	while (1)
+	int		count;
+
+	count = 0;
+	while (str[count])
+		count++;
+	return (count);
+}
+
+int	ft_strcmp(char *str1, char *str2)
+{
+	int		i;
+
+	i = 0;
+	if (!str1 || !str2)
+		return (0);
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (0);
+	while (str1[i] && str2[i])
 	{
-		input = readline("\n$> ");
-		if (ft_strcmp(input, "exit"))
-			exit(0);
-		print_commands(input);
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
 	}
-	return (0);
+	return (1);
 }

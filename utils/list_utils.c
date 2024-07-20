@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:07 by agaladi          ###   ########.fr       */
+/*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
+/*   Updated: 2024/07/16 06:19:23 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../main.h"
 
-
-int main(int argc, char *argv[])
+void	add_lstback(t_opperator *operators, t_opperator *to_add)
 {
-	(void)argc;
-	(void)argv;
-	char *input;
-	while (1)
+	t_opperator *current;
+
+	current = operators;
+	if (!operators)
+		operators = to_add;
+	else
 	{
-		input = readline("\n$> ");
-		if (ft_strcmp(input, "exit"))
-			exit(0);
-		print_commands(input);
+		while (current->next)
+			current = current->next;
+		current->next = to_add;
 	}
-	return (0);
 }
