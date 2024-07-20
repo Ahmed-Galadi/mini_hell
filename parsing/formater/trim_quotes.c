@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:50:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 12:21:06 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 16:44:52 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,25 @@ static int		quotes_count(char *str)
 	return (count);
 
 }
-
-char	*trim_quotes(char *str, char *output)
+void	trim_quotes(char **str)
 {
-	int		i;
-	int		j;
+	char *dup_str;
+	int  i;
+	int  j;
 
-	if ((quotes_count(str) % 2) != 0)
+	dup_str = ft_strdup(*str);
+	i = 0;
+	j = 0;
+	
+	if (dup_str[i] != '\"' || (quotes_count(dup_str) % 2))
 		error();
-	(1 && (i = 0), (j = 0));
-	while (str[i])
+	(*str)[j++] = '\"';
+	while (dup_str[i])
 	{
-		while (str[i] == '\"' && str[i + 1] == '\"')
-			i++;
-		i--;
-		if (((str[i] == '\"' && str[i + 1] != '\"')
-			|| (str[i] != '\"' && str[i + 1] == '\"'))
-			&& str[i + 1])
-		{
-			output[j] = '\"';
-			i++;
-			j++;
-		}
-		output[j++] = str[i++];
+		if (dup_str[i] != '\"')
+			(*str)[j++] = dup_str[i];
+		i++;
 	}
-	output[j] = '\0';
-	return (output);
+	(*str)[j++] = '\"';
+	(*str)[j] = '\0';
 }

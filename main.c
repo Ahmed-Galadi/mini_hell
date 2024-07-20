@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 09:20:58 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 14:02:58 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int main(int argc, char *argv[])
 			exit(0);
 		if (ft_strcmp(input, ""))
 			write(1, "", 0);
-		if (input)
-			ft_putstr(format(input));
+		int i = 0;
+		char **input_sep = format(input);
+		while (input_sep[i])
+			ft_putstr(input_sep[i++]);
 	}
 	return (0);
 }
