@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 09:18:58 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 11:35:53 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ int			ft_strcmp(char *str1, char *str2);
 char		**ft_split(char const *s, char c);
 void		ft_putstr(char *str);
 void		add_lstback(t_opp *operators, t_opp *to_add);
+char		*ft_strdup(char *str);
 // tokenizer
 int			is_quote(char *str);
 int			is_rederection(char *str);
-char		*trim_quotes(char *str);
+char		*trim_quotes(char *str, char *output);
 char		*add_spaces(char *str);
 void		switch_char(char *str, char to_find, char character);
 char		*format(char *str);

@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 08:54:12 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 11:35:34 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,24 @@ int	ft_strcmp(char *str1, char *str2)
 		i++;
 	}
 	return (1);
+}
+
+char	*ft_strdup(char *str)
+{
+	char	*output;
+	int		size;
+	int		i;
+
+	size = ft_strlen(str) + 1;
+	output = (char *)malloc(size);
+	if (!output)
+		error();
+	i = 0;
+	while (str[i])
+	{
+		output[i] = str[i];
+		i++;
+	}
+	output[i] = '\0';
+	return (output);
 }

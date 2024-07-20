@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:50:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 09:27:33 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/20 12:21:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,28 @@ static int		quotes_count(char *str)
 
 }
 
-static void	skip_quotes(char *str ,int *i)
+char	*trim_quotes(char *str, char *output)
 {
-	while (str[*i] == '\"')
-		*i += 1;
-}
-
-char	*trim_quotes(char *str)
-{
-	char	*output;
 	int		i;
 	int		j;
 
 	if ((quotes_count(str) % 2) != 0)
 		error();
-	output = malloc(ft_strlen(str) + 1);
-	i = 0;
-	j = 0;
+	(1 && (i = 0), (j = 0));
 	while (str[i])
 	{
-		if (str[i] == '\"')
-			skip_quotes(str, &i);
-		else
-			output[j++] = str[i++];
+		while (str[i] == '\"' && str[i + 1] == '\"')
+			i++;
+		i--;
+		if (((str[i] == '\"' && str[i + 1] != '\"')
+			|| (str[i] != '\"' && str[i + 1] == '\"'))
+			&& str[i + 1])
+		{
+			output[j] = '\"';
+			i++;
+			j++;
+		}
+		output[j++] = str[i++];
 	}
 	output[j] = '\0';
 	return (output);
