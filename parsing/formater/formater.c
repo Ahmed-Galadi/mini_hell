@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:42:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/22 09:34:30 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/22 10:02:26 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	switch_char(char **str, char to_find, char character)
 		i++;
 	}
  }
-
-
 
 char	*format(char *str)
 {
