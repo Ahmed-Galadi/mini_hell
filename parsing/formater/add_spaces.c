@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/11 02:39:01 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/22 09:39:26 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ char	*add_spaces(char *str)
 			output[j++] = str[i++];
 			output[j++] = ' ';
 		}
-		if (((!is_op(str[i]) && is_op(str[i] + 1)))
-			|| (is_op(str[i]) && !is_op(str[i + 1])))
+		else if (((!is_op(str[i]) && is_op(str[i] + 1)))
+			|| (is_op(str[i]) && !is_op(str[i + 1]))
+			|| (is_op(str[i]) && is_op(str[i + 1])))
 		{
 			output[j++] = ' ';
 			output[j++] = str[i++];

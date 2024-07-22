@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 19:00:13 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/22 09:34:42 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef enum e_tokenType
 	HERE_DOC,
 	COMMAND,
 	STRING,
+	S_QUOTE,
+	D_QUOTE,
 	PIPE
 }	e_tokenType;
 
@@ -65,8 +67,7 @@ int			is_quote(char *str);
 int			is_rederection(char *str);
 char		*add_spaces(char *str);
 void		switch_char(char **str, char to_find, char character);
-char		**format(char *str);
-void		trim_quotes(char **str);
+char		*format(char *str);
 // errors
 void	error(void);
 
