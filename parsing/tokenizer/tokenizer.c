@@ -6,53 +6,69 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/22 15:13:41 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/23 13:21:54 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
 
-t_token	*token_init(char **s_input)
+void 	token_init(char **s_input, t_token	**to_fill)
 {
-	t_token		*output;
 	e_tokenType	type;
+	static int	i;
 
-	output = (t_token *)malloc(sizeof(t_token));
-	if (!output)
+	if (s_input[i] == NULL)
+		*to_fill = NULL;
+	*to_fill = (t_token *)malloc(sizeof(t_token));
+	if (!(*to_fill) || (is_rederection(s_input[i]) && s_input[i + 1] == NULL))
 		error();
-	if (ft_strcmp(s_input[0], "|"))
-		error();
-	output->next = NULL;
-	if (ft_strcmp(s_input[0], "<"))
+	(*to_fill)->next = NULL;
+	if (ft_strcmp(s_input[i], "|"))
+		type = PIPE;
+	else if (ft_strcmp(s_input[i], "<"))
 		type = RED_IN;
-	else if (ft_strcmp(s_input[0], ">"))
+	else if (ft_strcmp(s_input[i], ">"))
 		type = RED_OUT;
-	else if (ft_strcmp(s_input[0], ">>"))
+	else if (ft_strcmp(s_input[i], ">>"))
 		type = APPEND;
-	else if (ft_strcmp(s_input[0], "<<"))
+	else if (ft_strcmp(s_input[i], "<<"))
 		type = HERE_DOC;
 	else
 		type = COMMAND;
-	output->type = type;
-	output->value = ft_strdup(s_input[0]);
-	return (output);
+	(*to_fill)->type = type;
+	if (type == COMMAND || type == PIPE)
+	{
+		(*to_fill)->value = ft_strdup(s_input[i]);
+		i++;	
+	}
+	else
+	{
+		(*to_fill)->value = ft_strdup(s_input[i + 1]);
+		i += 2;
+	}
 }
 
 t_token *tokenizer(char *input)
 {
 	t_token	*output;
+	t_token	*tmp;
 	char	*formated_input;
 	char	**splited_input;
-	int		i;
 
 	formated_input = format(input);
 	switch_char(&formated_input, ' ', -1);
 	splited_input = ft_split(formated_input, ' ');
-	output = token_init(splited_input);
-	i = 1;
-	while (splited_input[i]) 
+	if (ft_strcmp(splited_input[0], "|"))
+		error();
+	token_init(splited_input, &output);
+	tmp = output;
+	tmp = tmp->next;
+	while (1)
 	{
-		// tokenize everything
+		token_init(splited_input, &tmp);
+		if (!tmp)
+			break;
+		tmp = tmp->next;
 	}
 	return (output);
 }
