@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/07/22 10:39:32 by agaladi          ###   ########.fr        #
+#    Updated: 2024/07/26 15:19:46 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ CC = cc
 SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c  parsing/tokenizer/token_check.c \
 parsing/tokenizer/tokenizer.c \
+parsing/lexer/lexing_checks.c parsing/lexer/lexer.c \
 utils/str_utils.c utils/ft_split.c utils/list_utils.c main.c
 CFLAGS = -Wall -Wextra -Werror
 DEPS = main.h
