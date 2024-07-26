@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/26 21:35:47 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/27 00:12:08 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		**ft_split(char const *s, char c);
 void		ft_putstr(char *str);
 void		add_lstback(t_opp *operators, t_opp *to_add);
 char		*ft_strdup(char *str);
-char		*ft_strjoin(char **splited_str);
+char		*ft_strjoin(char *str1, char *str2);
 // tokenizer
 int			is_quote(char *str);
 int			is_rederection(char *str);

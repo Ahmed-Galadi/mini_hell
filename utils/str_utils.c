@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 19:01:54 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/27 00:11:42 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,28 @@ char	*ft_strdup(char *str)
 	return (output);
 }
 
-static void	copy_str(char *str, char *output)
-{
-	static int	i;
-	int			j;
-	
-	output[i++] = ' ';
-	j = 0;
-	while (str[j])
-		output[i++] = str[j++];
-	output[i] = '\0';
-}
 
-char	*ft_strjoin(char **splited_str)
+
+char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*output;
 	int		size;
 	int		i;
+	int		j;
 
-	size = 0;
-	i = 0;
-	while (splited_str[i])
-		size += ft_strlen(splited_str[i++]) + 1;
+	if (!str1)
+		return (ft_strdup(str2));
+	size = ft_strlen(str1) + ft_strlen(str1) + 1;
 	output = (char *)malloc(size);
 	if (!output)
 		error();
 	i = 0;
-	while (splited_str[i])
-		copy_str(splited_str[i++], output);
+	j = 0;
+	while (str1[i])
+		output[j++] = str1[i++];
+	i = 0;
+	while (str2[i])
+		output[j++] = str2[i++];
+	output[j] = '\0';
 	return (output);
 }

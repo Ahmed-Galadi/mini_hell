@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/26 22:00:26 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/27 00:15:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,19 @@ bool check_quote_syntax(char *input)
 }
 
 
-int get_close_quote(char *input, char quote)
+int get_close_quote(char *input, int index_quote)
 {
-	
+	char quote;
+
+	quote = input[index_quote];
+	index_quote++;
+	while (input[index_quote])
+	{
+		if (input[index_quote] == quote)
+			return (index_quote);
+		index_quote++;
+	}
+	return (-1);
 }
 
 int main(int argc, char *argv[])
@@ -69,7 +79,7 @@ int main(int argc, char *argv[])
 			t_token *token;
 			token = tokenizer(input);
 			print_token(token);
-			printf("\n%d\n", check_quote_syntax(token->value));
+			printf("\n%s|\n", ft_strjoin("abc", "def"));
 		}
 		add_history(input);
 	}
