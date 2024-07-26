@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/25 22:13:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/25 22:25:38 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,14 @@ int main(int argc, char *argv[])
 		input = readline("\n$> ");
 		if (ft_strcmp(input, "exit"))
 			exit(0);
-		if (ft_strcmp(input, ""))
+		else if (ft_strcmp(input, ""))
 			write(1, "", 0);
-		t_token *token;
-		token = tokenizer(input);
-		print_token(token);
+		else
+		{
+			t_token *token;
+			token = tokenizer(input);
+			print_token(token);	
+		}
 	}
 	return (0);
 }
