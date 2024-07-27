@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/27 00:12:08 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:04:18 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			is_rederection(char *str);
 char		*add_spaces(char *str);
 void		switch_char(char **str, char to_find, char character);
 char		*format(char *str);
+char		*handle_quotes(char *str);
 t_token		*tokenizer(char *input);
 // errors
 void	error(void);

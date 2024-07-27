@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/27 00:15:05 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:05:01 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,7 @@ void print_token(t_token *token)
 	}
 }
 
-bool check_quote_syntax(char *input)
-{
-    bool single_quote_open = false;
-    bool double_quote_open = false;
-	int i = 0;
 
-    while (input[i])
-	{
-        if (input[i] == '\'' && !double_quote_open)
-            single_quote_open = !single_quote_open;
-		else if (input[i] == '\"' && !single_quote_open)
-            double_quote_open = !double_quote_open;
-		i++;
-    }
-    return (!single_quote_open && !double_quote_open);
-}
-
-
-int get_close_quote(char *input, int index_quote)
-{
-	char quote;
-
-	quote = input[index_quote];
-	index_quote++;
-	while (input[index_quote])
-	{
-		if (input[index_quote] == quote)
-			return (index_quote);
-		index_quote++;
-	}
-	return (-1);
-}
 
 int main(int argc, char *argv[])
 {
@@ -79,7 +48,7 @@ int main(int argc, char *argv[])
 			t_token *token;
 			token = tokenizer(input);
 			print_token(token);
-			printf("\n%s|\n", ft_strjoin("abc", "def"));
+			printf("\n%s\n", handle_quotes(token->value));
 		}
 		add_history(input);
 	}
