@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/20 09:05:02 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/28 00:15:56 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,16 @@ void	add_lstback(t_opp *operators, t_opp *to_add)
 			current = current->next;
 		current->next = to_add;
 	}
+}
+
+t_token	*last_token(t_token *token)
+{
+	t_token	*current;
+
+	current = token;
+	if (!current)
+		return (NULL);
+	while (current->next)
+		current = current->next;
+	return (current);
 }

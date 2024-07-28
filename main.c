@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/27 19:52:38 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/28 01:26:37 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void print_token(t_token *token)
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **env)
 {
 	(void)argc;
 	(void)argv;
@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		input = readline("\n$> ");
+		add_history(input);
 		if (ft_strcmp(input, "exit"))
 			exit(0);
 		else if (ft_strcmp(input, ""))
@@ -45,10 +46,14 @@ int main(int argc, char *argv[])
 		{
 			t_token *token;
 			token = tokenizer(input);
-			trim_quotes(&token);
-			print_token(token);
+			if (!check_pipes(token) || !check_red(token))
+				printf("\nERROR!\n");
+			else
+			{
+				trim_quotes(&token);
+				print_token(token);
+			}
 		}
-		add_history(input);
 	}
 	return (0);
 }
