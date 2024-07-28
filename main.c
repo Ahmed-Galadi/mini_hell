@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 01:26:37 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/28 23:55:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void print_token(t_token *token)
 	}
 }
 
-int main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
@@ -51,6 +51,7 @@ int main(int argc, char *argv[], char **env)
 			else
 			{
 				trim_quotes(&token);
+				set_expand(&token);
 				print_token(token);
 			}
 		}

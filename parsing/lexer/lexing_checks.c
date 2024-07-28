@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 02:14:12 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/29 00:08:11 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,37 @@ int	check_red(t_token *token)
 	return (1);
 }
 
-void	set_expand(t_token *str)
+int		ft_isalpha(char c)
 {
-	// to do
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+}
+
+int	is_expand(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && ft_isalpha(str[i + 1]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	set_expand(t_token **token)
+{
+	t_token *current;
+	
+	current = *token;
+	while (current)
+	{
+		if (current->type != S_QUOTE && !is_red(current->type))
+		{
+			if (is_expand(current->value))
+				current->type = EXPAND;
+		}
+		current = current->next;
+	}
 }
