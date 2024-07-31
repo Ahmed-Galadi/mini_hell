@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 01:10:16 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/31 04:54:03 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token *tokenizer(char *input)
     while (splited_input[i])
     {
         t_token *new_token = (t_token *)malloc(sizeof(t_token));
-        if (!new_token || (is_rederection(splited_input[i]) && splited_input[i + 1] == NULL))
+        if (!new_token)
             error();
         if (ft_strcmp(splited_input[i], "|"))
             type = PIPE;
@@ -49,7 +49,10 @@ t_token *tokenizer(char *input)
         }
         else
         {
-            new_token->value = ft_strdup(splited_input[i + 1]);
+            if (splited_input[i + 1])
+                new_token->value = ft_strdup(splited_input[i + 1]);
+            else
+                return (NULL);
             i += 2;
         }
 
@@ -65,5 +68,5 @@ t_token *tokenizer(char *input)
             last->next = new_token;
         }
     }
-    return head;
+    return (head);
 }

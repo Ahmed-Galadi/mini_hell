@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 23:48:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/31 06:15:24 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 typedef enum e_tokenType
 {
 	RED_IN,
+	RED_IN_EXP,
 	RED_OUT,
+	RED_OUT_EXP,
 	APPEND,
+	APPEND_EXP,
 	HERE_DOC,
+	HERE_DOC_EXP,
 	EXPAND,
-	DELLIMITER,
 	COMMAND,
-	STRING,
 	S_QUOTE,
 	D_QUOTE,
 	PIPE
@@ -80,6 +82,7 @@ int		check_pipes(t_token *token);
 int		check_red(t_token *token);
 int		is_red(e_tokenType type);
 void	set_expand(t_token **token);
+t_opp	*new_op(t_token **token);
 // errors
 void	error(void);
 

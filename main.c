@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 23:55:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/31 05:54:39 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,30 @@ void print_token(t_token *token)
 	current = token;
 	while (current)
 	{
-		printf("Type: %d | Value: %s\n", current->type, current->value);
+		printf("Type: %d", current->type);
+		if (current->value)
+			printf("| Value: %s", current->value);
+		printf("\n****************************\n");
+		current = current->next;
+	}
+}
+
+void print_opp(t_opp *opera)
+{
+	t_opp *current;
+
+	if (!opera)
+	{
+		printf("empty operations!\n");
+		return ;
+	}
+	current = opera;
+	while (current)
+	{
+		printf("Redirection Type: %d", current->operator);
+		if (current->arg)
+			printf(" | File: %s", current->arg);
+		printf("\n");
 		current = current->next;
 	}
 }
@@ -46,13 +69,17 @@ int main(int argc, char *argv[])
 		{
 			t_token *token;
 			token = tokenizer(input);
-			if (!check_pipes(token) || !check_red(token))
-				printf("\nERROR!\n");
+			if (!token)
+				error();
+			else if (!check_pipes(token))
+				error();
 			else
 			{
 				trim_quotes(&token);
 				set_expand(&token);
 				print_token(token);
+				t_opp *op = new_op(&token);
+				print_opp(op);
 			}
 		}
 	}

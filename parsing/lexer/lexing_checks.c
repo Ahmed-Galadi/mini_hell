@@ -6,11 +6,39 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/29 00:08:11 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/07/31 06:18:38 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
+
+e_tokenType red_type(t_token *token)
+{
+	bool	is_dq;
+	int		i;
+
+	is_dq = false;
+	i = 0;
+	while ((token->value)[i])
+	{
+		if ((token->value)[i] == '\"')
+		{
+			is_dq = true;
+			break;
+		}
+		i++;
+	}
+	if (token->type == RED_IN && is_dq)
+		return (RED_IN_EXP);
+	else if (token->type == RED_OUT && is_dq)
+		return (RED_OUT_EXP);
+	else if (token->type == APPEND && is_dq)
+		return (APPEND_EXP);
+	else if (token->type == HERE_DOC && is_dq)
+		return (HERE_DOC_EXP);
+	else
+		return (token->type);
+}
 
 void	trim_quotes(t_token **token)
 {
@@ -32,7 +60,7 @@ void	trim_quotes(t_token **token)
 		else if ((current->value)[0] == '\'')
 		{
 			if (!is_red(current->type))
-				current->type = D_QUOTE;
+				current->type = S_QUOTE;
 			switch_char(&(current->value), -1, ' ');
 			ptr_holder = current->value;
 			current->value = handle_quotes(ptr_holder);
@@ -92,10 +120,10 @@ int		ft_isalpha(char c)
 int	is_expand(char *str)
 {
 	int		i;
-
+	
 	i = 0;
 	while (str[i])
-	{
+	{		
 		if (str[i] == '$' && ft_isalpha(str[i + 1]))
 			return (1);
 		i++;
@@ -110,11 +138,43 @@ void	set_expand(t_token **token)
 	current = *token;
 	while (current)
 	{
-		if (current->type != S_QUOTE && !is_red(current->type))
+		if ((current->type != S_QUOTE && !is_red(current->type)))
 		{
 			if (is_expand(current->value))
 				current->type = EXPAND;
 		}
 		current = current->next;
 	}
+}
+
+t_opp *new_op(t_token **token)
+{
+    t_token *current;
+    t_opp   *output;
+    t_opp   *out_head = NULL;
+    t_opp   *out_tail = NULL;
+
+    if (!*token)
+        return (NULL);
+    current = *token;
+    while (current && (current->type != PIPE))
+    {
+        if (is_red(current->type))
+        {
+            output = (t_opp *)malloc(sizeof(t_opp));
+            if (!output)
+                return (NULL);
+            output->operator = current->type;
+            output->arg = current->value;
+            output->next = NULL;
+
+            if (!out_head)
+                out_head = output;
+            else
+                out_tail->next = output;
+            out_tail = output;
+        }
+        current = current->next;
+    }
+    return (out_head);
 }
