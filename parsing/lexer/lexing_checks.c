@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 02:07:35 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 04:43:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,12 +185,14 @@ void	add_opp(t_opp **opp, t_opp *to_add)
 {
 	t_opp	*current;
 
-	current = *opp;
-	while (current)
+	if (!*opp)
+		*opp = to_add;
+	else
 	{
-		if (!(current->next))
-			current->next = to_add;
-		current = current->next;
+		current = *opp;
+		while (current->next)
+			current = current->next;
+		current->next = to_add;
 	}
 }
 
@@ -200,13 +202,14 @@ t_opp *new_op(t_token **token)
 	t_token	*current;
 	t_opp	*tmp;
 
+	output = NULL;
 	current = *token;
 	while (current)
 	{
 		if (is_red(current->type))
 		{
 			tmp = (t_opp *)malloc(sizeof(t_opp));
-			if (!output)
+			if (!tmp)
                 return (NULL);
 			tmp->operator = current->type;
             tmp->arg = current->value;
@@ -216,6 +219,7 @@ t_opp *new_op(t_token **token)
 			else
 				add_opp(&output, tmp);
 		}
+		current = current->next;
 	}
 	return (output);
 }
