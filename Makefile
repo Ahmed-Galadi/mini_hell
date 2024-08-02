@@ -3,38 +3,47 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
+#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/07/27 19:03:37 by agaladi          ###   ########.fr        #
+#    Updated: 2024/08/03 00:39:51 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
+LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
+		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
+			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
+
+EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
+
+PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c \
-utils/str_utils.c utils/ft_split.c utils/list_utils.c main.c
+utils/str_utils.c utils/list_utils.c main.c
+
 CFLAGS = -Wall -Wextra -Werror
-DEPS = main.h
+HEADER = minishell.h
 LIB = main.a
 OUT = minishell
-OBJS = $(SRCS:.c=.o)
+PARSING_OBJS = $(PARSING_SRCS:.c=.o)
+EXECUTION_OBJS = $(EXECUTION_SRCS:.c=.o)
+LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
 all: $(OUT)
 
-$(OUT): $(OBJS) $(DEPS)
-	$(CC) $(CFLAGS) -lreadline $(OBJS) -o $(OUT)
+$(OUT): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
+	$(CC) $(CFLAGS) -lreadline $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $(OUT)
 
-$(LIB): $(OBJS)
-	ar -rc $(LIB) $(OBJS)
+$(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
+	ar -rc $(LIB) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 
-%.o: %.c $(DEPS)
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS) $(LIB)
+	rm -rf $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(LIB)
 
 fclean: clean
 	rm -rf $(OUT)
@@ -42,4 +51,4 @@ fclean: clean
 re: fclean all
 
 recom: all
-	rm -rf $(OBJS) $(LIB)
+	rm -rf $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(LIB)

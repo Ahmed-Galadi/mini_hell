@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   add_spaces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/22 09:39:26 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 static int	is_op(char c)
 {

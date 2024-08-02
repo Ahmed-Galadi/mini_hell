@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/11/10 15:44:46 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/03 00:40:11 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_lstback(t_opp *operators, t_opp *to_add)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	t_opp *current;
+	char	*sub_string;
+	size_t	i;
 
-	current = operators;
-	if (!operators)
-		operators = to_add;
-	else
-	{
-		while (current->next)
-			current = current->next;
-		current->next = to_add;
-	}
-}
-
-t_token	*last_token(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	if (!current)
+	if (!s)
 		return (NULL);
-	while (current->next)
-		current = current->next;
-	return (current);
+	if (start > ft_strlen(s))
+	{
+		return (ft_strdup(""));
+	}
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	sub_string = (void *)malloc(len + 1);
+	if (!sub_string)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		sub_string[i] = s[start];
+		start++;
+		i++;
+	}
+	sub_string[i] = '\0';
+	return (sub_string);
 }

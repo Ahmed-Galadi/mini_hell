@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/31 06:15:24 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 03:19:27 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,20 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 
+// execution types - start
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
+typedef struct s_data {
+	t_env	*env;
+	char	*cwd;
+}	t_data;
+
+// execution types - end
 typedef enum e_tokenType
 {
 	RED_IN,
@@ -58,15 +71,27 @@ typedef struct		s_com
 	struct s_com	*next;
 }					t_com;
 
+// execution prototypes
+int	ft_echo(char **args);
+int	ft_env(t_env *env);
+t_env *init_env(char **env);
+int init_data(t_data *data, char **envp);
+
+// LIBFT Prototypes
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_atoi(const char *str);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 // utils
-int		ft_strlen(char *str);
-int		ft_strcmp(char *str1, char *str2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
-char	*ft_strdup(char *str);
-char	*ft_strjoin(char *str1, char *str2);
 t_token	*last_token(t_token *token);
 // tokenizer
 int		is_quote(char *str);

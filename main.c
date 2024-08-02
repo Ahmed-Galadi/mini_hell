@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/31 05:54:39 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/03 00:49:42 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "minishell.h"
+#include <string.h>
 
 void print_token(t_token *token)
 {
@@ -52,36 +53,38 @@ void print_opp(t_opp *opera)
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **envp)
 {
-	(void)argc;
-	(void)argv;
-	char *input;
-	while (1)
+	char *cmd;
+    char *args[argc];
+    int i;
+	t_data data;
+
+    if (argc < 2)
+    {
+        printf("Usage: ./minishell \"command\"\n");
+        return (1);
+    }
+    cmd = argv[1];
+	i = 1;
+	while (i < argc)
 	{
-		input = readline("\n$> ");
-		add_history(input);
-		if (ft_strcmp(input, "exit"))
-			exit(0);
-		else if (ft_strcmp(input, ""))
-			write(1, "", 0);
-		else
-		{
-			t_token *token;
-			token = tokenizer(input);
-			if (!token)
-				error();
-			else if (!check_pipes(token))
-				error();
-			else
-			{
-				trim_quotes(&token);
-				set_expand(&token);
-				print_token(token);
-				t_opp *op = new_op(&token);
-				print_opp(op);
-			}
-		}
+        args[i - 1] = argv[i];
+		i++;
 	}
+	data.env = init_env(envp);
+    args[argc - 1] = NULL;
+    if (ft_strcmp(cmd, "echo") == 0)
+        return ft_echo(args);
+    if (ft_strcmp(cmd, "env") == 0)
+        return ft_env(data.env);
+    else
+        printf("Unknown command: %s\n", cmd);
+
+    if (!init_data(&data, envp)) {
+        fprintf(stderr, "Failed to initialize data\n");
+        return (1);
+    }
+	
 	return (0);
 }
