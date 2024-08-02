@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/31 05:54:39 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 00:58:57 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void print_opp(t_opp *opera)
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **env)
 {
 	(void)argc;
 	(void)argv;
+	(void)env;
 	char *input;
 	while (1)
 	{
@@ -69,18 +70,8 @@ int main(int argc, char *argv[])
 		{
 			t_token *token;
 			token = tokenizer(input);
-			if (!token)
-				error();
-			else if (!check_pipes(token))
-				error();
-			else
-			{
-				trim_quotes(&token);
-				set_expand(&token);
-				print_token(token);
-				t_opp *op = new_op(&token);
-				print_opp(op);
-			}
+			// printf("\n%d | %s\n", red_type(token), token->value);
+			print_token(token);
 		}
 	}
 	return (0);

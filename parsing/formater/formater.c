@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:42:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/22 10:02:26 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/01 23:38:23 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ char	*format(char *str)
 	switch_char(&formated_input, '|', -1);
 	formated_input = add_spaces(formated_input);
 	switch_char(&formated_input, -1, '|');
-	
 	return (formated_input);
 }

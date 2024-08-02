@@ -6,11 +6,23 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/31 04:54:03 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 01:11:07 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
+
+void    set_expand_opp(t_token **token)
+{
+	t_token	*current;
+
+	current = *token;
+	while (current)
+	{
+		current->type = red_type(current);
+		current = current->next;
+	}
+}
 
 t_token *tokenizer(char *input)
 {
@@ -30,11 +42,11 @@ t_token *tokenizer(char *input)
         if (!new_token)
             error();
         if (ft_strcmp(splited_input[i], "|"))
-            type = PIPE;
-        else if (ft_strcmp(splited_input[i], "<"))
-            type = RED_IN;
+			type = PIPE;
+		else if (ft_strcmp(splited_input[i], "<"))
+			type = RED_IN;
         else if (ft_strcmp(splited_input[i], ">"))
-            type = RED_OUT;
+			type = RED_OUT;
         else if (ft_strcmp(splited_input[i], ">>"))
             type = APPEND;
         else if (ft_strcmp(splited_input[i], "<<"))
@@ -68,5 +80,8 @@ t_token *tokenizer(char *input)
             last->next = new_token;
         }
     }
+	set_expand_opp(&head);
+	trim_quotes(&head);
+	set_expand(&head);
     return (head);
 }

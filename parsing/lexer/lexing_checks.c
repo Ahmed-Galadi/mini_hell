@@ -6,11 +6,16 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/31 06:18:38 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/02 01:47:30 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
+
+int		ft_isalpha(char c)
+{
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+}
 
 e_tokenType red_type(t_token *token)
 {
@@ -22,22 +27,21 @@ e_tokenType red_type(t_token *token)
 	while ((token->value)[i])
 	{
 		if ((token->value)[i] == '\"')
+			is_dq = !is_dq;
+		if (is_dq && ((token->value)[i] == '$' && ft_isalpha((token->value)[i + 1])))
 		{
-			is_dq = true;
-			break;
+			if (token->type == RED_IN)
+				return (RED_IN_EXP);
+			else if (token->type == RED_OUT)
+				return (RED_OUT_EXP);
+			else if (token->type == APPEND)
+				return (APPEND_EXP);
+			else if (token->type == HERE_DOC)
+				return (HERE_DOC_EXP);
 		}
 		i++;
 	}
-	if (token->type == RED_IN && is_dq)
-		return (RED_IN_EXP);
-	else if (token->type == RED_OUT && is_dq)
-		return (RED_OUT_EXP);
-	else if (token->type == APPEND && is_dq)
-		return (APPEND_EXP);
-	else if (token->type == HERE_DOC && is_dq)
-		return (HERE_DOC_EXP);
-	else
-		return (token->type);
+	return (token->type);
 }
 
 void	trim_quotes(t_token **token)
@@ -95,7 +99,8 @@ int	check_pipes(t_token *token)
 
 int	is_red(e_tokenType type)
 {
-	return (type == RED_IN || type == RED_OUT || type == APPEND || type == HERE_DOC);
+	return (type == RED_IN || type == RED_OUT || type == APPEND || type == HERE_DOC
+		|| type == RED_IN_EXP || type == RED_OUT_EXP || type == APPEND_EXP || type == HERE_DOC_EXP);
 }
 
 int	check_red(t_token *token)
@@ -112,10 +117,7 @@ int	check_red(t_token *token)
 	return (1);
 }
 
-int		ft_isalpha(char c)
-{
-	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
-}
+
 
 int	is_expand(char *str)
 {
@@ -147,34 +149,52 @@ void	set_expand(t_token **token)
 	}
 }
 
+// t_opp *new_op(t_token **token)
+// {
+//     t_token *current;
+//     t_opp   *output;
+//     t_opp   *out_head = NULL;
+//     t_opp   *out_tail = NULL;
+
+//     if (!*token)
+//         return (NULL);
+//     current = *token;
+//     while (current && (current->type != PIPE))
+//     {
+//         if (is_red(current->type))
+//         {
+//             output = (t_opp *)malloc(sizeof(t_opp));
+//             if (!output)
+//                 return (NULL);
+//             output->operator = current->type;
+//             output->arg = current->value;
+//             output->next = NULL;
+
+//             if (!out_head)
+//                 out_head = output;
+//             else
+//                 out_tail->next = output;
+//             out_tail = output;
+//         }
+//         current = current->next;
+//     }
+//     return (out_head);
+// }
+
+void	add_opp(t_opp **opp, t_opp *to_add)
+{
+	t_opp	*current;
+
+	current = *opp;
+	while (current)
+	{
+		if (!(current->next))
+			current->next = to_add;
+		current = current->next;
+	}
+}
+
 t_opp *new_op(t_token **token)
 {
-    t_token *current;
-    t_opp   *output;
-    t_opp   *out_head = NULL;
-    t_opp   *out_tail = NULL;
-
-    if (!*token)
-        return (NULL);
-    current = *token;
-    while (current && (current->type != PIPE))
-    {
-        if (is_red(current->type))
-        {
-            output = (t_opp *)malloc(sizeof(t_opp));
-            if (!output)
-                return (NULL);
-            output->operator = current->type;
-            output->arg = current->value;
-            output->next = NULL;
-
-            if (!out_head)
-                out_head = output;
-            else
-                out_tail->next = output;
-            out_tail = output;
-        }
-        current = current->next;
-    }
-    return (out_head);
+	
 }
