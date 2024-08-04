@@ -29,7 +29,8 @@ typedef struct s_env
 
 typedef struct s_data {
 	t_env	*env;
-	char	*cwd;
+	t_env	*export;
+	char	*pwd;
 }	t_data;
 
 // execution types - end
@@ -72,10 +73,20 @@ typedef struct		s_com
 }					t_com;
 
 // execution prototypes
-int	ft_echo(char **args);
-int	ft_env(t_env *env);
-t_env *init_env(char **env);
-int init_data(t_data *data, char **envp);
+int		ft_echo(char **args);
+int		ft_env(t_env *env);
+t_env	*init_env(char **env);
+int		init_data(t_data *data, char **envp);
+void	ft_printf_envs(t_env *env);
+t_env   *convert_env_to_list(char **envp);
+t_env   *create_env_node(char *env_str);
+int		ft_cd(char **args, t_data *data);
+int		ft_unset(char **args, t_data *data);
+int		ft_pwd(t_data *data);
+int		ft_exit(char **args);
+int		ft_export(char **args, t_data *data);
+int		ft_export_command(t_env **my_env, const char *key, const char *value);
+
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
@@ -87,6 +98,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		init_data(t_data *data, char **envp);
 
 // utils
 char	**ft_split(char const *s, char c);

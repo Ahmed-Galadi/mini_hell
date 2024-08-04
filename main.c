@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/03 00:49:42 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/04 07:51:06 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,33 @@ void print_opp(t_opp *opera)
 int main(int argc, char *argv[], char **envp)
 {
 	char *cmd;
-    char *args[argc];
-    int i;
+    char **args;
 	t_data data;
 
-    if (argc < 2)
-    {
-        printf("Usage: ./minishell \"command\"\n");
-        return (1);
-    }
-    cmd = argv[1];
-	i = 1;
-	while (i < argc)
+	(void)argv;
+	(void)argc;
+    if (!init_data(&data, envp))
 	{
-        args[i - 1] = argv[i];
-		i++;
-	}
-	data.env = init_env(envp);
-    args[argc - 1] = NULL;
-    if (ft_strcmp(cmd, "echo") == 0)
-        return ft_echo(args);
-    if (ft_strcmp(cmd, "env") == 0)
-        return ft_env(data.env);
-    else
-        printf("Unknown command: %s\n", cmd);
-
-    if (!init_data(&data, envp)) {
         fprintf(stderr, "Failed to initialize data\n");
         return (1);
     }
-	
+	while (1)
+	{
+		cmd = readline("$> ");
+		if (!cmd || !ft_strcmp(cmd, "exit"))
+			return (0);
+		add_history(cmd);
+		args = ft_split(cmd, ' ');
+    	if (ft_strcmp(args[0], "echo") == 0)
+        	ft_echo(&args[1]);
+		else if (ft_strcmp(args[0], "env") == 0)
+			ft_env(data.env);
+		else if (ft_strcmp(args[0], "export") == 0)
+			ft_export(&args[1], &data);
+		else if (ft_strcmp(args[0], "pwd") == 0)
+			ft_pwd(&data);
+		else
+			printf("Unknown command: %s\n", args[0]);	
+	}
 	return (0);
 }

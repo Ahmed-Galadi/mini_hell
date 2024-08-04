@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 21:27:24 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/04 05:32:20 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/08/04 05:23:12 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/04 05:27:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-// NOTE 
-// export
-// var=value, if value is null do not print in env. do not update value.
-// var+=value, joins value with the previous one.
-// value. alpha num only and '_' and in one case (var+=value).
-
-int ft_env(t_env *env)
+int		ft_pwd(t_data *data)
 {
-	ft_printf_envs(env);
-	return (0);
+    if (!data)
+        return (127);
+    else
+        printf("%s\n", data->pwd);
+    return (0);    
 }
