@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/04 07:52:41 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:43:26 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	export_print(t_env *export)
 	while (tmp)
 	{
 		if (!tmp->value)
-			printf("%s\n", tmp->key);
+			printf("declare -x %s\n", tmp->key);
 		else if (tmp->key)
-			printf("%s=%s\n", tmp->key, tmp->value);
+			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -71,14 +71,21 @@ int		ft_export(char **args, t_data *data)
 {
 	char	*env_key;
 	char	*env_value;
+	int		len_key;
+	int		len_value;
+
 	if (!data)
 		return (127);
-
-	env_key = args[0];
-	env_value = args[1];
+	if (!args || !(*args))
+	{
+		export_print(data->export);	
+		return (0);
+	}
+	len_value = ft_strlen(ft_strchr(*args, '='));
+	len_key = ft_strlen(*args) - len_value;
+	env_key = ft_substr(*args, 0, len_key);
+	env_value = ft_substr(*args, len_key + 1, len_value);
 	if (env_key)
 		ft_export_command(&data->export, env_key, env_value);
-	else
-		export_print(data->export);	
 	return (0);
 }

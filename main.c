@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 07:51:06 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:43:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void print_opp(t_opp *opera)
 
 int main(int argc, char *argv[], char **envp)
 {
-	char *cmd;
+	char *cmd_line_args;
     char **args;
 	t_data data;
 
@@ -68,11 +68,11 @@ int main(int argc, char *argv[], char **envp)
     }
 	while (1)
 	{
-		cmd = readline("$> ");
-		if (!cmd || !ft_strcmp(cmd, "exit"))
+		cmd_line_args = readline("$> ");
+		if (!cmd_line_args || !ft_strcmp(cmd_line_args, "exit"))
 			return (0);
-		add_history(cmd);
-		args = ft_split(cmd, ' ');
+		add_history(cmd_line_args);
+		args = ft_split(cmd_line_args, ' ');
     	if (ft_strcmp(args[0], "echo") == 0)
         	ft_echo(&args[1]);
 		else if (ft_strcmp(args[0], "env") == 0)
