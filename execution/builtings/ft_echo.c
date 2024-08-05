@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/02 20:56:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:46:35 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int ft_echo(char **args)
 	int	i;
 	int	newline;
 
-	i = 1;
+	i = 0;
 	newline = 1;
 	while (args[i])
 	{
