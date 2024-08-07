@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/05 15:46:35 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:12:17 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int	ft_check_n_flag(char *flag)
 	return (0);
 }
 
-int ft_echo(char **args)
+int ft_echo(char **args, int *ret_val)
 {
 	int	i;
 	int	newline;
 
-	i = 0;
-	newline = 1;
+	(1 && (i = 0), (newline = 1));
 	while (args[i])
 	{
 		if (args[i] && (ft_check_n_flag(args[i]) == 1))
@@ -47,7 +46,9 @@ int ft_echo(char **args)
 			newline = 0;
 			i++;
 		}
-		if (ft_check_n_flag(args[i]) != 1)
+		if (ft_strcmp("$?", args[i]) == 0)
+			printf("%d", *ret_val);
+		else if (ft_check_n_flag(args[i]) != 1)
 			printf("%s", args[i]);
 		if (args[i + 1])
 			printf(" ");

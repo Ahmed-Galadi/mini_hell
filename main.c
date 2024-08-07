@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/05 15:59:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:01:59 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ void print_opp(t_opp *opera)
 
 int main(int argc, char *argv[], char **envp)
 {
-	char *cmd_line_args;
-    char **args;
-	t_data data;
+	char	*cmd_line_args;
+    char	**args;
+	t_data	data;
+	int		return_value;
 
 	(void)argv;
 	(void)argc;
@@ -75,13 +76,15 @@ int main(int argc, char *argv[], char **envp)
 		args = ft_split(cmd_line_args, ' ');
 
 		if (ft_strcmp(args[0], "echo") == 0)
-        ft_echo(&args[1]);
+        ft_echo(&args[1], &return_value);
 		else if (ft_strcmp(args[0], "env") == 0)
 			ft_env(data.env);
 		else if (ft_strcmp(args[0], "export") == 0)
 			ft_export(&args[1], &data);
 		else if (ft_strcmp(args[0], "pwd") == 0)
 			ft_pwd(&data);
+		else if (ft_strcmp(args[0], "cd") == 0)
+			ft_cd(args, &data, &return_value);
 		else
 			readline("big-bash-0.1$ ");	
 

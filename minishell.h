@@ -73,14 +73,14 @@ typedef struct		s_com
 }					t_com;
 
 // execution prototypes
-int		ft_echo(char **args);
+int		ft_echo(char **args, int *ret_val);
 int		ft_env(t_env *env);
 t_env	*init_env(char **env);
 int		init_data(t_data *data, char **envp);
 void	ft_printf_envs(t_env *env);
 t_env   *convert_env_to_list(char **envp);
 t_env   *create_env_node(char *env_str);
-int		ft_cd(char **args, t_data *data);
+int		ft_cd(char **args, t_data *data, int *ret_val);
 int		ft_unset(char **args, t_data *data);
 int		ft_pwd(t_data *data);
 int		ft_exit(char **args);
