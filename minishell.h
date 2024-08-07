@@ -16,9 +16,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <readline/readline.h>
 
+# define BASH_PROMPT_NAME "big-bash-0.1 "
 // execution types - start
 typedef struct s_env
 {
@@ -81,9 +83,9 @@ void	ft_printf_envs(t_env *env);
 t_env   *convert_env_to_list(char **envp);
 t_env   *create_env_node(char *env_str);
 int		ft_cd(char **args, t_data *data, int *ret_val);
-int		ft_unset(char **args, t_data *data);
+int		ft_unset(char **args, t_data *data, int *ret_val);
 int		ft_pwd(t_data *data);
-int		ft_exit(char **args);
+void	ft_exit(char **args, int *ret_val);
 int		ft_export(char **args, t_data *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
 

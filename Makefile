@@ -6,7 +6,7 @@
 #    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/08/07 16:50:31 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/08/07 20:18:51 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 
 EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/ft_pwd.c execution/builtings/ft_export.c \
-				 execution/builtings/ft_init_data.c execution/builtings/ft_cd.c \
+				 execution/builtings/ft_init_data.c execution/builtings/ft_exit.c \
+				 execution/builtings/ft_unset.c execution/builtings/ft_cd.c  \
 				 execution/builtings/builtings_utils/utils.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \

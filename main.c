@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/07 17:01:59 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:50:08 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int main(int argc, char *argv[], char **envp)
     }
 	while (1)
 	{
-		cmd_line_args = readline("big-bash-0.1$ ");
-		if (!cmd_line_args || !ft_strcmp(cmd_line_args, "exit"))
+		cmd_line_args = readline(BASH_PROMPT_NAME);
+		if (!cmd_line_args)
 			return (0);
 		add_history(cmd_line_args);
 		args = ft_split(cmd_line_args, ' ');
 
 		if (ft_strcmp(args[0], "echo") == 0)
-        ft_echo(&args[1], &return_value);
+			ft_echo(&args[1], &return_value);
 		else if (ft_strcmp(args[0], "env") == 0)
 			ft_env(data.env);
 		else if (ft_strcmp(args[0], "export") == 0)
@@ -85,9 +85,12 @@ int main(int argc, char *argv[], char **envp)
 			ft_pwd(&data);
 		else if (ft_strcmp(args[0], "cd") == 0)
 			ft_cd(args, &data, &return_value);
+		else if (ft_strcmp(args[0], "unset") == 0)
+			ft_unset(args, &data, &return_value);
+		else if (ft_strcmp(args[0], "exit") == 0)
+			ft_exit(args, &return_value);
 		else
-			readline("big-bash-0.1$ ");	
-
+			readline(BASH_PROMPT_NAME);	
 	}
 	return (0);
 }
