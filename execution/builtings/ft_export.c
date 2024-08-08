@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/05 15:43:26 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/08 03:26:19 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int		ft_export(char **args, t_data *data)
 	env_value = ft_substr(*args, len_key + 1, len_value);
 	if (env_key)
 		ft_export_command(&data->export, env_key, env_value);
+		ft_export_command(&data->env, env_key, env_value);
 	return (0);
 }

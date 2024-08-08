@@ -6,52 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/07 20:50:08 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/08 03:17:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <string.h>
 
-void print_token(t_token *token)
-{
-	t_token *current;
-
-	if (!token)
-	{
-		printf("empty token!\n");
-		return ;
-	}
-	current = token;
-	while (current)
-	{
-		printf("Type: %d", current->type);
-		if (current->value)
-			printf("| Value: %s", current->value);
-		printf("\n****************************\n");
-		current = current->next;
-	}
-}
-
-void print_opp(t_opp *opera)
-{
-	t_opp *current;
-
-	if (!opera)
-	{
-		printf("empty operations!\n");
-		return ;
-	}
-	current = opera;
-	while (current)
-	{
-		printf("Redirection Type: %d", current->operator);
-		if (current->arg)
-			printf(" | File: %s", current->arg);
-		printf("\n");
-		current = current->next;
-	}
-}
 
 int main(int argc, char *argv[], char **envp)
 {
