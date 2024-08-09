@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 05:17:24 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 09:26:00 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ t_opp *new_op(t_token **token)
 
 	output = NULL;
 	current = *token;
-	while (current)
+	while (current && current->type != PIPE)
 	{
 		if (is_red(current->type))
 		{

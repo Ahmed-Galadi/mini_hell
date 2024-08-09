@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 05:36:27 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 09:59:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct		s_opp
 typedef struct		s_com
 {
 	char			**command;
-	int				**expand_tab;
 	t_opp			*operator;
 	struct s_com	*next;
 }					t_com;
@@ -83,6 +82,7 @@ int		is_expand(char *str);
 int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
+t_com	*new_com(t_token *token);
 // errors
 void	error(void);
 

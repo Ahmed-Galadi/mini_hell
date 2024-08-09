@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 01:44:21 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 10:49:09 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ int main(int argc, char *argv[], char **env)
 			write(1, "", 0);
 		else
 		{
-			t_token *token;
-			token = tokenizer(input);
+			t_token *token = tokenizer(input);
 			t_opp	*opp = new_op(&token);
+			t_com	*com = new_com(token);
 			print_opp(opp);
 			print_token(token);
+			printf("\n-------------\narg[%d] = %s\noperation(%d) > type : %d # value : %s\n-------------\n"
+			, 1, (com->command)[1], 0, (com->operator->operator), (com->operator->arg));
 		}
 	}
 	return (0);
