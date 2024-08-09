@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 04:43:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/04 05:17:24 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,61 @@ int		ft_isalpha(char c)
 
 e_tokenType red_type(t_token *token)
 {
+	bool	dq_fl;
 	bool	is_dq;
 	int		i;
 
 	is_dq = false;
+	dq_fl = false;
 	i = 0;
 	while ((token->value)[i])
 	{
 		if ((token->value)[i] == '\"')
-			is_dq = !is_dq;
-		if (is_dq && ((token->value)[i] == '$' && ft_isalpha((token->value)[i + 1])))
 		{
-			if (token->type == RED_IN)
-				return (RED_IN_EXP);
-			else if (token->type == RED_OUT)
-				return (RED_OUT_EXP);
-			else if (token->type == APPEND)
-				return (APPEND_EXP);
-			else if (token->type == HERE_DOC)
-				return (HERE_DOC_EXP);
+			dq_fl = true;
+			break;
 		}
 		i++;
+	}
+	if (!dq_fl)
+	{
+		i = 0;
+		while ((token->value)[i])
+		{
+			if ((token->value)[i] == '$' && ft_isalpha((token->value)[i + 1]))
+			{
+				if (token->type == RED_IN)
+					return (RED_IN_EXP);
+				else if (token->type == RED_OUT)
+					return (RED_OUT_EXP);
+				else if (token->type == APPEND)
+					return (APPEND_EXP);
+				else if (token->type == HERE_DOC)
+					return (HERE_DOC_EXP);
+			}
+			i++;
+		}
+	}
+	else
+	{
+		i = 0;
+		while ((token->value)[i])
+		{
+			if ((token->value)[i] == '\"')
+				is_dq = !is_dq;
+			if ((is_dq && ((token->value)[i] == '$' && ft_isalpha((token->value)[i + 1]))))
+			{
+				if (token->type == RED_IN)
+					return (RED_IN_EXP);
+				else if (token->type == RED_OUT)
+					return (RED_OUT_EXP);
+				else if (token->type == APPEND)
+					return (APPEND_EXP);
+				else if (token->type == HERE_DOC)
+					return (HERE_DOC_EXP);
+			}
+			i++;
+		}
 	}
 	return (token->type);
 }
@@ -54,8 +88,6 @@ void	trim_quotes(t_token **token)
 	{
 		if ((current->value)[0] == '\"')
 		{
-			if (!is_red(current->type))
-				current->type = D_QUOTE;
 			switch_char(&(current->value), -1, ' ');
 			ptr_holder = current->value;
 			current->value = handle_quotes(ptr_holder);
@@ -63,8 +95,6 @@ void	trim_quotes(t_token **token)
 		}
 		else if ((current->value)[0] == '\'')
 		{
-			if (!is_red(current->type))
-				current->type = S_QUOTE;
 			switch_char(&(current->value), -1, ' ');
 			ptr_holder = current->value;
 			current->value = handle_quotes(ptr_holder);
@@ -133,21 +163,6 @@ int	is_expand(char *str)
 	return (0);
 }
 
-void	set_expand(t_token **token)
-{
-	t_token *current;
-	
-	current = *token;
-	while (current)
-	{
-		if ((current->type != S_QUOTE && !is_red(current->type)))
-		{
-			if (is_expand(current->value))
-				current->type = EXPAND;
-		}
-		current = current->next;
-	}
-}
 
 // t_opp *new_op(t_token **token)
 // {

@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:01:02 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/27 19:04:28 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/04 02:46:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ char	*handle_quotes(char *str)
 				i++;
 		}
 		else 
-			output[j++] = str[i];
-		i++;
+			output[j++] = str[i++];
 	}
 	output[j] = '\0';
 	return (output);

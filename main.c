@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 04:44:34 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/04 01:44:21 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int main(int argc, char *argv[], char **env)
 	while (1)
 	{
 		input = readline("\n$> ");
+		if (!input)
+			break ;
 		add_history(input);
 		if (ft_strcmp(input, "exit"))
 			exit(0);

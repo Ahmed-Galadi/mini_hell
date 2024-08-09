@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 01:11:07 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/04 05:43:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void    set_expand_opp(t_token **token)
 	while (current)
 	{
 		current->type = red_type(current);
+		current = current->next;
+	}
+}
+
+void	set_ex_to_com(void **token)
+{
+	t_token	*current;
+	
+	current = *token;
+	while (current)
+	{
+		if (is_expand(current->value))
 		current = current->next;
 	}
 }
@@ -81,7 +93,5 @@ t_token *tokenizer(char *input)
         }
     }
 	set_expand_opp(&head);
-	trim_quotes(&head);
-	set_expand(&head);
     return (head);
 }

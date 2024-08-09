@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/07/27 19:03:37 by agaladi          ###   ########.fr        #
+#    Updated: 2024/08/04 01:45:07 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c \
 utils/str_utils.c utils/ft_split.c utils/list_utils.c main.c
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 DEPS = main.h
 LIB = main.a
 OUT = minishell

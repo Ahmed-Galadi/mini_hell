@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/01 23:39:23 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/04 05:36:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ typedef enum e_tokenType
 	HERE_DOC_EXP,
 	EXPAND,
 	COMMAND,
-	S_QUOTE,
-	D_QUOTE,
 	PIPE
 }	e_tokenType;
 
@@ -54,6 +52,7 @@ typedef struct		s_opp
 typedef struct		s_com
 {
 	char			**command;
+	int				**expand_tab;
 	t_opp			*operator;
 	struct s_com	*next;
 }					t_com;
@@ -80,8 +79,8 @@ t_token	*tokenizer(char *input);
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
 int		check_red(t_token *token);
+int		is_expand(char *str);
 int		is_red(e_tokenType type);
-void	set_expand(t_token **token);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
 // errors
