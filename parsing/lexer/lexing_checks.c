@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 13:36:25 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 15:18:17 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,7 @@ void	trim_quotes(t_token **token)
 	}
 }
 
-int	check_pipes(t_token *token)
-{
-	t_token	*current;
 
-	current = token;
-	if (current->type == PIPE || last_token(token)->type == PIPE)
-		return (0);
-	while(current)
-	{
-		if (current->type == PIPE && current->next->type == PIPE)
-			return (0);
-		current = current->next;
-	}
-	return (1);
-}
 
 int	is_red(e_tokenType type)
 {

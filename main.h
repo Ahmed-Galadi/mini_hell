@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 11:47:37 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 16:14:01 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
 t_com	*new_com(t_token *token);
+bool check_quote_syntax(char *input);
 t_com	*create_cmds(t_token *token);
 // errors
 void	error(void);

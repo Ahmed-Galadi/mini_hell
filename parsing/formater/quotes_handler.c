@@ -6,28 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:01:02 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 02:46:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 16:13:46 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
-
-static bool check_quote_syntax(char *input)
-{
-    bool single_quote_open = false;
-    bool double_quote_open = false;
-	int i = 0;
-
-    while (input[i])
-	{
-        if (input[i] == '\'' && !double_quote_open)
-            single_quote_open = !single_quote_open;
-		else if (input[i] == '\"' && !single_quote_open)
-            double_quote_open = !double_quote_open;
-		i++;
-    }
-    return (!single_quote_open && !double_quote_open);
-}
 
 
 static int get_close_quote(char *input, int index_quote)
