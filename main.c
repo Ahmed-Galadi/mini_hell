@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 10:49:09 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 13:19:51 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,38 @@ void print_opp(t_opp *opera)
 
 	if (!opera)
 	{
-		printf("empty operations!\n");
+		printf("\tempty operations!\n");
 		return ;
 	}
 	current = opera;
-	printf("\n/////////////////////////////\n");
 	while (current)
 	{
-		printf("Redirection Type: %d", current->operator);
+		printf("\tRedirection Type: %d", current->operator);
 		if (current->arg)
-			printf(" | File: %s", current->arg);
-		printf("\n--------------------------\n");
+			printf("\t | File: %s", current->arg);
+		printf("\n\t--------------------------\n");
+		current = current->next;
+	}
+}
+
+void	print_command(t_com *command)
+{
+	t_com	*current;
+	
+	if (!command)
+	{
+		printf("No Command!\n");
+		return ;
+	}
+	current = command;
+	while(current)
+	{
+		int i = 0;
+		printf("args:");
+		while ((current->command)[i])
+			printf(" %s", (current->command)[i++]);
+		printf("\n");
+		print_opp(current->operator);
 		current = current->next;
 	}
 }
@@ -72,12 +93,8 @@ int main(int argc, char *argv[], char **env)
 		else
 		{
 			t_token *token = tokenizer(input);
-			t_opp	*opp = new_op(&token);
-			t_com	*com = new_com(token);
-			print_opp(opp);
-			print_token(token);
-			printf("\n-------------\narg[%d] = %s\noperation(%d) > type : %d # value : %s\n-------------\n"
-			, 1, (com->command)[1], 0, (com->operator->operator), (com->operator->arg));
+			t_com	*com = create_cmds(token);
+			print_command(com);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 09:26:00 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 13:36:25 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,39 +162,6 @@ int	is_expand(char *str)
 	}
 	return (0);
 }
-
-
-// t_opp *new_op(t_token **token)
-// {
-//     t_token *current;
-//     t_opp   *output;
-//     t_opp   *out_head = NULL;
-//     t_opp   *out_tail = NULL;
-
-//     if (!*token)
-//         return (NULL);
-//     current = *token;
-//     while (current && (current->type != PIPE))
-//     {
-//         if (is_red(current->type))
-//         {
-//             output = (t_opp *)malloc(sizeof(t_opp));
-//             if (!output)
-//                 return (NULL);
-//             output->operator = current->type;
-//             output->arg = current->value;
-//             output->next = NULL;
-
-//             if (!out_head)
-//                 out_head = output;
-//             else
-//                 out_tail->next = output;
-//             out_tail = output;
-//         }
-//         current = current->next;
-//     }
-//     return (out_head);
-// }
 
 void	add_opp(t_opp **opp, t_opp *to_add)
 {

@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 09:55:18 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/08/09 13:39:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,67 @@ int	args_count(t_token *token)
 	return (count);
 }
 
-t_com	*new_com(t_token *token)
+t_com *new_com(t_token *token) 
 {
-	t_com	*output;
-	char	**out_args;
-	t_opp	*out_opp;
-	int		i;
-	
-	output = (t_com *)malloc(sizeof(t_com));
-	out_args = (char **)malloc(args_count(token));
-	if (!out_args || !output)
-		return (NULL);
-	i = 0;
-	out_opp = new_op(&token);
-	while (token && token->type != PIPE)
+    t_com *output;
+    char **out_args;
+    t_opp *out_opp;
+    int i;
+
+    output = (t_com *)malloc(sizeof(t_com));
+    if (!output)
+        return (NULL);
+    out_args = (char **)malloc(sizeof(char *) * (args_count(token) + 1));
+    if (!out_args)
+        return (NULL);
+    i = 0;
+    out_opp = new_op(&token);
+    if (!out_opp)
+        return (NULL);
+    while (token && token->type != PIPE)
 	{
-		if (!is_red(token->type))
-		{
-			out_args[i] = ft_strdup(token->value);
-			i++;
-		}
-		token = token->next;
+        if (!is_red(token->type))
+            out_args[i++] = ft_strdup(token->value);
+        token = token->next;
+    }
+    out_args[i] = NULL;
+    output->command = out_args;
+    output->operator = out_opp;
+    output->next = NULL;
+    return (output);
+}
+
+
+void	add_com(t_com **command, t_com *to_add)
+{
+	t_com	*current;
+
+	if (!*command)
+		*command = to_add;
+	else
+	{
+		current = *command;
+		while (current->next)
+			current = current->next;
+		current->next = to_add;	
 	}
-	output->command = out_args;
-	output->operator = out_opp;
-	output->next = NULL;
-	return (output);
+}
+
+
+t_com *create_cmds(t_token *token)
+{
+    t_com *output;
+    t_token *current;
+
+	output = NULL;
+	current = token;
+    while (current)
+	{
+        add_com(&output, new_com(current));
+        while (current && current->type != PIPE)
+            current = current->next;
+        if (current)
+            current = current->next;
+    }
+    return (output);
 }
