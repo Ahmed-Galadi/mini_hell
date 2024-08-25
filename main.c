@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/08 03:17:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/08/25 22:46:02 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,8 @@ int main(int argc, char *argv[], char **envp)
 			return (0);
 		add_history(cmd_line_args);
 		args = ft_split(cmd_line_args, ' ');
-
-		if (ft_strcmp(args[0], "echo") == 0)
-			ft_echo(&args[1], &return_value);
-		else if (ft_strcmp(args[0], "env") == 0)
-			ft_env(data.env);
-		else if (ft_strcmp(args[0], "export") == 0)
-			ft_export(&args[1], &data);
-		else if (ft_strcmp(args[0], "pwd") == 0)
-			ft_pwd(&data);
-		else if (ft_strcmp(args[0], "cd") == 0)
-			ft_cd(args, &data, &return_value);
-		else if (ft_strcmp(args[0], "unset") == 0)
-			ft_unset(args, &data, &return_value);
-		else if (ft_strcmp(args[0], "exit") == 0)
-			ft_exit(args, &return_value);
-		else
-			readline(BASH_PROMPT_NAME);	
+		// remember to change envp with actual environment (t_env *env)
+		return (ft_execute_command(args, &return_value, &data));
 	}
 	return (0);
 }

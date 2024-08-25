@@ -6,20 +6,24 @@
 #    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/08/07 20:18:51 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/08/25 22:53:40 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
+CC = cc -g
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
+			 libft/find_executable.c
 
 EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/ft_pwd.c execution/builtings/ft_export.c \
 				 execution/builtings/ft_init_data.c execution/builtings/ft_exit.c \
 				 execution/builtings/ft_unset.c execution/builtings/ft_cd.c  \
 				 execution/builtings/builtings_utils/utils.c \
+				 execution/execution_types/execute_external.c \
+				 execution/execution_types/execute_command.c \
+				 execution/execution_types/execute_builtin.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \

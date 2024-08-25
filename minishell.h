@@ -88,7 +88,10 @@ int		ft_pwd(t_data *data);
 void	ft_exit(char **args, int *ret_val);
 int		ft_export(char **args, t_data *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
-
+int		ft_execute_builtin(char **args, int *return_value, t_data *data);
+int		ft_execute_command(char **args, int *return_value, t_data *data);
+int		ft_execute_external(char **args, int *return_value, t_data *data);
+char	*find_command(char *cmd, char **p_env);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
@@ -101,6 +104,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		init_data(t_data *data, char **envp);
+char	**env_to_array(t_env *env);
 
 // utils
 char	**ft_split(char const *s, char c);
