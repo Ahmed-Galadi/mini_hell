@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 13:39:06 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/01 23:37:58 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ t_com *new_com(t_token *token)
         return (NULL);
     i = 0;
     out_opp = new_op(&token);
-    if (!out_opp)
-        return (NULL);
     while (token && token->type != PIPE)
 	{
         if (!is_red(token->type))
