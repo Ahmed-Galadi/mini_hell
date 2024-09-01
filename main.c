@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 13:19:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/01 22:58:30 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void print_opp(t_opp *opera)
 	t_opp *current;
 
 	if (!opera)
-	{
 		printf("\tempty operations!\n");
-		return ;
-	}
-	current = opera;
-	while (current)
+	else
 	{
-		printf("\tRedirection Type: %d", current->operator);
-		if (current->arg)
-			printf("\t | File: %s", current->arg);
-		printf("\n\t--------------------------\n");
-		current = current->next;
+		current = opera;
+		while (current)
+		{
+			printf("\tRedirection Type: %d", current->operator);
+			if (current->arg)
+				printf("\t | File: %s", current->arg);
+			printf("\n\t--------------------------\n");
+			current = current->next;
+		}	
 	}
 }
 
