@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:03:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 16:29:59 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/01 22:37:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool check_quote_syntax(char *input)
     return (!single_quote_open && !double_quote_open);
 }
 
-int		syntax_error(t_token *token)
-{
+// int		syntax_error(t_token *token)
+// {
 	
-}
+// }
