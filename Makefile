@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/08/09 15:04:18 by agaladi          ###   ########.fr        #
+#    Updated: 2024/09/02 16:27:31 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,5 +41,5 @@ fclean: clean
 
 re: fclean all
 
-recom: all
+recom: re	
 	rm -rf $(OBJS) $(LIB)
