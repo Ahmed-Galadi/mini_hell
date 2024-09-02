@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/07/28 00:15:56 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:46:48 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../minishell.h"
 
 void	add_lstback(t_opp *operators, t_opp *to_add)
 {

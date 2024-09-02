@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/04 05:31:39 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:46:48 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 static int	is_op(char c)
 {

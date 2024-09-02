@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/09/02 16:27:31 by agaladi          ###   ########.fr        #
+#    Updated: 2024/09/02 18:51:00 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/ft_split.c utils/list_utils.c main.c
 CFLAGS = -Wall -Wextra -Werror -g
-DEPS = main.h
-LIB = main.a
+DEPS = minishell.h
+LIB = minishell.a
 OUT = minishell
 OBJS = $(SRCS:.c=.o)
 

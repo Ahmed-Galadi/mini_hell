@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 16:23:33 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:50:23 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 void    set_expand_opp(t_token **token)
 {
@@ -53,15 +53,15 @@ t_token *tokenizer(char *input)
         t_token *new_token = (t_token *)malloc(sizeof(t_token));
         if (!new_token)
             error();
-        if (ft_strcmp(splited_input[i], "|"))
+        if (cstm_strcmp(splited_input[i], "|"))
 			type = PIPE;
-		else if (ft_strcmp(splited_input[i], "<"))
+		else if (cstm_strcmp(splited_input[i], "<"))
 			type = RED_IN;
-        else if (ft_strcmp(splited_input[i], ">"))
+        else if (cstm_strcmp(splited_input[i], ">"))
 			type = RED_OUT;
-        else if (ft_strcmp(splited_input[i], ">>"))
+        else if (cstm_strcmp(splited_input[i], ">>"))
             type = APPEND;
-        else if (ft_strcmp(splited_input[i], "<<"))
+        else if (cstm_strcmp(splited_input[i], "<<"))
             type = HERE_DOC;
         else
             type = COMMAND;

@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/01 23:38:52 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:50:23 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "minishell.h"
 
 void print_token(t_token *token)
 {
@@ -86,9 +86,9 @@ int main(int argc, char *argv[], char **env)
 		if (!input)
 			break ;
 		add_history(input);
-		if (ft_strcmp(input, "exit"))
+		if (cstm_strcmp(input, "exit"))
 			exit(0);
-		else if (ft_strcmp(input, ""))
+		else if (cstm_strcmp(input, ""))
 			write(1, "", 0);
 		else
 		{

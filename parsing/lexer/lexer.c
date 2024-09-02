@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/01 23:37:58 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:46:48 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 int	args_count(t_token *token)
 {

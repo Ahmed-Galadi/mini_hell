@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 16:14:01 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 18:50:23 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <unistd.h>
@@ -59,7 +59,7 @@ typedef struct		s_com
 
 // utils
 int		ft_strlen(char *str);
-int		ft_strcmp(char *str1, char *str2);
+int		cstm_strcmp(char *str1, char *str2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
