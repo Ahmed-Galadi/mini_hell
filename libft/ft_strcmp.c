@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/08/02 06:51:31 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_lstback(t_opp *operators, t_opp *to_add)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_opp *current;
+	size_t	i;
 
-	current = operators;
-	if (!operators)
-		operators = to_add;
-	else
+	if (!s1 || !s2)
+		return (-1);
+	i = 0;
+	while ((s1[i] || s2[i]))
 	{
-		while (current->next)
-			current = current->next;
-		current->next = to_add;
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
-}
-
-t_token	*last_token(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	if (!current)
-		return (NULL);
-	while (current->next)
-		current = current->next;
-	return (current);
+	return (0);
 }

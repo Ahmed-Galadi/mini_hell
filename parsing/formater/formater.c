@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   formater.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:42:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/01 23:38:23 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 19:07:11 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 void	switch_char(char **str, char to_find, char character)
  {

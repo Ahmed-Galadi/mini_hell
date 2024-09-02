@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_utils.c                                        :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 20:17:15 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/08/04 05:23:12 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/04 05:27:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_putstr(char *str)
+int		ft_pwd(t_data *data)
 {
-	while (*str)
-		write(1, str++, 1);
+    if (!data)
+        return (127);
+    else
+        printf("%s\n", data->pwd);
+    return (0);    
 }
-

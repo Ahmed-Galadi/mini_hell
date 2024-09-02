@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+=======
+/*   Updated: 2024/08/02 02:07:35 by agaladi          ###   ########.fr       */
+>>>>>>> main
+=======
 /*   Updated: 2024/08/02 04:43:36 by agaladi          ###   ########.fr       */
+>>>>>>> 9cefbccd785f0aaca6bd182350f3cd896b39d52a
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../main.h"
+#include "../../minishell.h"
 
 int		ft_isalpha(char c)
 {

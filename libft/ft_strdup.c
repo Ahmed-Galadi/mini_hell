@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/08/02 06:56:26 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_lstback(t_opp *operators, t_opp *to_add)
+char	*ft_strdup(const char *s1)
 {
-	t_opp *current;
+	char	*str;
+	int		str_length;
+	size_t	i;
 
-	current = operators;
-	if (!operators)
-		operators = to_add;
-	else
-	{
-		while (current->next)
-			current = current->next;
-		current->next = to_add;
-	}
-}
-
-t_token	*last_token(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	if (!current)
+	if (!s1)
 		return (NULL);
-	while (current->next)
-		current = current->next;
-	return (current);
+	str_length = ft_strlen(s1);
+	str = (char *)malloc(str_length + 1);
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

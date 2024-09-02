@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/08/02 06:57:01 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_lstback(t_opp *operators, t_opp *to_add)
+char	*ft_strchr(const char *s, int c)
 {
-	t_opp *current;
+	unsigned int	i;
+	char			converted_c;
 
-	current = operators;
-	if (!operators)
-		operators = to_add;
-	else
-	{
-		while (current->next)
-			current = current->next;
-		current->next = to_add;
-	}
-}
-
-t_token	*last_token(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	if (!current)
+	if (!s)
 		return (NULL);
-	while (current->next)
-		current = current->next;
-	return (current);
+	converted_c = (char) c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == converted_c)
+			return ((char *) &s[i]);
+		i++;
+	}
+	if (s[i] == converted_c)
+		return ((char *) &s[i]);
+	return (NULL);
 }
