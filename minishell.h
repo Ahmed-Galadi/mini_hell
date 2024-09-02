@@ -39,6 +39,7 @@ typedef struct s_data {
 }	t_data;
 
 // execution types - end
+
 typedef enum e_tokenType
 {
 	RED_IN,
@@ -51,8 +52,6 @@ typedef enum e_tokenType
 	HERE_DOC_EXP,
 	EXPAND,
 	COMMAND,
-	S_QUOTE,
-	D_QUOTE,
 	PIPE
 }	e_tokenType;
 
@@ -117,6 +116,7 @@ int		init_data(t_data *data, char **envp);
 char	**env_to_array(t_env *env);
 
 // utils
+int		cstm_strcmp(char *str1, char *str2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
@@ -133,9 +133,13 @@ t_token	*tokenizer(char *input);
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
 int		check_red(t_token *token);
+int		is_expand(char *str);
 int		is_red(e_tokenType type);
-void	set_expand(t_token **token);
+e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
+t_com	*new_com(t_token *token);
+bool check_quote_syntax(char *input);
+t_com	*create_cmds(t_token *token);
 // errors
 void	error(void);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
+#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/08/26 17:37:16 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/09/02 22:20:22 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,12 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
-parsing/lexer/lexing_checks.c parsing/lexer/lexer.c \
+parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/list_utils.c main.c
 
 CFLAGS = -Wall -Wextra -Werror
 HEADER = minishell.h
-LIB = main.a
+LIB = minishell.a
 OUT = minishell
 PARSING_OBJS = $(PARSING_SRCS:.c=.o)
 EXECUTION_OBJS = $(EXECUTION_SRCS:.c=.o)

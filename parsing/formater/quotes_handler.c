@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:01:02 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-static bool check_quote_syntax(char *input)
-{
-    bool single_quote_open = false;
-    bool double_quote_open = false;
-	int i = 0;
-
-    while (input[i])
-	{
-        if (input[i] == '\'' && !double_quote_open)
-            single_quote_open = !single_quote_open;
-		else if (input[i] == '\"' && !single_quote_open)
-            double_quote_open = !double_quote_open;
-		i++;
-    }
-    return (!single_quote_open && !double_quote_open);
-}
 
 
 static int get_close_quote(char *input, int index_quote)
@@ -69,8 +52,7 @@ char	*handle_quotes(char *str)
 				i++;
 		}
 		else 
-			output[j++] = str[i];
-		i++;
+			output[j++] = str[i++];
 	}
 	output[j] = '\0';
 	return (output);

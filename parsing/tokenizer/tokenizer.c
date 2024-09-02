@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/02 01:11:07 by agaladi          ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +20,18 @@ void    set_expand_opp(t_token **token)
 	while (current)
 	{
 		current->type = red_type(current);
+		current = current->next;
+	}
+}
+
+void	set_ex_to_com(void **token)
+{
+	t_token	*current;
+	
+	current = *token;
+	while (current)
+	{
+		if (is_expand(current->value))
 		current = current->next;
 	}
 }
@@ -45,15 +53,15 @@ t_token *tokenizer(char *input)
         t_token *new_token = (t_token *)malloc(sizeof(t_token));
         if (!new_token)
             error();
-        if (ft_strcmp(splited_input[i], "|"))
+        if (cstm_strcmp(splited_input[i], "|"))
 			type = PIPE;
-		else if (ft_strcmp(splited_input[i], "<"))
+		else if (cstm_strcmp(splited_input[i], "<"))
 			type = RED_IN;
-        else if (ft_strcmp(splited_input[i], ">"))
+        else if (cstm_strcmp(splited_input[i], ">"))
 			type = RED_OUT;
-        else if (ft_strcmp(splited_input[i], ">>"))
+        else if (cstm_strcmp(splited_input[i], ">>"))
             type = APPEND;
-        else if (ft_strcmp(splited_input[i], "<<"))
+        else if (cstm_strcmp(splited_input[i], "<<"))
             type = HERE_DOC;
         else
             type = COMMAND;
@@ -84,8 +92,7 @@ t_token *tokenizer(char *input)
             last->next = new_token;
         }
     }
-	set_expand_opp(&head);
+	//set_expand_opp(&head);
 	trim_quotes(&head);
-	set_expand(&head);
     return (head);
 }

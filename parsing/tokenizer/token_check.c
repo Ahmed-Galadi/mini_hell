@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 02:42:54 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	is_quote(char *str)
 {
-	return (ft_strcmp(str, "\"") || ft_strcmp(str, "\'"));
+	return (cstm_strcmp(str, "\"") || cstm_strcmp(str, "\'"));
 }
 
 int	is_rederection(char *str)
 {
-	return (ft_strcmp(str, "<<") || ft_strcmp(str, ">>")
-	|| ft_strcmp(str, ">") || ft_strcmp(str, "<"));
+	return (cstm_strcmp(str, "<<") || cstm_strcmp(str, ">>")
+	|| cstm_strcmp(str, ">") || cstm_strcmp(str, "<"));
 }
