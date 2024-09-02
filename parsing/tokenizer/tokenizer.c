@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/09 16:14:47 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 16:23:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ t_token *tokenizer(char *input)
         }
     }
 	//set_expand_opp(&head);
-	//trim_quotes(&head);
+	trim_quotes(&head);
     return (head);
 }

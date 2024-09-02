@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/01 23:18:22 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/01 23:38:52 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int main(int argc, char *argv[], char **env)
 			t_token *token = tokenizer(input);
 			t_com	*com = create_cmds(token);
 			print_command(com);
-			printf("%s %s", (com->command)[0], (com->next->command)[0]);
 		}
 	}
 	return (0);
