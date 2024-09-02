@@ -6,11 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:03:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 18:46:48 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/02 19:22:55 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../main.h"
 
 int	check_pipes(t_token *token)
 {
