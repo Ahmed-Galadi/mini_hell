@@ -6,15 +6,17 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/02 03:21:00 by bzinedda         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/02 06:59:10 by agaladi          ###   ########.fr       */
->>>>>>> 9cefbccd785f0aaca6bd182350f3cd896b39d52a
+/*   Updated: 2024/09/02 21:47:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	args_size(t_token *token)
+{
+	(void)token;
+	return (1);
+}
 
 t_com	*new_com(t_token *token)
 {
@@ -35,4 +37,5 @@ t_com	*new_com(t_token *token)
 		}
 		token = token->next;
 	}
+	return (NULL);
 }

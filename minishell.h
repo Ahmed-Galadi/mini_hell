@@ -135,6 +135,7 @@ int		check_pipes(t_token *token);
 int		check_red(t_token *token);
 int		is_red(e_tokenType type);
 void	set_expand(t_token **token);
+e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
 // errors
 void	error(void);
