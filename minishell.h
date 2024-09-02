@@ -19,6 +19,9 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <readline/readline.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <fcntl.h>
 
 # define BASH_PROMPT_NAME "big-bash-0.1 "
 // execution types - start
@@ -92,6 +95,13 @@ int		ft_execute_builtin(char **args, int *return_value, t_data *data);
 int		ft_execute_command(char **args, int *return_value, t_data *data);
 int		ft_execute_external(char **args, int *return_value, t_data *data);
 char	*find_command(char *cmd, char **p_env);
+char	**env_to_array(t_env *env);
+// pipes prototypes
+int		count_pipes(char **args);
+char	***split_commands(char **args, int num_commands);
+int		count_args_until_pipe(char **args);
+void    free_commands(char ***commands, int num_commands);
+int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
