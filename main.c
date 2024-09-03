@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 22:19:45 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:17:33 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,54 +74,60 @@ void	print_command(t_com *command)
 	}
 }
 
-// int main(int argc, char *argv[], char **envp)
-// {
-// 	// char	*cmd_line_args;
-//     // char	**args;
-// 	// t_data	data;
-// 	// int		return_value;
-
-// 	// (void)argv;
-// 	// (void)argc;
-//     // if (!init_data(&data, envp))
-// 	// {
-//     //     fprintf(stderr, "Failed to initialize data\n");
-//     //     return (1);
-//     // }
-// 	// while (1)
-// 	// {
-// 	// 	cmd_line_args = readline(BASH_PROMPT_NAME);
-// 	// 	if (!cmd_line_args)
-// 	// 		return (0);
-// 	// 	add_history(cmd_line_args);
-// 	// 	args = ft_split(cmd_line_args, ' ');
-// 	// 	ft_execute_command(args, &return_value, &data);
-// 	// }
-// 	return (0);
-// }
-
-int main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[], char **envp)
 {
-	(void)argc;
+	char	*cmd_line_args;
+   	char	**args;
+	t_data	data;
+	int		return_value;
+
 	(void)argv;
-	(void)env;
-	char *input;
+	(void)argc;
+    if (!init_data(&data, envp))
+	{
+        fprintf(stderr, "Failed to initialize data\n");
+        return (1);
+    }
 	while (1)
 	{
-		input = readline("\n$> ");
-		if (!input)
+		cmd_line_args = readline(BASH_PROMPT_NAME);
+		if (!cmd_line_args)
 			break ;
-		add_history(input);
-		if (cstm_strcmp(input, "exit"))
-			exit(0);
-		else if (cstm_strcmp(input, ""))
-			write(1, "", 0);
-		else
-		{
-			t_token *token = tokenizer(input);
-			t_com	*com = create_cmds(token);
-			print_command(com);
-		}
+		add_history(cmd_line_args);
+		args = ft_split(cmd_line_args, ' ');
+		t_token *token = tokenizer(cmd_line_args);
+		t_com	*com = create_cmds(token);
+		// printf("***** start ******\n");
+		// print_command(com);
+		// printf("***** end ******\n");
+		if (com->command)
+			ft_execute_command(args, &return_value, &data);
 	}
 	return (0);
 }
+
+// int main(int argc, char *argv[], char **env)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	(void)env;
+// 	char *input;
+// 	while (1)
+// 	{
+// 		input = readline("\n$> ");
+// 		if (!input)
+// 			break ;
+// 		add_history(input);
+// 		if (cstm_strcmp(input, "exit"))
+// 			exit(0);
+// 		else if (cstm_strcmp(input, ""))
+// 			write(1, "", 0);
+// 		else
+// 		{
+// 			t_token *token = tokenizer(input);
+// 			t_com	*com = create_cmds(token);
+// 			print_command(com);
+// 		}
+// 	}
+// 	return (0);
+// }
