@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 17:35:45 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:53:19 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 int ft_execute_builtin(char **args, int *return_value, t_data *data, t_com *command)
 {
-	 (void)command;
+	int stdout_copy = -1;
+
+	if (command->operator)
+	{
+		if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)
+		{
+			stdout_copy = dup(STDOUT_FILENO);
+			handle_redirections(command);
+		}
+	}
+
 	if (ft_strcmp(args[0], "echo") == 0)
 		ft_echo(&args[1], return_value);
 	else if (ft_strcmp(args[0], "env") == 0)
@@ -34,5 +44,10 @@ int ft_execute_builtin(char **args, int *return_value, t_data *data, t_com *comm
 		// Not a builtin command
 		*return_value = -1;
 	}
-   		return (*return_value);
+
+	// Restore stdout if it was redirected
+	if (stdout_copy != -1)
+		restore_stdout(stdout_copy);
+
+	return (*return_value);
 }

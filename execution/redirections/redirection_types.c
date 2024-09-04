@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 17:26:06 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:53:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_redirections(t_com *command)
 {
     if (!command || !command->operator)
-        return;
+        return ;
 
     t_opp *current_op = command->operator;
 
@@ -98,12 +98,21 @@ void setup_input_redirection(const char *infile, int is_here_doc)
     }
 }
 
-void	setup_output_redirection(const char *outfile, int is_appended)
+void setup_output_redirection(const char *outfile, int is_appended)
 {
     int fd_out;
+    int stdout_copy;
 
     if (!outfile || is_appended < 0)
         return;
+
+    // Save the current stdout
+    stdout_copy = dup(STDOUT_FILENO);
+    if (stdout_copy < 0)
+    {
+        perror("Error saving stdout");
+        return;
+    }
 
     if (is_appended)
         fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0666);
@@ -124,5 +133,14 @@ void	setup_output_redirection(const char *outfile, int is_appended)
     }
 
     close(fd_out);
-    return ;
+
+}
+
+void	restore_stdout(int stdout_copy)
+{
+    if (dup2(stdout_copy, STDOUT_FILENO) < 0)
+    {
+        perror("Error restoring stdout");
+    }
+    close(stdout_copy);
 }

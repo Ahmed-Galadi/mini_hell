@@ -104,6 +104,7 @@ int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, 
 void	handle_redirections(t_com *command);
 void	setup_input_redirection(const char *infile, int is_here_doc);
 void	setup_output_redirection(const char *outfile, int is_appended);
+void	restore_stdout(int stdout_copy);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
