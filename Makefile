@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
+#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/09/02 22:20:22 by agaladi          ###   ########.fr        #
+#    Updated: 2024/09/04 15:32:08 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/execution_types/execute_command.c \
 				 execution/execution_types/execute_builtin.c \
 				 execution/pipes/pipe_utils.c execution/pipes/pipeline.c \
+				 execution/redirections/redirection_types.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \

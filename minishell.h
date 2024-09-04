@@ -101,6 +101,10 @@ char	***split_commands(char **args, int num_commands);
 int		count_args_until_pipe(char **args);
 void    free_commands(char ***commands, int num_commands);
 int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data);
+// redirections
+void	handle_redirections(t_com *command);
+void	setup_input_redirection(const char *infile, int is_here_doc);
+void	setup_output_redirection(const char *outfile, int is_appended);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);

@@ -6,63 +6,11 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/03 16:25:13 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:15:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// int ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data)
-// {
-//     int i;
-//     int in, fd[2];
-//     pid_t pid;
-
-//     in = STDIN_FILENO;
-//     i = 0;
-//     while (i < num_commands)
-//     {
-//         pipe(fd);
-//         pid = fork();
-
-//         if (pid == 0)
-//         {
-//             // Child process
-//             if (in != STDIN_FILENO)
-//             {
-//                 dup2(in, STDIN_FILENO);
-//                 close(in);
-//             }
-//             if (i < num_commands - 1)
-//             {
-//                 dup2(fd[1], STDOUT_FILENO);
-//             }
-//             close(fd[0]);
-//             close(fd[1]);
-
-//             ft_execute_command(commands[i], return_value, data);
-//             exit(EXIT_FAILURE);  // In case execute_command fails
-//         }
-//         else if (pid < 0)
-//         {
-//             perror("fork");
-//             return 1;
-//         }
-
-//         // Parent process
-//         close(fd[1]);
-//         if (in != STDIN_FILENO)
-//             close(in);
-//         in = fd[0];
-//         i++;
-//     }
-
-//     // Wait for all children
-//     while (wait(NULL) > 0);
-
-//     return 0;
-// }
-
 #include <sys/wait.h>
 #include <errno.h>
 
@@ -106,6 +54,7 @@ int ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t
 	pid_t pid;
 	int status;
 	(void)data;
+	const char	*full_path;
 
 	in = STDIN_FILENO;
 	for (i = 0; i < num_commands; i++)
@@ -118,7 +67,6 @@ int ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t
 				return 1;
 			}
 		}
-
 		pid = fork();
 		if (pid == 0)
 		{
@@ -134,25 +82,15 @@ int ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t
 				close(fd[0]);
 			}
 			close(fd[1]);
-
+			full_path = get_path(commands[i][0], data->env);
 			//execvp(commands[i][0], commands[i]);
-			if (get_path(commands[i][0], data->env) != NULL)
+			if (full_path != NULL)
 			{
 				
-				execve(get_path(commands[i][0], data->env), commands[i], env_to_array(data->env));
+				execve(full_path, commands[i], env_to_array(data->env));
 				perror("execvp");
+				exit(EXIT_FAILURE);
 			}
-
-			
-			// if (ft_strchr(commands[i][0], '/'))
-			// 	execve(commands[i][0], commands[i], env_to_array(data->env));
-			// else
-			// {
-			// 	const char *full_path = ft_strjoin("/bin/", commands[i][0]);
-			// 	execve(full_path, commands[i], env_to_array(data->env));
-				
-			// }
-			exit(EXIT_FAILURE);
 		}
 		else if (pid < 0)
 		{
@@ -179,5 +117,5 @@ int ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t
 	else if (WIFSIGNALED(status))
 		*return_value = 128 + WTERMSIG(status);
 
-	return 0;
+	return (0);
 }
