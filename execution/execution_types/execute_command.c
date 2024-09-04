@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 16:34:09 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:33:25 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
 {
     int builtin_status;
     int pipe_count;
-    
+
     if (!command)
         return (1);
     // Check if the command contains pipes

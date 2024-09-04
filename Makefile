@@ -6,11 +6,11 @@
 #    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/09/04 15:32:08 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/09/04 17:08:30 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc -g
+CC = cc
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \

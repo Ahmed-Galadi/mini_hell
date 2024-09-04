@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 16:39:24 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:35:45 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int ft_execute_builtin(char **args, int *return_value, t_data *data, t_com *command)
 {
-	(void)command;
-	//handle_redirections(command);
+	 (void)command;
 	if (ft_strcmp(args[0], "echo") == 0)
 		ft_echo(&args[1], return_value);
 	else if (ft_strcmp(args[0], "env") == 0)
