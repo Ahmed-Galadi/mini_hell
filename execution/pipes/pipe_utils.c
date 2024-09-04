@@ -6,84 +6,90 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:26:37 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/26 17:39:12 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:14:32 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int count_pipes(char **args)
+int count_pipes(t_com *command)
 {
-    int count;
-    int i;
+	int count;
+	t_com *curr;
 
-    count = 0;
-    i = 0;
-    while (args[i])
-    {
-        if (ft_strcmp(args[i], "|") == 0)
-            count++;
-        i++;
-    }
-    return (count);
+	if (!command)
+		return (0);
+	count = 0;
+	curr = command;
+	while (curr->next)
+	{
+		++count;
+		curr = curr->next;
+	}
+	return (count);
 }
 
-char ***split_commands(char **args, int num_commands)
+char	***split_commands(t_com *commands, int num_commands)
 {
-    int cmd_index;
-    int arg_index;
-    int i;
-    char ***commands;
-    
-    cmd_index = 0;
-    arg_index = 0;
-    i = 0;
-    commands = malloc(sizeof(char **) * num_commands);
-    commands[cmd_index] = malloc(sizeof(char *) * (count_args_until_pipe(args) + 1));
-    while (args[i])
-    {
-        if (ft_strcmp(args[i], "|") == 0)
-        {
-            commands[cmd_index][arg_index] = NULL;
-            cmd_index++;
-            arg_index = 0;
-            commands[cmd_index] = malloc(sizeof(char *) * (count_args_until_pipe(args + i + 1) + 1));
-        }
-        else
-        {
-            commands[cmd_index][arg_index] = ft_strdup(args[i]);
-            arg_index++;
-        }
-        i++;
-    }
-    commands[cmd_index][arg_index] = NULL;
-    return (commands);
-}
+	char ***command_list;
+	int cmd_index;
+	int	i;
+	t_com *current = commands;
 
-int count_args_until_pipe(char **args)
-{
-    int count = 0;
-    while (args[count] && ft_strcmp(args[count], "|") != 0)
-        count++;
-    return count;
+	// Allocate memory for the command list
+	command_list = malloc(sizeof(char **) * (num_commands + 1));
+	if (!command_list)
+		return NULL;
+
+	cmd_index = 0;
+	// Iterate through the commands
+	while (current && cmd_index < num_commands)
+	{
+		int arg_count = 0;
+		while (current->command[arg_count])
+			arg_count++;
+
+		// Allocate memory for the command and its arguments
+		command_list[cmd_index] = malloc(sizeof(char *) * (arg_count + 1));
+		if (!command_list[cmd_index])
+			return NULL;
+
+		// Copy the command and arguments
+		i = 0;
+		while (i < arg_count)
+		{
+			command_list[cmd_index][i] = ft_strdup(current->command[i]);
+			i++;
+		}
+		command_list[cmd_index][arg_count] = NULL;
+
+		// Move to the next command
+		current = current->next;
+		cmd_index++;
+	}
+
+	// Null-terminate the list of commands
+	command_list[cmd_index] = NULL;
+
+	return command_list;
 }
 
 void    free_commands(char ***commands, int num_commands)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
-    i = 0;
-    while (i < num_commands)
-    {
-        j = 0;
-        while (commands[i][j])
-        {
-            free(commands[i][j]);
-            j++;
-        }
-        free(commands[i]);
-        i++;
-    }
-    free(commands);
+	i = 0;
+	while (i < num_commands)
+	{
+		j = 0;
+		while (commands[i][j])
+		{
+			free(commands[i][j]);
+			j++;
+		}
+		free(commands[i]);
+		i++;
+	}
+	free(commands);
 }

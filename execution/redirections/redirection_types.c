@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 15:32:18 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:27:47 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,5 @@ void	setup_output_redirection(const char *outfile, int is_appended)
     }
 
     close(fd_out);
+    return ;
 }

@@ -90,15 +90,14 @@ int		ft_pwd(t_data *data);
 void	ft_exit(char **args, int *ret_val);
 int		ft_export(char **args, t_data *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
-int		ft_execute_builtin(char **args, int *return_value, t_data *data);
-int		ft_execute_command(char **args, int *return_value, t_data *data);
-int		ft_execute_external(char **args, int *return_value, t_data *data);
+int		ft_execute_builtin(char **args, int *return_value, t_data *data, t_com *command);
+int		ft_execute_command(t_com *command, int *return_value, t_data *data);
+int		ft_execute_external(char **args, int *return_value, t_data *data, t_com *command);
 char	*find_command(char *cmd, char **p_env);
 char	**env_to_array(t_env *env);
 // pipes prototypes
-int		count_pipes(char **args);
-char	***split_commands(char **args, int num_commands);
-int		count_args_until_pipe(char **args);
+int		count_pipes(t_com *command);
+char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
 int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data);
 // redirections

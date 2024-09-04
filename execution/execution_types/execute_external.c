@@ -6,17 +6,18 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/26 22:40:42 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:33:01 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_execute_external(char **args, int *return_value, t_data *data)
+int	ft_execute_external(char **args, int *return_value, t_data *data, t_com *command)
 {
 	pid_t	pid;
 	char	*cmd_path;
 	int		status;
+	
 
 	pid = fork();
 	if (pid == -1)
@@ -39,6 +40,7 @@ int	ft_execute_external(char **args, int *return_value, t_data *data)
 			fprintf(stderr, "Command not found: %s\n", args[0]);
 			exit(127);  // Exit with 127 for command not found
 		}
+		handle_redirections(command);
 		if (execve(cmd_path, args, env_array) == -1)
 		{
 			perror("Error execve");
