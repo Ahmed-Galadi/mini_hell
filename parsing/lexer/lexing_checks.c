@@ -180,7 +180,7 @@ t_opp *new_op(t_token **token)
 			if (!tmp)
                 return (NULL);
 			tmp->operator = current->type;
-            tmp->arg = current->value;
+            tmp->arg = ft_strdup(current->value);
             tmp->next = NULL;
 			if (!output)
 				output = tmp;
