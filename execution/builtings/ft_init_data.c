@@ -6,11 +6,73 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:26:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/07 19:18:23 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/07 17:07:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void print_token(t_token *token)
+{
+	t_token *current;
+
+	if (!token)
+	{
+		printf("empty token!\n");
+		return ;
+	}
+	current = token;
+	while (current)
+	{
+		printf("Type: %d", current->type);
+		if (current->value)
+			printf("| Value: %s", current->value);
+		printf("\n****************************\n");
+		current = current->next;
+	}
+}
+
+void print_opp(t_opp *opera)
+{
+	t_opp *current;
+
+	if (!opera)
+		printf("\tempty operations!\n");
+	else
+	{
+		current = opera;
+		while (current)
+		{
+			printf("\tRedirection Type: %d", current->operator);
+			if (current->arg)
+				printf("\t | File: %s", current->arg);
+			printf("\n\t--------------------------\n");
+			current = current->next;
+		}	
+	}
+}
+
+void	print_command(t_com *command)
+{
+	t_com	*current;
+	
+	if (!command)
+	{
+		printf("No Command!\n");
+		return ;
+	}
+	current = command;
+	while(current)
+	{
+		int i = 0;
+		printf("args:");
+		while ((current->command)[i])
+			printf(" %s", (current->command)[i++]);
+		printf("\n");
+		print_opp(current->operator);
+		current = current->next;
+	}
+}
 
 int init_data(t_data *data, char **envp)
 {
@@ -18,7 +80,8 @@ int init_data(t_data *data, char **envp)
 
 	if (!data || !envp)
 		return (0);
-
+	// Initilize command struct
+	data->command = NULL;
 	// Initialize environment variable linked list
 	data->env = init_env(envp);
 	if (!data->env)

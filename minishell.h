@@ -24,21 +24,6 @@
 #include <fcntl.h>
 
 # define BASH_PROMPT_NAME "big-bash-0.1 "
-// execution types - start
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct s_data {
-	t_env	*env;
-	t_env	*export;
-	char	*pwd;
-}	t_data;
-
-// execution types - end
 
 typedef enum e_tokenType
 {
@@ -75,6 +60,22 @@ typedef struct		s_com
 	t_opp			*operator;
 	struct s_com	*next;
 }					t_com;
+
+// execution types - start
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_data {
+	t_com	*command;
+	t_env	*env;
+	t_env	*export;
+	char	*pwd;
+}	t_data;
+// execution types - end
 
 // execution prototypes
 int		ft_echo(char **args, int *ret_val);
@@ -116,7 +117,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-int		init_data(t_data *data, char **envp);
+// int		init_data(t_data *data, char **envp);
 char	**env_to_array(t_env *env);
 
 // utils
@@ -142,8 +143,11 @@ int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
 t_com	*new_com(t_token *token);
-bool check_quote_syntax(char *input);
+bool	check_quote_syntax(char *input);
 t_com	*create_cmds(t_token *token);
+void	print_command(t_com *command);
+void	print_opp(t_opp *opera);
+void	print_token(t_token *token);
 // errors
 void	error(void);
 

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "fcntl.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "locale": "c"
     }
 }
