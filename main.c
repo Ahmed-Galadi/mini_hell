@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
+#include <sys/signal.h>
 
 void	set_command(t_data *data_config, char *cmd_line_args)
 {
@@ -22,6 +24,17 @@ void	set_command(t_data *data_config, char *cmd_line_args)
 	if (!data_config || !cmd_line_args)
 		return ;
 	data_config->command = com;
+}
+
+void	handle_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 int main(int argc, char *argv[], char **envp)
@@ -42,6 +55,9 @@ int main(int argc, char *argv[], char **envp)
     }
 	while (1)
 	{
+		signal(SIGINT, handle_sig);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGKILL, SIG_IGN);
 		cmd_line_args = readline(BASH_PROMPT_NAME);
 		if (!cmd_line_args)
 			break ;

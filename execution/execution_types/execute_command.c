@@ -45,3 +45,54 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
         }
     }
 }
+
+const char *get_path(const char *cmd, t_env *env)
+{
+	int i;
+	char **executables;
+	char *with_back_slash;
+	char *full_path;
+	t_env *curr;
+
+	executables = NULL;
+	if (!cmd || !env)
+		return (NULL);
+	curr = env;
+	while (curr->next)
+	{
+		if (ft_strncmp(curr->key, "PATH", 4) == 0)
+		{
+			executables = ft_split(curr->value, ':');
+			break;
+		}
+		curr = curr->next;
+	}
+	i = 0;
+	while (executables[i])
+	{
+		with_back_slash = ft_strjoin(executables[i], "/");
+		full_path = ft_strjoin(with_back_slash, cmd);
+		if (access(full_path, F_OK | X_OK) == 0)
+			return (full_path);
+		i++;
+	}
+	return (NULL);
+}
+
+void execute_command(t_data *data, char **commands)
+{
+	const char *full_path;
+
+	full_path = get_path(commands[0], data->env);
+	if (full_path != NULL)
+	{
+		execve(full_path, commands, NULL);
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		fprintf(stderr, "Command not found: %s\n", commands[0]);
+		exit(EXIT_FAILURE);
+	}
+}

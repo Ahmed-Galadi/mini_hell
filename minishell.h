@@ -150,5 +150,8 @@ void	print_opp(t_opp *opera);
 void	print_token(t_token *token);
 // errors
 void	error(void);
+void	rl_replace_line(char *s, int a);
+void execute_command(t_data *data, char **commands);
+const char *get_path(const char *cmd, t_env *env);
 
 #endif
