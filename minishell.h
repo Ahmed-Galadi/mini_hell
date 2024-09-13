@@ -24,7 +24,7 @@
 #include <fcntl.h>
 
 # define BASH_PROMPT_NAME "big-bash-0.1 "
-
+# define MAX_FDS 1024
 typedef enum e_tokenType
 {
 	RED_IN,
