@@ -100,12 +100,16 @@ char	**env_to_array(t_env *env);
 int		count_pipes(t_com *command);
 char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
-int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data);
+int		ft_execute_pipeline(char ***commands, int num_commands, t_data *data);
 // redirections
 void	handle_redirections(t_com *command);
 void	setup_input_redirection(const char *infile, int is_here_doc);
 void	setup_output_redirection(const char *outfile, int is_appended);
 void	restore_stdout(int stdout_copy);
+void	redirect_to_pipe_fds(t_com *command, int *prev_pipe,
+			int *curr_pipe, int curr_cmd, int num_commands);
+void    close_all_fds(int *fds, int count);
+void    handle_files_redirections(t_opp *curr_op);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);

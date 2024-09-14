@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/07 20:17:08 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:32:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_execute_external(char **args, int *return_value, t_data *data, t_com *com
 	if (pid == 0)
 	{
 		// Child process
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		char **env_array = env_to_array(data->env);
 		if (!env_array)
 		{

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/14 12:34:32 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:28:30 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
     if (pipe_count > 0)
     {
         char ***commands = split_commands(command, pipe_count + 1);
-        int result = ft_execute_pipeline(commands, pipe_count + 1, return_value, data);
+        int result = ft_execute_pipeline(commands, pipe_count + 1, data);
         // Free commands array
 		// I will use gc
        // free_commands(commands, pipe_count + 1);
