@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/14 16:34:25 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:25:15 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[], char **envp)
 		set_command(&data, cmd_line_args);
 		//print_command(data.command);
 		if (data.command && data.command->command)
-			ft_execute_command(data.command, &return_value, &data);
+			ft_execute_command(&return_value, &data);
 	}
 	return (0);
 }

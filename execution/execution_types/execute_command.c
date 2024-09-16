@@ -6,17 +6,19 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/14 16:28:30 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:24:12 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int ft_execute_command(t_com *command, int *return_value, t_data *data)
+int ft_execute_command(int *return_value, t_data *data)
 {
-    int builtin_status;
-    int pipe_count;
+    int		builtin_status;
+    int		pipe_count;
+	t_com	*command;
 
+	command = data->command;
     if (!command)
         return (1);
     // Check if the command contains pipes
@@ -32,7 +34,7 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
     }
     else
     { 
-        builtin_status = ft_execute_builtin(command->command, return_value, data, command);
+        builtin_status = ft_execute_builtin(return_value, data);
         if (builtin_status != -1)
         {
             //printf("execute builtin called\n");
