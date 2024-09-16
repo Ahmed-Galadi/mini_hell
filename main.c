@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/16 13:25:15 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:50 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <readline/readline.h>
 #include <sys/signal.h>
 
-void	set_command(t_data *data_config, char *cmd_line_args)
+void	set_command(t_shell *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
@@ -41,14 +41,14 @@ int main(int argc, char *argv[], char **envp)
 {
 	char	*cmd_line_args;
    	char	**args;
-	t_data	data;
+	t_shell	data;
 	int		return_value;
 
 	(void)args;
 	(void)argv;
 	(void)argc;
 	(void)return_value;
-    if (!init_data(&data, envp))
+    if (!init_shell_data_config(&data, envp))
 	{
     	fprintf(stderr, "Failed to initialize data\n");
     	return (1);

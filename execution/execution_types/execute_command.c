@@ -6,13 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 13:24:12 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:29 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int ft_execute_command(int *return_value, t_data *data)
+int ft_execute_command(int *return_value, t_shell *data)
 {
     int		builtin_status;
     int		pipe_count;
@@ -57,6 +57,8 @@ const char *get_path(const char *cmd, t_env *env)
 	t_env *curr;
 
 	executables = NULL;
+	if (cmd[0] == '/')
+		return (cmd);
 	if (!cmd || !env)
 		return (NULL);
 	curr = env;
@@ -81,7 +83,7 @@ const char *get_path(const char *cmd, t_env *env)
 	return (NULL);
 }
 
-void execute_command(t_data *data, char **commands)
+void execute_command(t_shell *data, char **commands)
 {
 	const char *full_path;
 

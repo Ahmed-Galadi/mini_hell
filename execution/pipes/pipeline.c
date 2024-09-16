@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/14 16:34:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:24:57 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int set_exit_status(int status)
 	return (WEXITSTATUS(status));
 }
 
-int ft_execute_pipeline(char ***commands, int num_commands, t_data *data)
+int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 {
 	int prev_pipe[2] = {-1, -1};
 	int curr_pipe[2] = {-1, -1};
@@ -60,7 +60,9 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_data *data)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			redirect_to_pipe_fds(data->command, (i > 0) ? prev_pipe : NULL, (i < num_commands - 1) ? curr_pipe : NULL, i, num_commands);
+			redirect_to_pipe_fds(data, (i > 0) ? prev_pipe : NULL, (i < num_commands - 1) ? curr_pipe : NULL, i, num_commands);
+			if (is_builtin(data->command->command[0]))
+				ft_execute_builtin(NULL, data);
 			execute_command(data, commands[i]);
 		}
 		update_prev_pipe(prev_pipe, curr_pipe, i < num_commands - 1);

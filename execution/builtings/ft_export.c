@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/08 03:40:26 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_export_command(t_env **my_export_env, const char *key, const char *value)
 	return (0);
 }
 
-int		ft_export(char **args, t_data *data)
+int		ft_export(char **args, t_shell *data)
 {
 	char	*env_key;
 	char	*env_value;

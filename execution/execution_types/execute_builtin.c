@@ -6,13 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 13:23:56 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int ft_execute_builtin(int *return_value, t_data *data)
+int ft_execute_builtin(int *return_value, t_shell *data)
 {
 	int stdout_copy = -1;
 

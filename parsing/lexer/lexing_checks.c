@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	trim_quotes(t_token **token)
 			current->value = handle_quotes(ptr_holder);
 			free(ptr_holder);
 		}
+		if (!current->value)
+			break ;
 		current = current->next;
 	}
 }

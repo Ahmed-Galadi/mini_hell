@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 20:17:26 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/27 14:52:27 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	unset_var(t_env **env, char *var_to_unset, int *ret_var)
 	*env = head_env;
 }
 
-int		ft_unset(char **args, t_data *data, int *ret_val)
+int		ft_unset(char **args, t_shell *data, int *ret_val)
 {
 	char	*var_to_unset;
 

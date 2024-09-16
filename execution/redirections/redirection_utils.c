@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/14 15:57:47 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:22:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ void handle_files_redirections(t_opp *curr_op)
         perror(file);
 }
 
-void redirect_to_pipe_fds(t_com *command, int *prev_pipe, int *curr_pipe, int curr_cmd, int num_commands)
+void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int curr_cmd, int num_commands)
 {
-    t_opp *curr_op = command->operator;
+    t_com *command;
+    t_opp *curr_op;
+
+    command = data->command;
+    curr_op = command->operator;
     int flag_in = 0;
     int flag_out = 0;
     if (curr_op && curr_op->operator>= 0) // User redirections take precedence

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:30:19 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/04 05:38:45 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:58:32 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,25 @@ t_env *init_env(char **env)
 	return (envs);
 }
 
+int	is_builtin(const char *cmd)
+{
+	int		i;
+	char	*builtins[8];
+
+	if(!cmd)
+		return (-1);
+	builtins[0] = "echo";
+	builtins[1] = "cd";
+	builtins[2] = "pwd";
+	builtins[3] = "env";
+	builtins[4] = "export";
+	builtins[5] = "unset";
+	builtins[6] = "exit";
+	builtins[7] = NULL;
+
+	i = -1;
+	while (++i < 8)
+		if (ft_strcmp((const char *)builtins[i], cmd) == 0)
+			return (1);
+	return (0);
+}

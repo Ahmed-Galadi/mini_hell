@@ -2,6 +2,13 @@
     "files.associations": {
         "fcntl.h": "c",
         "minishell.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "__config": "c",
+        "__errc": "c",
+        "__hash_table": "c",
+        "__locale": "c",
+        "__tuple": "c",
+        "bitset": "c",
+        "ios": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/07 19:21:07 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 	return (NULL);
 }
 
-void	change_directory(const char *path, t_data *data, int *ret_val)
+void	change_directory(const char *path, t_shell *data, int *ret_val)
 {
     char cwd[1024];
 
@@ -49,7 +49,7 @@ void	change_directory(const char *path, t_data *data, int *ret_val)
     }
 }
 	
-int		ft_cd(char **args, t_data *data, int *ret_val)
+int		ft_cd(char **args, t_shell *data, int *ret_val)
 {
 	args++;
 	if (!(*args))
