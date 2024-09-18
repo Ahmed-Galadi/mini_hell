@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 01:02:23 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/18 02:23:44 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_command(t_data *data_config, char *cmd_line_args)
 	t_token *token;
 	t_com	*com;
 
-	token = tokenizer(cmd_line_args);
+	token = tokenizer(cmd_line_args, data_config->env);
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
 		return ;
@@ -32,7 +32,7 @@ void	handle_sig(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		//rl_replace_line("", 0);
+		//rl_replace_line("", 0); !!!!!hadi dert liha comment cuz makaynash (shof lheader)!!!!
 		rl_redisplay();
 	}
 }

@@ -23,7 +23,9 @@
 #include <errno.h>
 #include <fcntl.h>
 
-# define BASH_PROMPT_NAME "big-bash-0.1 "
+// this prompt name msg is not fully functional
+# define BASH_PROMPT_NAME "\033[0;47m\033[0;34m  \033[0m \033[1m~/Desktop/minishell ─╮\n\
+\033[0;32m❯\033[0m " 
 # define MAX_FDS 1024
 typedef enum e_tokenType
 {
@@ -133,7 +135,7 @@ char	*add_spaces(char *str);
 void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
 char	*handle_quotes(char *str);
-t_token	*tokenizer(char *input);
+t_token	*tokenizer(char *input, t_env *env);
 // expand
 int		ft_isspace(char c);
 void	expand_str(t_token **token, t_env *env);
@@ -153,7 +155,7 @@ void	print_opp(t_opp *opera);
 void	print_token(t_token *token);
 // errors
 void	error(void);
-//void	rl_replace_line(char *s, int a);
+//void	rl_replace_line(char *s, int a); HADI MAKAYNASH
 void execute_command(t_data *data, char **commands);
 const char *get_path(const char *cmd, t_env *env);
 

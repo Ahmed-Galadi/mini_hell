@@ -3,40 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/04 17:14:23 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/18 02:23:03 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void    set_expand_opp(t_token **token)
-{
-	t_token	*current;
-
-	current = *token;
-	while (current)
-	{
-		current->type = red_type(current);
-		current = current->next;
-	}
-}
-
-void	set_ex_to_com(void **token)
-{
-	t_token	*current;
-	
-	current = *token;
-	while (current)
-	{
-		if (is_expand(current->value))
-		current = current->next;
-	}
-}
-
-t_token *tokenizer(char *input)
+t_token *tokenizer(char *input, t_env *env)
 {
     t_token *head = NULL;
     char *formated_input;
@@ -92,7 +68,7 @@ t_token *tokenizer(char *input)
             last->next = new_token;
         }
     }
-	//set_expand_opp(&head);
+	expand_str(&head, env);
 	trim_quotes(&head);
     return (head);
 }
