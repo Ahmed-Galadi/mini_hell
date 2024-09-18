@@ -24,7 +24,9 @@
 #include <fcntl.h>
 
 // this prompt name msg is not fully functional
-# define BASH_PROMPT_NAME "\033[0;47m\033[0;34m  \033[0m \033[1m~/Desktop/minishell ─╮\n\
+# define PROMPT_MSG_1 "\033[0;47m\033[0;34m  \033[0m \033[1m\033[0;33m~"
+# define PROMPT_MSG_2 " ─╮\n\033[0;32m❯\033[0m "
+# define BASH_PROMPT_NAME "\033[0;47m\033[0;34m  \033[0m \033[1m\033[0;33m~/Desktop/minishell ─╮\n\
 \033[0;32m❯\033[0m " 
 # define MAX_FDS 1024
 typedef enum e_tokenType

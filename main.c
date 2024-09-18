@@ -37,6 +37,18 @@ void	handle_sig(int sig)
 	}
 }
 
+char *prompt(t_data *data)
+{
+	char *cwd = data->pwd;
+	char *output;
+	
+	output = NULL;
+	output = ft_strjoin(output, PROMPT_MSG_1);
+	output = ft_strjoin(output, cwd);
+	output = ft_strjoin(output, PROMPT_MSG_2);
+	return (output);
+}
+
 int main(int argc, char *argv[], char **envp)
 {
 	char	*cmd_line_args;
@@ -58,7 +70,7 @@ int main(int argc, char *argv[], char **envp)
 		signal(SIGINT, handle_sig);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGKILL, SIG_IGN);
-		cmd_line_args = readline(BASH_PROMPT_NAME);
+		cmd_line_args = readline(prompt(&data));
 		if (!cmd_line_args)
 			break ;
 		add_history(cmd_line_args);
