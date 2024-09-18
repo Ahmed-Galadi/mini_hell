@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 06:56:07 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/18 00:54:38 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	if (c == '\t' || c == '\n'
 		|| c == ' ' || c == '\v'

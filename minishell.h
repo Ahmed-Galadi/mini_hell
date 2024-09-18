@@ -134,6 +134,9 @@ void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
 char	*handle_quotes(char *str);
 t_token	*tokenizer(char *input);
+// expand
+int		ft_isspace(char c);
+void	expand_str(t_token **token, t_env *env);
 // lexer
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
@@ -150,7 +153,7 @@ void	print_opp(t_opp *opera);
 void	print_token(t_token *token);
 // errors
 void	error(void);
-void	rl_replace_line(char *s, int a);
+//void	rl_replace_line(char *s, int a);
 void execute_command(t_data *data, char **commands);
 const char *get_path(const char *cmd, t_env *env);
 
