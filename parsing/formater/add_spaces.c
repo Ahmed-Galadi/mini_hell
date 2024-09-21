@@ -43,7 +43,7 @@ char	*add_spaces(char *str)
 			output[j++] = str[i++];
 			output[j++] = ' ';
 		}
-		else if ((((!is_op(str[i]) && is_op(str[i] + 1)))
+		else if ((((!is_op(str[i]) && is_op(str[i + 1])))
 			|| (is_op(str[i]) && !is_op(str[i + 1]))
 			|| (is_op(str[i]) && is_op(str[i + 1]))) && (!open_d_quote && !open_s_quote))
 		{
