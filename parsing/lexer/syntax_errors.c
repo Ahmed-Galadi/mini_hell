@@ -58,7 +58,25 @@ bool check_quote_syntax(char *input)
     return (!single_quote_open && !double_quote_open);
 }
 
-// int		syntax_error(t_token *token)
-// {
-	
-// }
+int		syntax_error(t_token *token)
+{
+	t_token *current;
+	int		output;
+
+	output = 1;
+	if (!token)
+		output = -1;
+	if (!check_pipes(token) || !check_redirection(token))
+		output = 0;
+	current = token;
+	while (current)
+	{
+		if (!check_quote_syntax(current->value))
+			output = 0;
+		current = current->next;
+	}
+	if (output == 0)
+		printf("SYNTAX ERROR!!\n");
+	return (output);
+}
+

@@ -68,6 +68,8 @@ t_token *tokenizer(char *input, t_env *env)
             last->next = new_token;
         }
     }
+	if (!syntax_error(head))
+		return (NULL);
 	expand_str(&head, env);
 	trim_quotes(&head);
     return (head);

@@ -23,9 +23,16 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#define WHITE_BG    "\e[0;47m"
+#define BLUE_FG     "\e[0;34m"
+#define RESET       "\e[0m"
+#define BOLD        "\e[1m"
+#define YELLOW_FG   "\e[0;33m"
+#define GREEN_FG    "\e[0;32m"
+
 // this prompt name msg is not fully functional
-# define PROMPT_MSG_1 "\033[0;47m\033[0;34m  \033[0m \033[1m\033[0;33m~"
-# define PROMPT_MSG_2 " ─╮\n\033[0;32m❯\033[0m "
+#define PROMPT_MSG_1 "\001" WHITE_BG BLUE_FG "\002" "  " RESET " " BOLD YELLOW_FG ""
+#define PROMPT_MSG_2 " ─╮\n" GREEN_FG "❯" RESET " "
 # define BASH_PROMPT_NAME "\033[0;47m\033[0;34m  \033[0m \033[1m\033[0;33m~/Desktop/minishell ─╮\n\
 \033[0;32m❯\033[0m " 
 # define MAX_FDS 1024
@@ -157,6 +164,7 @@ void	print_opp(t_opp *opera);
 void	print_token(t_token *token);
 // errors
 void	error(void);
+int	syntax_error(t_token *token);
 //void	rl_replace_line(char *s, int a); HADI MAKAYNASH
 void execute_command(t_data *data, char **commands);
 const char *get_path(const char *cmd, t_env *env);
