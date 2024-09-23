@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:38:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int ft_execute_builtin(int *return_value, t_shell *data)
 	else if (ft_strcmp(command->command[0], "cd") == 0)
 		ft_cd(command->command, data, return_value);
 	else if (ft_strcmp(command->command[0], "unset") == 0)
-		ft_unset(command->command, data, return_value);
+		ft_unset(&command->command[1], data, return_value);
 	else if (ft_strcmp(command->command[0], "exit") == 0)
 		ft_exit(command->command, return_value);
 	else

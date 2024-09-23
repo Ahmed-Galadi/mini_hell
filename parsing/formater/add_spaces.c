@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_spaces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/21 15:38:18 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*add_spaces(char *str)
 			output[j++] = str[i++];
 			output[j++] = ' ';
 		}
-		else if ((((!is_op(str[i]) && is_op(str[i] + 1)))
+		else if ((((!is_op(str[i]) && is_op(str[i + 1])))
 			|| (is_op(str[i]) && !is_op(str[i + 1]))
 			|| (is_op(str[i]) && is_op(str[i + 1]))) && (!open_d_quote && !open_s_quote))
 		{

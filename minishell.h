@@ -122,6 +122,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_isalnum(int c);
 // int		init_shell_data_config(t_shell *data, char **envp);
 char	**env_to_array(t_env *env);
 

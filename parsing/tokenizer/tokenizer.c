@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/04 17:14:23 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:53:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_token *tokenizer(char *input)
     formated_input = format(input);
     switch_char(&formated_input, ' ', -1);
     splited_input = ft_split(formated_input, ' ');
-
     while (splited_input[i])
     {
         t_token *new_token = (t_token *)malloc(sizeof(t_token));
@@ -93,6 +92,7 @@ t_token *tokenizer(char *input)
         }
     }
 	//set_expand_opp(&head);
+
 	trim_quotes(&head);
     return (head);
 }
