@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
 
 
 void	ft_get_vars(t_env *export)
@@ -200,10 +201,14 @@ void	export_manager(t_shell *data, char *crud_operation)
 			prev_value = ft_get_var_value(data->export ,key);
 			if (*value)
 			{
-
 				ft_set_vars(&data->export, key, ft_strjoin(prev_value, value));
 				ft_set_vars(&data->env, key, ft_strjoin(prev_value, value));
-			}	
+			}
+			else
+			{
+				ft_set_vars(&data->export, key, "");
+				ft_set_vars(&data->env, key, "");	
+			}
 			i++;
 		}
 	}
@@ -235,6 +240,8 @@ int	ft_check_arg(char *arg)
 	i = 1;
 	while (arg[i])
 	{
+		if (arg[i] == '+' && arg[i + 1] == '=' && arg[i + 2] == '\0')
+			return (1);
 		if (arg[i] == '+' && arg[i + 1] == '=')
 			i = i + 2;
 		if (arg[i] == '=' && arg[i + 1] == '\0')
