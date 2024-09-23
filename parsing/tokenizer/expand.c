@@ -105,6 +105,52 @@ int		calculate_size(char *str, t_env *env)
 	return (output_size);
 }
 
+/*void	expand(char **str, t_env *env)*/
+/*{*/
+/*	char *output;*/
+/*	char *to_ex;*/
+/*	bool in_double_q = false;*/
+/*	bool in_single_q = false;*/
+/*	int	i = 0;*/
+/*	int j = 0;*/
+/**/
+/*	// Allocate memory for the output string*/
+/*	output = (char *)malloc(calculate_size(*str, env));*/
+/*	if (!output)*/
+/*		exit(EXIT_FAILURE);*/
+/**/
+/*	while ((*str)[i])*/
+/*	{*/
+/*		// Handle double and single quotes*/
+/*		if ((*str)[i] == '\"' && !in_single_q)*/
+/*			in_double_q = !in_double_q;*/
+/*		if ((*str)[i] == '\'' && !in_double_q)*/
+/*			in_single_q = !in_single_q;*/
+/**/
+/*		// Handle variable expansion*/
+/*		if ((*str)[i] == '$' && (ft_isspace((*str)[i + 1]) || (*str)[i + 1] == '\0' || (*str)[i + 1] == '\"' || (*str)[i + 1] == '\''))*/
+/*			output[j++] = (*str)[i++];*/
+/*		else if (((*str)[i] == '$' && in_double_q) || ((*str)[i] == '$' && !in_double_q && !in_single_q))*/
+/*		{*/
+/*			// Expand the environment variable*/
+/*			to_ex = get_expand_val(*str, env, &i); // `i` is updated inside get_expand_val()*/
+/*			// If a valid expansion is found*/
+/*			if (to_ex)*/
+/*				// Copy the expanded value into output*/
+/*				while (*to_ex)*/
+/*					output[j++] = *to_ex++;*/
+/*			else*/
+/*				// If the expansion failed (i.e., NULL), skip the dollar sign*/
+/*				if ((*str)[i] != '$')*/
+/*					output[j++] = (*str)[i++];*/
+/*		}*/
+/*		else*/
+/*			// Copy current character from the original string*/
+/*			output[j++] = (*str)[i++];*/
+/*	}*/
+/*	output[j] = '\0';  // Null-terminate the output string*/
+/*	*str = output;*/
+/*}*/
 void	expand(char **str, t_env *env)
 {
 	char *output;
@@ -128,8 +174,13 @@ void	expand(char **str, t_env *env)
 			in_single_q = !in_single_q;
 
 		// Handle variable expansion
-		if ((*str)[i] == '$' && (ft_isspace((*str)[i + 1]) || (*str)[i + 1] == '\0' || (*str)[i + 1] == '\"' || (*str)[i + 1] == '\''))
-			output[j++] = (*str)[i++];
+		if ((*str)[i] == '$' && (ft_isspace((*str)[i + 1]) || (*str)[i + 1] == '\0'))
+		{
+			if((*str)[i + 1] == '\"' || (*str)[i + 1] == '\'')
+				i++;
+			else
+				output[j++] = (*str)[i++];
+		}
 		else if (((*str)[i] == '$' && in_double_q) || ((*str)[i] == '$' && !in_double_q && !in_single_q))
 		{
 			// Expand the environment variable
@@ -151,7 +202,6 @@ void	expand(char **str, t_env *env)
 	output[j] = '\0';  // Null-terminate the output string
 	*str = output;
 }
-
 
 void	expand_str(t_token **token, t_env *env)
 {
