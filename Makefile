@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 CC = cc 
+USER := $(shell whoami)
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
@@ -33,18 +34,25 @@ parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c parsing/tokenizer/
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/list_utils.c main.c
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g
+CFLAGS_R = -g -lreadline
 HEADER = minishell.h
 LIB = minishell.a
-OUT = minishell
+NAME = minishell
 PARSING_OBJS = $(PARSING_SRCS:.c=.o)
 EXECUTION_OBJS = $(EXECUTION_SRCS:.c=.o)
 LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
-all: $(OUT)
+ifeq ($(USER), agaladi)
+	CFLAGS_R += -L/Users/agaladi/.brew/opt/readline/lib
+else
+	CFLAGS_R += -L/Users/bzinedda/.brew/opt/readline/lib
+endif
 
-$(OUT): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
-	$(CC) $(CFLAGS) -lreadline $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $(OUT)
+all: $(NAME)
+
+$(NAME): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
+	$(CC) $(CFLAGS) $(CFLAGS_R) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $@
 
 $(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 	ar -rc $(LIB) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
@@ -56,7 +64,7 @@ clean:
 	rm -rf $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(LIB)
 
 fclean: clean
-	rm -rf $(OUT)
+	rm -rf $(NAME)
 
 re: fclean all
 

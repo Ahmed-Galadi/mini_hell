@@ -73,7 +73,7 @@ void	ft_exit(char **args, int *ret_val)
         args++;
         if (*args) 
         {
-            fprintf(stderr, "%s: exit: too many arguments\n", BASH_PROMPT_NAME);
+            fprintf(stderr, "%s: exit: too many arguments\n", RED"ERROR!"RESET);
             *ret_val = 1;
         }
         else

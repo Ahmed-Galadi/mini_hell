@@ -23,18 +23,16 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#define WHITE_BG    "\e[0;47m"
-#define BLUE_FG     "\e[0;34m"
-#define RESET       "\e[0m"
-#define BOLD        "\e[1m"
-#define YELLOW_FG   "\e[0;33m"
-#define GREEN_FG    "\e[0;32m"
-
+#define BLUE_FG "\001\e[34m\002"
+#define RESET "\001\e[0m\002"
+#define BOLD "\001\033[1m\002"
+#define YELLOW_FG "\001\033[33m\002"
+#define GREEN_FG "\001\033[92m\002"
+#define RED "\001\033[31m\002"
 // this prompt name msg is not fully functional
-#define PROMPT_MSG_1 "\001" WHITE_BG BLUE_FG "\002" "  " RESET " " BOLD YELLOW_FG ""
-#define PROMPT_MSG_2 " ─╮\n" GREEN_FG "❯" RESET " "
-# define BASH_PROMPT_NAME "\033[0;47m\033[0;34m  \033[0m \033[1m\033[0;33m~/Desktop/minishell ─╮\n\
-\033[0;32m❯\033[0m " 
+#define PROMPT_MSG_1 BLUE_FG "   " RESET YELLOW_FG BOLD 
+#define PROMPT_MSG_2 " \n" GREEN_FG "❯" RESET " "
+/*# define BASH_PROMPT_NAME "\001\033[0;47m\002\001\033[0;34m\002  \001\033[0m\002 \001\033[1m\002\001\033[0;33m\002~/Desktop/minishell ─╮\n\001\033[0;32m\002❯\001\033[0m\002 " */
 # define MAX_FDS 1024
 typedef enum e_tokenType
 {

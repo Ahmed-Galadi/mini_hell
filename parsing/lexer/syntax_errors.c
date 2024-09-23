@@ -16,6 +16,8 @@ int	check_pipes(t_token *token)
 {
 	t_token	*current;
 
+	if (!token)
+		return (-1);
 	current = token;
 	if (current->type == PIPE || last_token(token)->type == PIPE)
 		return (0);

@@ -12,7 +12,9 @@
 
 #include "minishell.h"
 #include <readline/readline.h>
+#include <readline/history.h>
 #include <sys/signal.h>
+#include <libc.h>
 
 void	set_command(t_data *data_config, char *cmd_line_args)
 {
@@ -20,6 +22,8 @@ void	set_command(t_data *data_config, char *cmd_line_args)
 	t_com	*com;
 
 	token = tokenizer(cmd_line_args, data_config->env);
+	if (!token)
+		return ;
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
 		return ;
@@ -37,13 +41,37 @@ void	handle_sig(int sig)
 	}
 }
 
+char	*simple_pwd(char *pwd, char *home)
+{
+	char	*rest_path;
+	char	*simplified;
+	int		len;
+
+	if (!home)
+		return (pwd);
+	len = ft_strlen(home);
+	if (ft_strncmp(pwd, home, ft_strlen(home)))
+		return (pwd);
+	rest_path = ft_substr(pwd, len, ft_strlen(pwd) - len);
+	simplified = ft_strjoin("~", rest_path);
+	return (simplified);
+}
+
 char *prompt(t_data *data)
 {
 	char *cwd = data->pwd;
 	char *output;
-	
+	t_env	*tmp;
+
 	output = NULL;
 	output = ft_strjoin(output, PROMPT_MSG_1);
+	tmp = data->env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, "HOME"))
+			cwd = simple_pwd(cwd, tmp->value);
+		tmp = tmp->next;
+	}
 	output = ft_strjoin(output, cwd);
 	output = ft_strjoin(output, PROMPT_MSG_2);
 	return (output);
