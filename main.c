@@ -6,14 +6,13 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 02:23:44 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/24 10:47:51 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <time.h>
 
-t_com	*set_command(t_data *data_config, char *cmd_line_args)
+t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
@@ -60,7 +59,7 @@ char	*simple_pwd(char *pwd, char *home)
 	return (simplified);
 }
 
-char *prompt(t_data *data)
+char *prompt(t_shell *data)
 {
 	char *cwd = data->pwd;
 	char *output;
@@ -126,7 +125,7 @@ int main(int argc, char *argv[], char **envp)
 		add_history(cmd_line_args);
 		if (set_command(&data, cmd_line_args) != NULL && is_spaces(cmd_line_args))
 			if (data.command && data.command->command)
-				data.exit_status = ft_execute_command(data.command, &return_value, &data);
+				data.exit_status = ft_execute_command(&return_value, &data);
 	}
 	return (0);
 }
