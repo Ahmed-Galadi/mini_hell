@@ -32,7 +32,7 @@ PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c parsing/tokenizer/expand.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
-utils/str_utils.c utils/list_utils.c utils/itoa.c main.c
+utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c main.c
 
 CFLAGS = -g
 CFLAGS_R = -g -lreadline

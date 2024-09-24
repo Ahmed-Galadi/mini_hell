@@ -91,6 +91,7 @@ void	trim_quotes(t_token **token)
 			if ((current->value)[0] == '\"')
 			{
 				switch_char(&(current->value), -1, ' ');
+				switch_char(&(current->value), -2, '\t');
 				ptr_holder = current->value;
 				current->value = handle_quotes(ptr_holder);
 				free(ptr_holder);
@@ -98,6 +99,7 @@ void	trim_quotes(t_token **token)
 			else if ((current->value)[0] == '\'')
 			{
 				switch_char(&(current->value), -1, ' ');
+				switch_char(&(current->value), -2, '\t');
 				ptr_holder = current->value;
 				current->value = handle_quotes(ptr_holder);
 				free(ptr_holder);
@@ -105,6 +107,7 @@ void	trim_quotes(t_token **token)
 			else
 			{
 				switch_char(&(current->value), -1, ' ');
+				switch_char(&(current->value), -2, '\t');
 				ptr_holder = current->value;
 				current->value = handle_quotes(ptr_holder);
 				free(ptr_holder);

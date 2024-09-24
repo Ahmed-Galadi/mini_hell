@@ -42,7 +42,8 @@ t_token *tokenizer(char *input, t_env *env)
 
     formated_input = format(input);
     switch_char(&formated_input, ' ', -1);
-    splited_input = ft_split(formated_input, ' ');
+	switch_char(&formated_input, '\t', -2);
+	splited_input = cstm_split(formated_input, " \t");
 
     while (splited_input[i])
     {

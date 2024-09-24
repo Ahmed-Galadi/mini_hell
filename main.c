@@ -84,6 +84,21 @@ char *prompt(t_data *data)
 	return (output);
 }
 
+int	is_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' '
+			&& str[i] != '\t')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int main(int argc, char *argv[], char **envp)
 {
 	char	*cmd_line_args;
@@ -109,7 +124,7 @@ int main(int argc, char *argv[], char **envp)
 		if (!cmd_line_args)
 			break ;
 		add_history(cmd_line_args);
-		if (set_command(&data, cmd_line_args) != NULL)
+		if (set_command(&data, cmd_line_args) != NULL && is_spaces(cmd_line_args))
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(data.command, &return_value, &data);
 	}

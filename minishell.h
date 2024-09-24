@@ -142,6 +142,7 @@ char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
 t_token	*last_token(t_token *token);
+char	**cstm_split(const char *str, const char *delims);
 char *ft_itoa(int n);
 // tokenizer
 int		is_quote(char *str);
