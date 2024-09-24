@@ -75,7 +75,10 @@ int		syntax_error(t_token *token)
 		return (-1);
 	if (!check_pipes(token) || !check_redirection(token))
 	{
-		printf("SYNTAX ERROR!!\n");
+		if (!check_pipes(token))
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes !\n"RESET);
+		if (!check_redirection(token))
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid redirection !\n"RESET);
 		return (0);
 	}
 	current = token;
@@ -83,7 +86,7 @@ int		syntax_error(t_token *token)
 	{
 		if (!check_quote_syntax(current->value))
 		{
-			printf("SYNTAX ERROR!!\n");
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
 			return (0);
 		}
 		current = current->next;

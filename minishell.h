@@ -30,9 +30,14 @@
 #define GREEN_FG "\001\033[92m\002"
 #define RED "\001\033[31m\002"
 #define F_COLOR "\001\033[96m\002"
+#define PINK "\001\033[38;5;13m\002"
 
 #define PROMPT_MSG_1 F_COLOR " " RESET YELLOW " ┄─━࿅༻  " RESET ORANGE BOLD 
-#define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET GREEN_FG "❱ " RESET
+#define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET
+#define VALID_ARROW GREEN_FG "❱ " RESET
+#define UNVALID_ARROW RED "❱ " RESET
+
+
 # define MAX_FDS 1024
 
 typedef enum e_tokenType

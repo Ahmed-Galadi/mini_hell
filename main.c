@@ -77,6 +77,10 @@ char *prompt(t_data *data)
 	}
 	output = ft_strjoin(output, cwd);
 	output = ft_strjoin(output, PROMPT_MSG_2);
+	if (data->exit_status != 0)
+		output = ft_strjoin(output, UNVALID_ARROW);
+	else
+		output = ft_strjoin(output, VALID_ARROW);
 	return (output);
 }
 
@@ -107,7 +111,7 @@ int main(int argc, char *argv[], char **envp)
 		add_history(cmd_line_args);
 		if (set_command(&data, cmd_line_args) != NULL)
 			if (data.command && data.command->command)
-				ft_execute_command(data.command, &return_value, &data);
+				data.exit_status = ft_execute_command(data.command, &return_value, &data);
 	}
 	return (0);
 }
