@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int ft_execute_command(int *return_value, t_shell *data)
+int ft_execute_command(t_shell *data)
 {
     int		builtin_status;
     int		pipe_count;
@@ -21,31 +21,21 @@ int ft_execute_command(int *return_value, t_shell *data)
 	command = data->command;
     if (!command)
         return (1);
-    // Check if the command contains pipes
     pipe_count = count_pipes(command);
     if (pipe_count > 0)
     {
         char ***commands = split_commands(command, pipe_count + 1);
         int result = ft_execute_pipeline(commands, pipe_count + 1, data);
-        // Free commands array
-		// I will use gc
-       // free_commands(commands, pipe_count + 1);
         return (result);
     }
     else
     { 
-        builtin_status = ft_execute_builtin(return_value, data);
-        if (builtin_status != -1)
-        {
-            //printf("execute builtin called\n");
-            return (builtin_status);
-        }
+		if (is_builtin(data->command->command[0]))
+			builtin_status = ft_execute_builtin(data);
         else
-        {
-            //printf("execute external called\n");
-            return (ft_execute_external(command->command, return_value, data, command));
-        }
+            return (ft_execute_external(command->command, data, command));
     }
+	return (0);
 }
 
 const char *get_path(const char *cmd, t_env *env)

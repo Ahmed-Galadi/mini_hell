@@ -35,7 +35,7 @@ int	ft_check_n_flag(char *flag)
 	return (0);
 }
 
-int ft_echo(char **args, int *ret_val)
+int ft_echo(char **args)
 {
 	int		i;
 	int		newline;
@@ -60,5 +60,5 @@ int ft_echo(char **args, int *ret_val)
 	}
 	if (newline)
 		printf("\n");
-	return (*ret_val);
+	return (0);
 }

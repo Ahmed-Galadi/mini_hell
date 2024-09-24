@@ -94,22 +94,22 @@ typedef struct s_data {
 // execution types - end
 
 // execution prototypes
-int		ft_echo(char **args, int *ret_val);
+int		ft_echo(char **args);
 int		ft_env(t_env *env);
 t_env	*init_env(char **env);
 int		init_shell_data_config(t_shell *data, char **envp);
 void	ft_printf_envs(t_env *env);
 t_env   *convert_env_to_list(char **envp);
 t_env   *create_env_node(char *env_str);
-int		ft_cd(char **args, t_shell *data, int *ret_val);
-int		ft_unset(char **args, t_shell *data, int *ret_val);
+int		ft_cd(char **args, t_shell *data);
+int		ft_unset(char **args, t_shell *data);
 int		ft_pwd(t_shell *data);
-void	ft_exit(char **args, int *ret_val);
+int	ft_exit(char **args, int exit_status);
 int		ft_export(char **args, t_shell *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
-int		ft_execute_builtin(int *return_value, t_shell *data);
-int		ft_execute_command(int *return_value, t_shell *data);
-int		ft_execute_external(char **args, int *return_value, t_shell *data, t_com *command);
+int		ft_execute_builtin(t_shell *data);
+int		ft_execute_command(t_shell *data);
+int		ft_execute_external(char **args, t_shell *data, t_com *command);
 char	*find_command(char *cmd, char **p_env);
 char	**env_to_array(t_env *env);
 int		is_builtin(const char *cmd);

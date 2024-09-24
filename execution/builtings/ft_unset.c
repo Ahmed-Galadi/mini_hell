@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 
-void	unset_var(t_env **env, char *var_to_unset, int *ret_var)
+int	unset_var(t_env **env, char *var_to_unset)
 {
 	t_env	*curr_env;
 	t_env	*node_to_delete;
@@ -25,8 +25,7 @@ void	unset_var(t_env **env, char *var_to_unset, int *ret_var)
 		free(curr_env->key);
 		free(curr_env->value);
 		free(curr_env);
-		*ret_var = 0;
-		return;
+		return (0);
 	}
 
 	while (curr_env)
@@ -38,28 +37,26 @@ void	unset_var(t_env **env, char *var_to_unset, int *ret_var)
 			free(node_to_delete->key);
 			free(node_to_delete->value);
 			free(node_to_delete);
-			*ret_var = 0;
-			return;
+			return (0);
 		}
 		curr_env = curr_env->next;
 	}
-	*ret_var = 1;
+	return (1);
 }
 
-int		ft_unset(char **args, t_shell *data, int *ret_val)
+int		ft_unset(char **args, t_shell *data)
 {
 	char	**tmp_var;
 
 	tmp_var = args;
 	if (!(*args) || !(data->export))
-		*ret_val = 1;
+		return (1);
 	while (*tmp_var)
 	{
-		unset_var(&data->export, *tmp_var, ret_val);
-		unset_var(&data->env, *tmp_var, ret_val);
+		unset_var(&data->export, *tmp_var);
+		unset_var(&data->env, *tmp_var);
 		tmp_var++;
 	}
-	*ret_val = 0;
-	return (*ret_val);
+	return (0);
 }
 

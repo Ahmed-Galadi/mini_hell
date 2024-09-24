@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int	ft_execute_external(char **args, int *return_value, t_shell *data, t_com *command)
+int	ft_execute_external(char **args, t_shell *data, t_com *command)
 {
 	pid_t	pid;
 	char	*cmd_path;
@@ -60,12 +60,12 @@ int	ft_execute_external(char **args, int *return_value, t_shell *data, t_com *co
 		
 		if (WIFEXITED(status))
 		{
-			*return_value = WEXITSTATUS(status);
+			data->exit_status = WEXITSTATUS(status);
 		}
 		else if (WIFSIGNALED(status))
 		{
-			*return_value = 128 + WTERMSIG(status);
+			data->exit_status = 128 + WTERMSIG(status);
 		}
 	}
-	return (*return_value);
+	return (data->exit_status);
 }

@@ -11,20 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <limits.h>
 
-int custom_atoi(const char *str, int *valid)
+int custom_atoi(const char *str)
 {
-    long int result = 0;
+    long result = 0;
     int sign = 1;
-    *valid = 1;  // Assume valid until proven otherwise
 
-    // Check for empty string
     if (str == NULL || *str == '\0')
-    {
-        *valid = 0;
         return 0;
-    }
-    // Check for optional sign
     if (*str == '-')
     {
         sign = -1;
@@ -33,53 +28,37 @@ int custom_atoi(const char *str, int *valid)
     else if (*str == '+')
         str++;
 
-    // Convert characters to integer
-    while (*str) {
-        if (!(*str >= '0' && *str <= '9'))
+    while (*str)
+	{
+		if ((result > (LLONG_MAX / 10) || 
+            (result == LLONG_MAX / 10 && (*str - '0') > LLONG_MAX % 10))
+			|| !(*str >= '0' && *str <= '9'))
         {
-            *valid = 0;
-            fprintf(stderr, "exit: %s: numeric argument required\n", str);
-            return 0;
-        }
+            fprintf(stderr, "exit\nexit: %s: numeric argument required\n", str);
+			return (-1);
+		}
         result = result * 10 + (*str - '0');
         str++;
     }
 
     result *= sign;
-
-    // Check for overflow
-    if (result < INT_MIN || result > INT_MAX)
-    {
-        *valid = 0;
-        fprintf(stderr, "Error: Argument out of range\n");
-        return 0;
-    }
-    return ((int)result);
+    return (result & 0xFF);
 }
 
 
-void	ft_exit(char **args, int *ret_val)
+int	ft_exit(char **args, int exit_status)
 {
-    // skip exit arg
-    args++;
-    // there is no arg
-    if (!(*args))
-    {
-        *ret_val = 0;
-        exit(*ret_val);
-    }
-    else
-    {
-        args++;
-        if (*args) 
-        {
-            fprintf(stderr, "%s: exit: too many arguments\n", RED"ERROR!"RESET);
-            *ret_val = 1;
-        }
-        else
-        {
-            args--;
-            exit (custom_atoi(*args, ret_val));
-        }
-    }
+	int	exit_tmp;
+
+	args++;
+	if (!(*args))
+		return (printf("exit\n"), exit(exit_status), 0);
+	exit_tmp = custom_atoi(*args);
+	if (exit_tmp < 0)
+		exit(255);
+	args++;
+	if (!*args)
+		exit (exit_tmp);
+	fprintf(stderr, "%s: exit: too many arguments\n", RED"ERROR!"RESET);
+	return (1);
 }

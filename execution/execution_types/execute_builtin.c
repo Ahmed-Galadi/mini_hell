@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int ft_execute_builtin(int *return_value, t_shell *data)
+int ft_execute_builtin(t_shell *data)
 {
 	int stdout_copy = -1;
 
@@ -29,7 +29,7 @@ int ft_execute_builtin(int *return_value, t_shell *data)
 	}
 
 	if (ft_strcmp(command->command[0], "echo") == 0)
-		ft_echo(&command->command[1], return_value);
+		ft_echo(&command->command[1]);
 	else if (ft_strcmp(command->command[0], "env") == 0)
 		ft_env(data->env);
 	else if (ft_strcmp(command->command[0], "export") == 0)
@@ -37,20 +37,12 @@ int ft_execute_builtin(int *return_value, t_shell *data)
 	else if (ft_strcmp(command->command[0], "pwd") == 0)
 		ft_pwd(data);
 	else if (ft_strcmp(command->command[0], "cd") == 0)
-		ft_cd(command->command, data, return_value);
+		ft_cd(command->command, data);
 	else if (ft_strcmp(command->command[0], "unset") == 0)
-		ft_unset(&command->command[1], data, return_value);
+		ft_unset(&command->command[1], data);
 	else if (ft_strcmp(command->command[0], "exit") == 0)
-		ft_exit(command->command, return_value);
-	else
-	{
-		// Not a builtin command
-		*return_value = -1;
-	}
-
-	// Restore stdout if it was redirected
+		ft_exit(command->command, data->exit_status);
 	if (stdout_copy != -1)
 		restore_stdout(stdout_copy);
-
-	return (*return_value);
+	return (0);
 }

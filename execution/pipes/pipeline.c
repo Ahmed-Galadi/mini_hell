@@ -62,7 +62,7 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 			signal(SIGQUIT, SIG_DFL);
 			redirect_to_pipe_fds(data, (i > 0) ? prev_pipe : NULL, (i < num_commands - 1) ? curr_pipe : NULL, i, num_commands);
 			if (is_builtin(data->command->command[0]))
-				ft_execute_builtin(NULL, data);
+				ft_execute_builtin(data);
 			execute_command(data, commands[i]);
 		}
 		update_prev_pipe(prev_pipe, curr_pipe, i < num_commands - 1);
