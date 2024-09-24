@@ -2,6 +2,29 @@
     "files.associations": {
         "fcntl.h": "c",
         "minishell.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "__config": "c",
+        "__errc": "c",
+        "__hash_table": "c",
+        "__locale": "c",
+        "__tuple": "c",
+        "bitset": "c",
+        "ios": "c",
+        "__bit_reference": "c",
+        "__functional_base": "c",
+        "__node_handle": "c",
+        "algorithm": "c",
+        "chrono": "c",
+        "__memory": "c",
+        "functional": "c",
+        "iterator": "c",
+        "limits": "c",
+        "memory": "c",
+        "optional": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "vector": "c"
     }
 }

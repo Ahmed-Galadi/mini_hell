@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:01:02 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 22:17:05 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/16 14:41:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*handle_quotes(char *str)
 
 	output = (char *)malloc(ft_strlen(str) + 1);
 	if (!output || !check_quote_syntax(str))
-		error();
+		return (error(), NULL);
 	i = 0;
 	j = 0;
 	while (str[i])

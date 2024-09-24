@@ -6,13 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/07 20:17:08 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_execute_external(char **args, int *return_value, t_data *data, t_com *command)
+int	ft_execute_external(char **args, int *return_value, t_shell *data, t_com *command)
 {
 	pid_t	pid;
 	char	*cmd_path;
@@ -28,6 +28,8 @@ int	ft_execute_external(char **args, int *return_value, t_data *data, t_com *com
 	if (pid == 0)
 	{
 		// Child process
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		char **env_array = env_to_array(data->env);
 		if (!env_array)
 		{

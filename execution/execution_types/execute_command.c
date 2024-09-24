@@ -6,17 +6,19 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/14 12:34:32 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:29 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int ft_execute_command(t_com *command, int *return_value, t_data *data)
+int ft_execute_command(int *return_value, t_shell *data)
 {
-    int builtin_status;
-    int pipe_count;
+    int		builtin_status;
+    int		pipe_count;
+	t_com	*command;
 
+	command = data->command;
     if (!command)
         return (1);
     // Check if the command contains pipes
@@ -24,7 +26,7 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
     if (pipe_count > 0)
     {
         char ***commands = split_commands(command, pipe_count + 1);
-        int result = ft_execute_pipeline(commands, pipe_count + 1, return_value, data);
+        int result = ft_execute_pipeline(commands, pipe_count + 1, data);
         // Free commands array
 		// I will use gc
        // free_commands(commands, pipe_count + 1);
@@ -32,7 +34,7 @@ int ft_execute_command(t_com *command, int *return_value, t_data *data)
     }
     else
     { 
-        builtin_status = ft_execute_builtin(command->command, return_value, data, command);
+        builtin_status = ft_execute_builtin(return_value, data);
         if (builtin_status != -1)
         {
             //printf("execute builtin called\n");
@@ -55,6 +57,8 @@ const char *get_path(const char *cmd, t_env *env)
 	t_env *curr;
 
 	executables = NULL;
+	if (cmd[0] == '/')
+		return (cmd);
 	if (!cmd || !env)
 		return (NULL);
 	curr = env;
@@ -79,7 +83,7 @@ const char *get_path(const char *cmd, t_env *env)
 	return (NULL);
 }
 
-void execute_command(t_data *data, char **commands)
+void execute_command(t_shell *data, char **commands)
 {
 	const char *full_path;
 

@@ -15,7 +15,7 @@ USER := $(shell whoami)
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
-			 libft/find_executable.c
+			 libft/find_executable.c libft/ft_isalnum.c \
 
 EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/ft_pwd.c execution/builtings/ft_export.c \
@@ -27,6 +27,7 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/execution_types/execute_builtin.c \
 				 execution/pipes/pipe_utils.c execution/pipes/pipeline.c \
 				 execution/redirections/redirection_types.c \
+				 execution/redirections/redirection_utils.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \

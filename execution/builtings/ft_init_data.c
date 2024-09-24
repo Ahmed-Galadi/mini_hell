@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:26:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/07 17:07:05 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:16:07 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_command(t_com *command)
 	}
 }
 
-int init_data(t_data *data, char **envp)
+int init_shell_data_config(t_shell *data, char **envp)
 {
 	char	cwd[1024];
 

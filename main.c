@@ -103,14 +103,14 @@ int main(int argc, char *argv[], char **envp)
 {
 	char	*cmd_line_args;
    	char	**args;
-	t_data	data;
+	t_shell	data;
 	int		return_value;
 
 	(void)args;
 	(void)argv;
 	(void)argc;
 	(void)return_value;
-    if (!init_data(&data, envp))
+    if (!init_shell_data_config(&data, envp))
 	{
     	fprintf(stderr, "Failed to initialize data\n");
     	return (1);

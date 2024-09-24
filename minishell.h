@@ -90,38 +90,43 @@ typedef struct s_data {
 	t_env	*export;
 	char	*pwd;
 	int		exit_status;
-}	t_data;
+}	t_shell;
 // execution types - end
 
 // execution prototypes
 int		ft_echo(char **args, int *ret_val);
 int		ft_env(t_env *env);
 t_env	*init_env(char **env);
-int		init_data(t_data *data, char **envp);
+int		init_shell_data_config(t_shell *data, char **envp);
 void	ft_printf_envs(t_env *env);
 t_env   *convert_env_to_list(char **envp);
 t_env   *create_env_node(char *env_str);
-int		ft_cd(char **args, t_data *data, int *ret_val);
-int		ft_unset(char **args, t_data *data, int *ret_val);
-int		ft_pwd(t_data *data);
+int		ft_cd(char **args, t_shell *data, int *ret_val);
+int		ft_unset(char **args, t_shell *data, int *ret_val);
+int		ft_pwd(t_shell *data);
 void	ft_exit(char **args, int *ret_val);
-int		ft_export(char **args, t_data *data);
+int		ft_export(char **args, t_shell *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
-int		ft_execute_builtin(char **args, int *return_value, t_data *data, t_com *command);
-int		ft_execute_command(t_com *command, int *return_value, t_data *data);
-int		ft_execute_external(char **args, int *return_value, t_data *data, t_com *command);
+int		ft_execute_builtin(int *return_value, t_shell *data);
+int		ft_execute_command(int *return_value, t_shell *data);
+int		ft_execute_external(char **args, int *return_value, t_shell *data, t_com *command);
 char	*find_command(char *cmd, char **p_env);
 char	**env_to_array(t_env *env);
+int		is_builtin(const char *cmd);
 // pipes prototypes
 int		count_pipes(t_com *command);
 char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
-int		ft_execute_pipeline(char ***commands, int num_commands, int *return_value, t_data *data);
+int		ft_execute_pipeline(char ***commands, int num_commands, t_shell *data);
 // redirections
 void	handle_redirections(t_com *command);
 void	setup_input_redirection(const char *infile, int is_here_doc);
 void	setup_output_redirection(const char *outfile, int is_appended);
 void	restore_stdout(int stdout_copy);
+void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
+			int *curr_pipe, int curr_cmd, int num_commands);
+void    close_all_fds(int *fds, int count);
+void    handle_files_redirections(t_opp *curr_op);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
@@ -133,7 +138,8 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-// int		init_data(t_data *data, char **envp);
+int		ft_isalnum(int c);
+// int		init_shell_data_config(t_shell *data, char **envp);
 char	**env_to_array(t_env *env);
 
 // utils
@@ -172,7 +178,7 @@ void	print_token(t_token *token);
 void	error(void);
 int	syntax_error(t_token *token);
 void	rl_replace_line(char *s, int a);
-void execute_command(t_data *data, char **commands);
+void execute_command(t_shell *data, char **commands);
 const char *get_path(const char *cmd, t_env *env);
 
 
