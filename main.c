@@ -6,12 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 02:23:44 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/24 10:47:51 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <time.h>
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
@@ -128,3 +127,4 @@ int main(int argc, char *argv[], char **envp)
 	}
 	return (0);
 }
+

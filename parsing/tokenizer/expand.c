@@ -13,6 +13,11 @@
 
 #include "../../minishell.h"
 
+int	ft_isnum(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
 char *get_key(char *str, int *i)
 {
     int length;
@@ -23,12 +28,18 @@ char *get_key(char *str, int *i)
         return (NULL);
     // Move past the initial '$'
     (*i)++;
+	if (ft_isnum(str[*i]))
+	{
+		(*i)++;
+		return (NULL);
+	}
     length = 0;
     j = 0;
     // Parse until a delimiter (space, quote, etc.) is found
     while (str[*i + length])
     {
-        if (ft_isspace(str[*i + length]) || str[*i + length] == '$' || str[*i + length] == -1
+        if (ft_isspace(str[*i + length]) || str[*i + length] == '$'
+			|| str[*i + length] == -1 || !ft_isalnum(str[*i + length])
             || str[*i + length] == '\'' || str[*i + length] == '\"')
             break;
         length++;
