@@ -12,6 +12,26 @@
 
 #include "../../minishell.h"
 
+void p_token(t_token *token)
+{
+	t_token *current;
+
+	if (!token)
+	{
+		printf("empty token!\n");
+		return ;
+	}
+	current = token;
+	while (current)
+	{
+		printf("Type: %d", current->type);
+		if (current->value)
+			printf("| Value: %s", current->value);
+		printf("\n****************************\n");
+		current = current->next;
+	}
+}
+
 t_token *tokenizer(char *input, t_env *env)
 {
     t_token *head = NULL;
@@ -28,7 +48,7 @@ t_token *tokenizer(char *input, t_env *env)
     {
         t_token *new_token = (t_token *)malloc(sizeof(t_token));
         if (!new_token)
-            error();
+            return (NULL);
         if (cstm_strcmp(splited_input[i], "|"))
 			type = PIPE;
 		else if (cstm_strcmp(splited_input[i], "<"))
@@ -49,11 +69,16 @@ t_token *tokenizer(char *input, t_env *env)
         }
         else
         {
-            if (splited_input[i + 1])
+            if (splited_input[i + 1] && !cstm_strcmp(splited_input[i + 1],"|"))
+			{
                 new_token->value = ft_strdup(splited_input[i + 1]);
+				i += 2;
+			}
             else
-                return (NULL);
-            i += 2;
+			{
+                new_token->value = NULL;
+				i++;
+			}
         }
 
         new_token->next = NULL;
@@ -68,9 +93,9 @@ t_token *tokenizer(char *input, t_env *env)
             last->next = new_token;
         }
     }
+	/*print_token(head);*/
 	if (!syntax_error(head))
 		return (NULL);
-	expand_str(&head, env);
-	trim_quotes(&head);
+	
     return (head);
 }

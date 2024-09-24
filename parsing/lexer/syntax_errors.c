@@ -37,18 +37,24 @@ int		check_redirection(t_token *token)
 	current = token;
 	while (current)
 	{
-		if (is_red(current->type) && !ft_strlen(current->value))
+		if (is_red(current->type) && is_rederection(current->value))
+			return (0);
+		if (!current->value && is_red(current->type))
 			return (0);
 		current = current->next;
 	}
 	return (1);
 }
+
+
 bool check_quote_syntax(char *input)
 {
     bool single_quote_open = false;
     bool double_quote_open = false;
 	int i = 0;
-
+	
+	if (!input)
+		return (-1);
     while (input[i])
 	{
         if (input[i] == '\'' && !double_quote_open)
@@ -64,21 +70,24 @@ int		syntax_error(t_token *token)
 {
 	t_token *current;
 	int		output;
-
 	output = 1;
 	if (!token)
-		output = -1;
+		return (-1);
 	if (!check_pipes(token) || !check_redirection(token))
-		output = 0;
+	{
+		printf("SYNTAX ERROR!!\n");
+		return (0);
+	}
 	current = token;
 	while (current)
 	{
 		if (!check_quote_syntax(current->value))
-			output = 0;
+		{
+			printf("SYNTAX ERROR!!\n");
+			return (0);
+		}
 		current = current->next;
 	}
-	if (output == 0)
-		printf("SYNTAX ERROR!!\n");
-	return (output);
+	return (1);
 }
 

@@ -23,17 +23,18 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#define BLUE_FG "\001\e[34m\002"
-#define RESET "\001\e[0m\002"
+#define YELLOW "\001\033[93m\002"
+#define RESET "\001\033[0m\002"
 #define BOLD "\001\033[1m\002"
-#define YELLOW_FG "\001\033[33m\002"
+#define ORANGE "\001\033[38;5;214m\002"
 #define GREEN_FG "\001\033[92m\002"
 #define RED "\001\033[31m\002"
-// this prompt name msg is not fully functional
-#define PROMPT_MSG_1 BLUE_FG "   " RESET YELLOW_FG BOLD 
-#define PROMPT_MSG_2 " \n" GREEN_FG "❯" RESET " "
-/*# define BASH_PROMPT_NAME "\001\033[0;47m\002\001\033[0;34m\002  \001\033[0m\002 \001\033[1m\002\001\033[0;33m\002~/Desktop/minishell ─╮\n\001\033[0;32m\002❯\001\033[0m\002 " */
+#define F_COLOR "\001\033[96m\002"
+
+#define PROMPT_MSG_1 F_COLOR " " RESET YELLOW " ┄─━࿅༻  " RESET ORANGE BOLD 
+#define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET GREEN_FG "❱ " RESET
 # define MAX_FDS 1024
+
 typedef enum e_tokenType
 {
 	RED_IN,
@@ -83,6 +84,7 @@ typedef struct s_data {
 	t_env	*env;
 	t_env	*export;
 	char	*pwd;
+	int		exit_status;
 }	t_data;
 // execution types - end
 
@@ -135,6 +137,7 @@ char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
 t_token	*last_token(t_token *token);
+char *ft_itoa(int n);
 // tokenizer
 int		is_quote(char *str);
 int		is_rederection(char *str);
@@ -145,12 +148,11 @@ char	*handle_quotes(char *str);
 t_token	*tokenizer(char *input, t_env *env);
 // expand
 int		ft_isspace(char c);
-void	expand_str(t_token **token, t_env *env);
+void	expand_str(t_token **token, t_env *env, int exit_status);
 // lexer
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
 int		check_red(t_token *token);
-int		is_expand(char *str);
 int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);
@@ -163,8 +165,9 @@ void	print_token(t_token *token);
 // errors
 void	error(void);
 int	syntax_error(t_token *token);
-//void	rl_replace_line(char *s, int a); HADI MAKAYNASH
+void	rl_replace_line(char *s, int a);
 void execute_command(t_data *data, char **commands);
 const char *get_path(const char *cmd, t_env *env);
+
 
 #endif

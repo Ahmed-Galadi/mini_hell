@@ -11,23 +11,26 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/signal.h>
-#include <libc.h>
+#include <time.h>
 
-void	set_command(t_data *data_config, char *cmd_line_args)
+t_com	*set_command(t_data *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
 
 	token = tokenizer(cmd_line_args, data_config->env);
+	expand_str(&token, data_config->env, data_config->exit_status);
+	trim_quotes(&token);
 	if (!token)
-		return ;
+	{
+		data_config->exit_status = 258;
+		return (NULL);
+	}
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
-		return ;
+		return (NULL);
 	data_config->command = com;
+	return (com);
 }
 
 void	handle_sig(int sig)
@@ -36,7 +39,7 @@ void	handle_sig(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		//rl_replace_line("", 0); !!!!!hadi dert liha comment cuz makaynash (shof lheader)!!!!
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -102,10 +105,9 @@ int main(int argc, char *argv[], char **envp)
 		if (!cmd_line_args)
 			break ;
 		add_history(cmd_line_args);
-		set_command(&data, cmd_line_args);
-		//print_command(data.command);
-		if (data.command && data.command->command)
-			ft_execute_command(data.command, &return_value, &data);
+		if (set_command(&data, cmd_line_args) != NULL)
+			if (data.command && data.command->command)
+				ft_execute_command(data.command, &return_value, &data);
 	}
 	return (0);
 }

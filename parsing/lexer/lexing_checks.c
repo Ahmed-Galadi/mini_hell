@@ -86,26 +86,29 @@ void	trim_quotes(t_token **token)
 	current = *token;
 	while (current)
 	{
-		if ((current->value)[0] == '\"')
+		if (current->value != NULL)
 		{
-			switch_char(&(current->value), -1, ' ');
-			ptr_holder = current->value;
-			current->value = handle_quotes(ptr_holder);
-			free(ptr_holder);
-		}
-		else if ((current->value)[0] == '\'')
-		{
-			switch_char(&(current->value), -1, ' ');
-			ptr_holder = current->value;
-			current->value = handle_quotes(ptr_holder);
-			free(ptr_holder);
-		}
-		else
-		{
-			switch_char(&(current->value), -1, ' ');
-			ptr_holder = current->value;
-			current->value = handle_quotes(ptr_holder);
-			free(ptr_holder);
+			if ((current->value)[0] == '\"')
+			{
+				switch_char(&(current->value), -1, ' ');
+				ptr_holder = current->value;
+				current->value = handle_quotes(ptr_holder);
+				free(ptr_holder);
+			}
+			else if ((current->value)[0] == '\'')
+			{
+				switch_char(&(current->value), -1, ' ');
+				ptr_holder = current->value;
+				current->value = handle_quotes(ptr_holder);
+				free(ptr_holder);
+			}
+			else
+			{
+				switch_char(&(current->value), -1, ' ');
+				ptr_holder = current->value;
+				current->value = handle_quotes(ptr_holder);
+				free(ptr_holder);
+			}
 		}
 		current = current->next;
 	}
@@ -131,22 +134,6 @@ int	check_red(t_token *token)
 		current = current->next;
 	}
 	return (1);
-}
-
-
-
-int	is_expand(char *str)
-{
-	int		i;
-	
-	i = 0;
-	while (str[i])
-	{		
-		if (str[i] == '$' && ft_isalpha(str[i + 1]))
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 void	add_opp(t_opp **opp, t_opp *to_add)
