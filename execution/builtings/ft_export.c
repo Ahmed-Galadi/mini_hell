@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
-
 
 void	ft_get_vars(t_env *export)
 {
@@ -119,6 +117,8 @@ char	*extract_key(char *str)
 
 	if (!str)
 			return (NULL);
+	if (first_occurence(str, '=') < 0)
+		return (str);
 	key = ft_substr(str, 0, first_occurence(str, '='));
 	if (!key)
 		return (NULL);
@@ -132,6 +132,8 @@ char	*extract_value(char *str)
 
 	if (!str)
 			return (NULL);
+	if (first_occurence(str, '=') < 0)
+		return (NULL);
 	value = ft_substr(str, first_occurence(str, '=') + 1, ft_strlen(str));
 	if (!value)
 		return (NULL);
@@ -168,66 +170,37 @@ char	*ft_get_var_value(t_env *env ,const char *key)
 	return (NULL);
 }
 
-void	export_manager(t_shell *data, char *crud_operation)
+void	export_manager(char *str, t_shell *data, char *crud_operation)
 {
 	int		i;
 	char	*key;
 	char	*value;
+	char	*prev_value;
 
 	i = 1;
-	if (ft_strcmp(crud_operation, "getAll") == 0)
-		ft_get_vars(data->export);
+	if (!ft_strcmp(crud_operation, "Invalid"))
+		return ;
 	if (ft_strcmp(crud_operation, "create") == 0)
 	{
-		while (data->command->command[i])
+		key = extract_key(str);
+		value = extract_value(str);
+		if (!is_var_exist(str, data->export))
 		{
-			key = extract_key(data->command->command[i]);
-			value = extract_value(data->command->command[i]);
-			if (!is_var_exist(data->command->command[i], data->export))
-			{
-				ft_set_vars(&data->export, key, value);
-				ft_set_vars(&data->env, key, value);
-			}	
-			i++;
-		}
+			ft_set_vars(&data->export, key, value);
+			ft_set_vars(&data->env, key, value);
+		}	
 	}
 	if (ft_strcmp(crud_operation, "append") == 0)
 	{
-		char	*prev_value;
-		while (data->command->command[i])
+		key = extract_key(str);
+		value = extract_value(str);
+		prev_value = ft_get_var_value(data->export ,key);
+		if (*prev_value)
 		{
-			key = extract_key(data->command->command[i]);
-			value = extract_value(data->command->command[i]);
-			prev_value = ft_get_var_value(data->export ,key);
-			if (*value)
-			{
-				ft_set_vars(&data->export, key, ft_strjoin(prev_value, value));
-				ft_set_vars(&data->env, key, ft_strjoin(prev_value, value));
-			}
-			else
-			{
-				ft_set_vars(&data->export, key, "");
-				ft_set_vars(&data->env, key, "");	
-			}
-			i++;
+			ft_set_vars(&data->export, key, ft_strjoin(prev_value, value));
+			ft_set_vars(&data->env, key, ft_strjoin(prev_value, value));
 		}
 	}
-}
-
-char	*get_operation(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		if (first_occurence(args[i], '=') && args[i][first_occurence(args[i], '=') - 1] == '+')
-			return ("append");
-		else if (first_occurence(args[i], '=') && args[i][first_occurence(args[i], '=') - 1] != '+')
-			return ("create");
-		i++;
-	}
-	return (NULL);
 }
 
 int	ft_check_arg(char *arg)
@@ -257,26 +230,18 @@ int	ft_check_arg(char *arg)
 	return (1);
 }
 
-
-int	parse_command(char **args)
+char	*get_operation(char *arg)
 {
-	int		i;
-	char	*key;
-	char	*value;
-
-	i = 0;
-	while (args[i])
+	if (!ft_check_arg(arg))
 	{
-		if (!ft_check_arg(args[i]))
-		{
-			printf("parse syntaxe error\n");
-			return (0);
-		}
-		key = extract_key(args[i]);
-		value = extract_value(args[i]);
-		i++;
+		printf("Error: export: \'%s\': not a valid identifier\n", arg);
+		return ("Invalid");
 	}
-	return (1);
+	if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] == '+')
+		return ("append");
+	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] != '+')
+		return ("create");
+	return (NULL);
 }
 
 int		ft_export(char **args, t_shell *data)
@@ -288,12 +253,14 @@ int		ft_export(char **args, t_shell *data)
 	if (!args)
 		return (1);
 	if (!(*args))
-		export_manager(data, "getAll");
-	operation = get_operation(args);
-	if (!operation)
-		return (1);
-	if (parse_command(args))
-		export_manager(data, operation);
+		ft_get_vars(data->export);
+	while (*args)
+	{
+		operation = get_operation(*args);
+		if (!operation)
+			return (1);
+		export_manager(*args, data, operation);
+		args++;
+	}
 	return (0);
 }
-
