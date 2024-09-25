@@ -39,7 +39,7 @@ char *get_key(char *str, int *i)
     while (str[*i + length])
     {
         if (ft_isspace(str[*i + length]) || str[*i + length] == '$'
-			|| str[*i + length] == -1 || !ft_isalnum(str[*i + length])
+			|| str[*i + length] == -1 || (!ft_isalnum(str[*i + length]) && str[*i + length] != '_' && str[*i + length] != '?')
             || str[*i + length] == '\'' || str[*i + length] == '\"')
             break;
         length++;
