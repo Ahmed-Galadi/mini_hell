@@ -82,13 +82,16 @@ int	change_directory(const char *path, t_shell *data)
 	
 int		ft_cd(char **args, t_shell *data)
 {
+	char	*home;
 	args++;
 
 	if (!(*args))
 	{
-		data->pwd = ft_get_env_var(data->env, "HOME");
-		if (!data->pwd)
+		home = ft_get_env_var(data->env, "HOME");
+		if (!home)
 			return (printf("Error: cd: HOME not set\n"), 1);
+		change_directory(home, data);
+		return (0);
 	}
 	return (change_directory(args[0], data));
 }

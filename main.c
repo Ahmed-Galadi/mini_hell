@@ -11,12 +11,15 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
 
+	if (!*cmd_line_args)
+		return (NULL);
 	token = tokenizer(cmd_line_args, data_config->env);
 	expand_str(&token, data_config->env, data_config->exit_status);
 	trim_quotes(&token);
@@ -87,15 +90,17 @@ int	is_spaces(char *str)
 {
 	int	i;
 
+	if (!*str)
+		return (1);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] != ' '
 			&& str[i] != '\t')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int main(int argc, char *argv[], char **envp)
@@ -121,7 +126,7 @@ int main(int argc, char *argv[], char **envp)
 		if (!cmd_line_args)
 			break ;
 		add_history(cmd_line_args);
-		if (set_command(&data, cmd_line_args) != NULL && is_spaces(cmd_line_args))
+		if (set_command(&data, cmd_line_args) != NULL && !is_spaces(cmd_line_args))
 		{
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(&data);
