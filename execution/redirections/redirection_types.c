@@ -6,11 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/07 20:15:13 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:58:08 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <unistd.h>
 
 void	handle_redirections(t_com *command)
 {
@@ -118,7 +119,7 @@ void setup_output_redirection(const char *outfile, int is_appended)
         fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0666);
     else
         fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-
+        
     if (fd_out < 0)
     {
         perror("Error opening outfile for output redirection");
@@ -131,6 +132,7 @@ void setup_output_redirection(const char *outfile, int is_appended)
         close(fd_out);
         return;
     }
+
 
     close(fd_out);
 

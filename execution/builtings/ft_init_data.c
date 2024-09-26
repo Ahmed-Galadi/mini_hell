@@ -83,7 +83,7 @@ int init_shell_data_config(t_shell *data, char **envp)
 	// Initilize command struct
 	data->command = NULL;
 	// Initialize environment variable linked list
-	data->env = init_env(envp);
+	data->env = init_env(envp, "env");
 	if (!data->env)
 		return (0);
 	// Initialize current working directory
@@ -105,7 +105,7 @@ int init_shell_data_config(t_shell *data, char **envp)
 		return (0);
 	}
 
-	data->export = convert_env_to_list(envp);
+	data->export = init_env(envp, "export");
 	if (!data->export)
 		return (0);
 

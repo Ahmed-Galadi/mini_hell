@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/24 10:47:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:07:50 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,10 @@ int main(int argc, char *argv[], char **envp)
 			break ;
 		add_history(cmd_line_args);
 		if (set_command(&data, cmd_line_args) != NULL && is_spaces(cmd_line_args))
+		{
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(&data);
+		}
 	}
 	return (0);
 }

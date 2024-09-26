@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
+#include <stdio.h>
 
 t_env   *create_env_node(char *env_str) 
 {
@@ -24,12 +25,15 @@ t_env   *create_env_node(char *env_str)
 		if (env_str[start] == '=')
 			break ;
 	node->key = ft_substr(env_str, 0, start);
-	node->value = ft_substr(env_str, start + 1, ft_strlen(env_str));
+	if (ft_strcmp("OLDPWD", node->key) == 0)
+		node->value = NULL;
+	else
+		node->value = ft_substr(env_str, start + 1, ft_strlen(env_str));
 	node->next = NULL;
 	return (node);
 }
 
-t_env   *convert_env_to_list(char **envp)
+t_env   *convert_env_to_list(char **envp, char *env_type)
 {
 	t_env *head = NULL;
 	t_env *current;
@@ -69,13 +73,13 @@ void	ft_printf_envs(t_env *env)
 		tmp = tmp->next;
 	}
 }
-t_env *init_env(char **env)
+t_env *init_env(char **env, char *env_type)
 {
 	t_env	*envs;
 	
 	if (!env)
 		return (NULL);
-	envs = convert_env_to_list(env);
+	envs = convert_env_to_list(env, env_type);
 	return (envs);
 }
 
