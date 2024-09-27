@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/21 15:28:33 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:00:46 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void handle_files_redirections(t_opp *curr_op)
 	flags = 0;
 	if (!valid_operator(curr_op->operator, &flags, &default_fd))
 		perror(file);
-	redirect_fd = open(file, flags, 0644);
+	if (ft_strcmp(file, "/dev/stdout") != 0)
+		redirect_fd = open(file, flags, 0644);
 	if (redirect_fd >= 0)
 	{
 		dup2(redirect_fd, default_fd);
@@ -58,7 +59,7 @@ void handle_files_redirections(t_opp *curr_op)
 		perror(file);
 }
 
-void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int curr_cmd, int num_commands)
+void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int curr_cmd, int num_commands, int is_builtin)
 {
 	t_com *command;
 	t_opp *curr_op;

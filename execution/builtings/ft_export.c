@@ -219,6 +219,8 @@ int	ft_check_arg(char *arg)
 			i = i + 2;
 		if (arg[i] == '=' && arg[i + 1] == '\0')
 			return (1);
+		if (arg[i] == '=' && arg[i + 1] == '/')
+			return (1);
 		if (arg[i] == '=')
 			i++;
 		if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A' && arg[i] <= 'Z')

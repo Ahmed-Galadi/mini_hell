@@ -75,7 +75,7 @@ int	syntax_error(t_token *token)
 
 	output = 1;
 	if (!token)
-		return (-1);
+		return (1);
 	if (!check_pipes(token) || !check_redirection(token))
 	{
 		if (!check_pipes(token))

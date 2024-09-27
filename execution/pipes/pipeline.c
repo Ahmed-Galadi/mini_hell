@@ -6,11 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 15:24:57 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:40:21 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <unistd.h>
 
 void update_prev_pipe(int *prev_pipe, int *curr_pipe, int is_last)
 {
@@ -48,6 +49,7 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	int i;
 
 	i = 0;
+	/*int	stdin_copy = dup(STDIN_FILENO);*/
 	while (i < num_commands)
 	{
 		if (i < num_commands - 1)
@@ -60,10 +62,12 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			redirect_to_pipe_fds(data, (i > 0) ? prev_pipe : NULL, (i < num_commands - 1) ? curr_pipe : NULL, i, num_commands);
+			redirect_to_pipe_fds(data, (i > 0) ? prev_pipe : NULL, (i < num_commands - 1) ? curr_pipe : NULL, i, num_commands, is_builtin(data->command->command[0]));
 			if (is_builtin(data->command->command[0]))
 				ft_execute_builtin(data);
-			execute_command(data, commands[i]);
+			else
+				execute_command(data, commands[i]);
+			exit(0);
 		}
 		update_prev_pipe(prev_pipe, curr_pipe, i < num_commands - 1);
 		data->command = data->command->next;
@@ -72,5 +76,6 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	update_prev_pipe(prev_pipe, curr_pipe, 0); /* Close prev_pipe fds */
 	while (wait(&status) > 0)
 		;
+	/*dup2(stdin_copy, STDIN_FILENO);*/
 	return (set_exit_status(status));
 }

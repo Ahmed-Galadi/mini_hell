@@ -6,11 +6,12 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/24 10:47:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/25 14:07:50 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
@@ -84,15 +85,17 @@ int	is_spaces(char *str)
 {
 	int	i;
 
+	if (!*str)
+		return (1);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] != ' '
 			&& str[i] != '\t')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int main(int argc, char *argv[], char **envp)
@@ -118,9 +121,11 @@ int main(int argc, char *argv[], char **envp)
 		if (!cmd_line_args)
 			break ;
 		add_history(cmd_line_args);
-		if (set_command(&data, cmd_line_args) != NULL && is_spaces(cmd_line_args))
+		if (set_command(&data, cmd_line_args) != NULL && !is_spaces(cmd_line_args))
+		{
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(&data);
+		}
 	}
 	return (0);
 }

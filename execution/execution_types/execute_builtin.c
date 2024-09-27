@@ -19,15 +19,15 @@ int ft_execute_builtin(t_shell *data)
 	t_com *command;
 
 	command = data->command;
-	if (command->operator)
-	{
-		if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)
-		{
-			stdout_copy = dup(STDOUT_FILENO);
-			handle_redirections(command);
-		}
-	}
-
+	/*if (command->operator)*/
+	/*{*/
+	/*	if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)*/
+	/*	{*/
+	/*		stdout_copy = dup(STDOUT_FILENO);*/
+	/*		handle_redirections(command);*/
+	/*	}*/
+	/*}*/
+	/**/
 	if (ft_strcmp(command->command[0], "echo") == 0)
 		ft_echo(&command->command[1]);
 	else if (ft_strcmp(command->command[0], "env") == 0)
@@ -42,7 +42,7 @@ int ft_execute_builtin(t_shell *data)
 		ft_unset(&command->command[1], data);
 	else if (ft_strcmp(command->command[0], "exit") == 0)
 		ft_exit(command->command, data->exit_status);
-	if (stdout_copy != -1)
-		restore_stdout(stdout_copy);
+	/*if (stdout_copy != -1)*/
+	/*	restore_stdout(stdout_copy);*/
 	return (0);
 }

@@ -93,10 +93,10 @@ typedef struct s_data {
 // execution prototypes
 int		ft_echo(char **args);
 int		ft_env(t_env *env);
-t_env	*init_env(char **env);
+t_env	*init_env(char **env, char *env_type);
 int		init_shell_data_config(t_shell *data, char **envp);
 void	ft_printf_envs(t_env *env);
-t_env   *convert_env_to_list(char **envp);
+t_env   *convert_env_to_list(char **envp, char *env_type);
 t_env   *create_env_node(char *env_str);
 int		ft_cd(char **args, t_shell *data);
 int		ft_unset(char **args, t_shell *data);
@@ -121,7 +121,7 @@ void	setup_input_redirection(const char *infile, int is_here_doc);
 void	setup_output_redirection(const char *outfile, int is_appended);
 void	restore_stdout(int stdout_copy);
 void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
-			int *curr_pipe, int curr_cmd, int num_commands);
+			int *curr_pipe, int curr_cmd, int num_commands, int is_builtin);
 void    close_all_fds(int *fds, int count);
 void    handle_files_redirections(t_opp *curr_op);
 
