@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
+#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/09/18 01:04:28 by agaladi          ###   ########.fr        #
+#    Updated: 2024/09/27 12:04:24 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc 
+CC = cc
 USER := $(shell whoami)
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
-			 libft/find_executable.c libft/ft_isalnum.c \
+			 libft/find_executable.c libft/ft_isalnum.c libft/ft_strcpy.c \
 
 EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/ft_pwd.c execution/builtings/ft_export.c \
@@ -28,6 +28,7 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/pipes/pipe_utils.c execution/pipes/pipeline.c \
 				 execution/redirections/redirection_types.c \
 				 execution/redirections/redirection_utils.c \
+				 execution/redirections/heredoc_utils.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/formater/formater.c parsing/formater/quotes_handler.c \

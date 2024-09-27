@@ -6,11 +6,14 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/25 17:00:46 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:52:55 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
+#include <sys/fcntl.h>
+#include <unistd.h>
 
 static int is_redirection_out(e_tokenType operator);
 static int is_redirection_in(e_tokenType operator);
@@ -32,10 +35,42 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 		*default_fd = STDOUT_FILENO;
 		*flags = O_RDWR | O_CREAT | O_APPEND;
 	}
+	else if (operator_type == HERE_DOC || operator_type == HERE_DOC_EXP)
+	{
+		*default_fd = STDIN_FILENO;
+		*flags = O_WRONLY | O_CREAT | O_TRUNC;
+	}
 	else
 		return (0); 
 	return (1);
 }
+
+
+
+
+// void handle_files_redirections(t_opp *curr_op,)
+// {
+// 	int flags;
+// 	int default_fd;
+// 	int redirect_fd;
+// 	char *file;
+// 	int		heredoc_fd;
+// 	char	*line;
+
+// 	file = curr_op->arg;
+// 	flags = 0;
+// 	if (!valid_operator(curr_op->operator, &flags, &default_fd))
+// 		perror(file);
+// 	if (ft_strcmp(file, "/dev/stdout") != 0)
+// 		redirect_fd = open(file, flags, 0644);
+// 	if (redirect_fd >= 0)
+// 	{
+// 		dup2(redirect_fd, default_fd);
+// 		close(redirect_fd);
+// 	}
+// 	else
+// 		perror(file);
+// }
 
 void handle_files_redirections(t_opp *curr_op)
 {
@@ -48,6 +83,7 @@ void handle_files_redirections(t_opp *curr_op)
 	flags = 0;
 	if (!valid_operator(curr_op->operator, &flags, &default_fd))
 		perror(file);
+
 	if (ft_strcmp(file, "/dev/stdout") != 0)
 		redirect_fd = open(file, flags, 0644);
 	if (redirect_fd >= 0)
@@ -68,6 +104,7 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 	curr_op = command->operator;
 	int flag_in = 0;
 	int flag_out = 0;
+
 	if (curr_op && curr_op->operator >= 0) // User redirections take precedence
 	{
 		while (curr_op)
@@ -76,8 +113,6 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 				flag_out = 1;
 			if (is_redirection_in(curr_op->operator))
 				flag_in = 1;
-			// if ()
-			handle_files_redirections(curr_op);
 			curr_op = curr_op->next;
 		}
 	}

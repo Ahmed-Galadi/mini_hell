@@ -89,6 +89,7 @@ typedef struct s_data {
 	t_env	*env;
 	t_env	*export;
 	char	*pwd;
+	char	**heredoc_files;
 	int		exit_status;
 }	t_shell;
 // execution types - end
@@ -127,6 +128,7 @@ void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
 			int *curr_pipe, int curr_cmd, int num_commands, int is_builtin);
 void    close_all_fds(int *fds, int count);
 void    handle_files_redirections(t_opp *curr_op);
+void	ft_read_here_doc_input(char *delimiter);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);
@@ -139,6 +141,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isalnum(int c);
+char	*ft_strcpy(char *dest, const char *src);
 // int		init_shell_data_config(t_shell *data, char **envp);
 char	**env_to_array(t_env *env);
 
