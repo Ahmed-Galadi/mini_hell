@@ -17,14 +17,11 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 	t_token *token;
 	t_com	*com;
 
-	token = tokenizer(cmd_line_args, data_config->env);
+	token = tokenizer(cmd_line_args, data_config->env, &(data_config->exit_status));
 	expand_str(&token, data_config->env, data_config->exit_status);
 	trim_quotes(&token);
 	if (!token)
-	{
-		data_config->exit_status = 258;
 		return (NULL);
-	}
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
 		return (NULL);

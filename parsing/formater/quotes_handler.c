@@ -12,10 +12,10 @@
 
 #include "../../minishell.h"
 
-
-static int get_close_quote(char *input, int index_quote)
+// Finds the index of the matching closing quote in the input string.
+static int	get_close_quote(char *input, int index_quote)
 {
-	char quote;
+	char	quote;
 
 	quote = input[index_quote];
 	index_quote++;
@@ -28,16 +28,13 @@ static int get_close_quote(char *input, int index_quote)
 	return (-1);
 }
 
-char	*handle_quotes(char *str)
+// Copies characters from input to output, excluding quoted sections.
+static int	copy_without_quotes(char *str, char *output)
 {
-	char	*output;
-	int		i;
-	int		j;
-	int		cq_index;
+	int	i;
+	int	j;
+	int	cq_index;
 
-	output = (char *)malloc(ft_strlen(str) + 1);
-	if (!output || !check_quote_syntax(str))
-		return (error(), NULL);
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -45,15 +42,60 @@ char	*handle_quotes(char *str)
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			cq_index = get_close_quote(str, i);
+			if (cq_index == -1)
+				return (-1);
 			i++;
 			while (i < cq_index)
 				output[j++] = str[i++];
-			if (str[i] && str[i + 1])
-				i++;
+			i++;
 		}
-		else 
+		else
 			output[j++] = str[i++];
 	}
 	output[j] = '\0';
+	return (j);
+}
+
+// Processes input string to remove quoted sections and returns a new string.
+static char	*handle_quotes(char *str)
+{
+	char	*output;
+
+	if (!check_quote_syntax(str))
+		return (error(), NULL);
+	output = (char *)malloc(ft_strlen(str) + 1);
+	if (!output)
+		return (error(), NULL);
+	if (copy_without_quotes(str, output) == -1)
+		return (error(), NULL);
 	return (output);
+}
+
+// Switch characters before trimming quotes then handle quotes
+static void	process_token_value(char **value)
+{
+	char	*ptr_holder;
+
+	if (*value != NULL)
+	{
+		switch_char(value, -1, ' ');
+		switch_char(value, -2, '\t');
+		ptr_holder = *value;
+		*value = handle_quotes(ptr_holder);
+	}
+}
+
+// Main function to process each token in the list
+void	trim_quotes(t_token **token)
+{
+	t_token	*current;
+
+	current = *token;
+	while (current)
+	{
+		process_token_value(&(current->value));
+		if (!current->value)
+			break ;
+		current = current->next;
+	}
 }

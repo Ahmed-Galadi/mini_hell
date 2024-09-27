@@ -21,7 +21,7 @@ int	check_pipes(t_token *token)
 	current = token;
 	if (current->type == PIPE || last_token(token)->type == PIPE)
 		return (0);
-	while(current)
+	while (current)
 	{
 		if (current->type == PIPE && current->next->type == PIPE)
 			return (0);
@@ -30,7 +30,7 @@ int	check_pipes(t_token *token)
 	return (1);
 }
 
-int		check_redirection(t_token *token)
+int	check_redirection(t_token *token)
 {
 	t_token	*current;
 
@@ -46,39 +46,42 @@ int		check_redirection(t_token *token)
 	return (1);
 }
 
-
-bool check_quote_syntax(char *input)
+bool	check_quote_syntax(char *input)
 {
-    bool single_quote_open = false;
-    bool double_quote_open = false;
-	int i = 0;
-	
+	bool	single_quote_open;
+	bool	double_quote_open;
+	int		i;
+
+	single_quote_open = false;
+	double_quote_open = false;
+	i = 0;
 	if (!input)
 		return (-1);
-    while (input[i])
+	while (input[i])
 	{
-        if (input[i] == '\'' && !double_quote_open)
-            single_quote_open = !single_quote_open;
+		if (input[i] == '\'' && !double_quote_open)
+			single_quote_open = !single_quote_open;
 		else if (input[i] == '\"' && !single_quote_open)
-            double_quote_open = !double_quote_open;
+			double_quote_open = !double_quote_open;
 		i++;
-    }
-    return (!single_quote_open && !double_quote_open);
+	}
+	return (!single_quote_open && !double_quote_open);
 }
 
-int		syntax_error(t_token *token)
+int	syntax_error(t_token *token)
 {
-	t_token *current;
+	t_token	*current;
 	int		output;
+
 	output = 1;
 	if (!token)
 		return (-1);
 	if (!check_pipes(token) || !check_redirection(token))
 	{
 		if (!check_pipes(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes !\n"RESET);
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes!\n"RESET);
 		if (!check_redirection(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid redirection !\n"RESET);
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
 		return (0);
 	}
 	current = token;
@@ -93,4 +96,3 @@ int		syntax_error(t_token *token)
 	}
 	return (1);
 }
-

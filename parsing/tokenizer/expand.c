@@ -119,7 +119,7 @@ int		calculate_size(char *str, t_env *env, int exit_status)
 	return (output_size);
 }
 
-void	expand(char **str, t_env *env, int exit_status)
+void	expand(char **token_val, e_tokenType *token_typ, t_env *env, int exit_status)
 {
 	char *output;
 	char *to_ex;
@@ -129,36 +129,36 @@ void	expand(char **str, t_env *env, int exit_status)
 	int j = 0;
 
 	// Allocate memory for the output string
-	if (calculate_size(*str, env, exit_status) < 0)
+	if (calculate_size(*token_val, env, exit_status) < 0)
 	{
 		printf("Syntax error\n");
 		return ;
 	}
-	output = (char *)malloc(calculate_size(*str, env, exit_status));
+	output = (char *)malloc(calculate_size(*token_val, env, exit_status));
 	if (!output)
 		return (perror("malloc"));
-	if (!*str)
+	if (!*token_val)
 		return ;
-	while ((*str)[i])
+	while ((*token_val)[i])
 	{
 		// Handle double and single quotes
-		if ((*str)[i] == '\"' && !in_single_q)
+		if ((*token_val)[i] == '\"' && !in_single_q)
 			in_double_q = !in_double_q;
-		if ((*str)[i] == '\'' && !in_double_q)
+		if ((*token_val)[i] == '\'' && !in_double_q)
 			in_single_q = !in_single_q;
 
 		// Handle variable expansion
-		if ((*str)[i] == '$' && (ft_isspace((*str)[i + 1]) || (*str)[i + 1] == '\0'))
+		if ((*token_val)[i] == '$' && (ft_isspace((*token_val)[i + 1]) || (*token_val)[i + 1] == '\0'))
 		{
-			if((*str)[i + 1] == '\"' || (*str)[i + 1] == '\'')
+			if((*token_val)[i + 1] == '\"' || (*token_val)[i + 1] == '\'')
 				i++;
 			else
-				output[j++] = (*str)[i++];
+				output[j++] = (*token_val)[i++];
 		}
-		else if (((*str)[i] == '$' && in_double_q) || ((*str)[i] == '$' && !in_double_q && !in_single_q))
-		{
+		else if (((*token_val)[i] == '$' && in_double_q) || ((*token_val)[i] == '$' && !in_double_q && !in_single_q))
+		{	
 			// Expand the environment variable
-			to_ex = get_expand_val(*str, env, &i, exit_status); // `i` is updated inside get_expand_val()
+			to_ex = get_expand_val(*token_val, env, &i, exit_status); // `i` is updated inside get_expand_val()
 			// If a valid expansion is found
 			if (to_ex)
 				// Copy the expanded value into output
@@ -166,16 +166,18 @@ void	expand(char **str, t_env *env, int exit_status)
 					output[j++] = *to_ex++;
 			else
 				// If the expansion failed (i.e., NULL), skip the dollar sign
-				if ((*str)[i] != '$')
-					output[j++] = (*str)[i++];
+				if ((*token_val)[i] != '$')
+					output[j++] = (*token_val)[i++];
 		}
 		else
 			// Copy current character from the original string
-			output[j++] = (*str)[i++];
+			output[j++] = (*token_val)[i++];
 	}
 	output[j] = '\0';  // Null-terminate the output string
-	*str = output;
+	*token_val = output;
 }
+
+
 
 void	expand_str(t_token **token, t_env *env, int exit_status)
 {
@@ -186,7 +188,7 @@ void	expand_str(t_token **token, t_env *env, int exit_status)
 		return ;
 	while (current_token)
 	{
-		expand(&(current_token->value), env, exit_status);
+		expand(&(current_token->value), &(current_token->type),env, exit_status);
 		current_token = current_token->next;
 	}
 }

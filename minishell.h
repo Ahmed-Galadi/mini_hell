@@ -43,13 +43,10 @@
 typedef enum e_tokenType
 {
 	RED_IN,
-	RED_IN_EXP,
 	RED_OUT,
-	RED_OUT_EXP,
 	APPEND,
-	APPEND_EXP,
-	HERE_DOC,
 	HERE_DOC_EXP,
+	HERE_DOC,
 	EXPAND,
 	COMMAND,
 	PIPE
@@ -150,21 +147,20 @@ void	add_lstback(t_opp *operators, t_opp *to_add);
 t_token	*last_token(t_token *token);
 char	**cstm_split(const char *str, const char *delims);
 char *ft_itoa(int n);
+int	is_op(char c);
 // tokenizer
 int		is_quote(char *str);
 int		is_rederection(char *str);
 char	*add_spaces(char *str);
 void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
-char	*handle_quotes(char *str);
-t_token	*tokenizer(char *input, t_env *env);
+t_token	*tokenizer(char *input, t_env *env, int *exit_status);
 // expand
 int		ft_isspace(char c);
 void	expand_str(t_token **token, t_env *env, int exit_status);
 // lexer
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
-int		check_red(t_token *token);
 int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);

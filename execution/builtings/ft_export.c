@@ -234,7 +234,7 @@ char	*get_operation(char *arg)
 {
 	if (!ft_check_arg(arg))
 	{
-		printf("Error: export: \'%s\': not a valid identifier\n", arg);
+		printf(BOLD RED"Error: "RESET PINK"export:"RESET" \'%s\': not a valid identifier\n", arg);
 		return ("Invalid");
 	}
 	if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] == '+')

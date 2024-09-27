@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 void	switch_char(char **str, char to_find, char character)
- {
+{
 	int		in_quote;
 	int		i;
 
@@ -29,7 +29,7 @@ void	switch_char(char **str, char to_find, char character)
 			(*str)[i] = character;
 		i++;
 	}
- }
+}
 
 char	*format(char *str)
 {

@@ -18,6 +18,12 @@ void	ft_putstr(char *str)
 		write(1, str++, 1);
 }
 
+// Check if a char is "|" or "<" or ">"  
+int	is_op(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
 int	cstm_strcmp(char *str1, char *str2)
 {
 	int		i;
