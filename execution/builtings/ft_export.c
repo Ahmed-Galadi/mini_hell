@@ -219,7 +219,7 @@ int	ft_check_arg(char *arg)
 			i = i + 2;
 		if (arg[i] == '=' && arg[i + 1] == '\0')
 			return (1);
-		if (arg[i] == '=' && arg[i + 1] == '/')
+		if (arg[i] == '=')
 			return (1);
 		if (arg[i] == '=')
 			i++;
@@ -234,7 +234,10 @@ int	ft_check_arg(char *arg)
 
 char	*get_operation(char *arg)
 {
-	if (!ft_check_arg(arg))
+	char	*key;
+
+	key = ft_substr(arg, 0, first_occurence(arg, '='));
+	if (!ft_check_arg(key))
 	{
 		printf(BOLD RED"Error: "RESET PINK"export:"RESET" \'%s\': not a valid identifier\n", arg);
 		return ("Invalid");
