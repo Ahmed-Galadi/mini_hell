@@ -62,7 +62,7 @@ void	ftputstr_fd(int fd, char *s)
 	}
 }
 
-void	open_heredoc(char **files, t_opp *op, int *count)
+void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 {
 	char	*str;
 	int		fd;
@@ -76,6 +76,8 @@ void	open_heredoc(char **files, t_opp *op, int *count)
 		str = readline("> ");
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return ;
+		if (op->operator == HERE_DOC_EXP)
+			expand(&str, data->env, data->exit_status);
 		ftputstr_fd(fd, str);
 		write(fd, "\n", 1);
 	}
@@ -106,7 +108,7 @@ void	ft_open_heredoc(t_shell *data)
 		{
 			if (op->operator == HERE_DOC
 				|| op->operator == HERE_DOC_EXP)
-				open_heredoc(data->heredoc_files, op, &count);
+				open_heredoc(data->heredoc_files, op, &count, data);
 			op = op->next;
 		}
 		curr = curr->next;
