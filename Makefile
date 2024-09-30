@@ -41,9 +41,10 @@ CFLAGS_R = -g -lreadline
 HEADER = minishell.h
 LIB = minishell.a
 NAME = minishell
-PARSING_OBJS = $(PARSING_SRCS:.c=.o)
-EXECUTION_OBJS = $(EXECUTION_SRCS:.c=.o)
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
+
+PARSING_OBJS =  $(addprefix obj/, $(PARSING_SRCS:.c=.o))
+EXECUTION_OBJS = $(addprefix obj/, $(EXECUTION_SRCS:.c=.o))
+LIBFT_OBJS = $(addprefix obj/, $(LIBFT_SRCS:.c=.o))
 
 ifeq ($(USER), agaladi)
 	CFLAGS_R += -L/Users/agaladi/.brew/opt/readline/lib
@@ -59,16 +60,14 @@ $(NAME): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
 $(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 	ar -rc $(LIB) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 
-%.o: %.c $(HEADER)
+obj/%.o: %.c $(HEADER)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(LIB)
+	rm -rf obj $(LIB)
 
 fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-recom: all
-	rm -rf $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(LIB)

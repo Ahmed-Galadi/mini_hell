@@ -20,8 +20,7 @@ int	ft_isalpha(char c)
 int	is_red(e_tokenType type)
 {
 	return (type == RED_IN || type == RED_OUT
-		|| type == APPEND || type == HERE_DOC
-		|| type == HERE_DOC_EXP);
+		|| type == APPEND || type == HERE_DOC);
 }
 
 void	add_opp(t_opp **opp, t_opp *to_add)

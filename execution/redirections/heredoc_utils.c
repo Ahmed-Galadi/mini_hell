@@ -102,7 +102,6 @@ void	ft_open_heredoc(t_shell *data)
 	}
 }
 
-
 int	ft_read_from_heredoc(t_shell *data)
 {
 	int	new;
