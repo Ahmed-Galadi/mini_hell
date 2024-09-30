@@ -12,26 +12,6 @@
 
 #include "../../minishell.h"
 
-static void	p_token(t_token *token)
-{
-	t_token	*current;
-
-	if (!token)
-	{
-		printf("empty token!\n");
-		return ;
-	}
-	current = token;
-	while (current)
-	{
-		printf("Type: %d", current->type);
-		if (current->value)
-			printf("| Value: %s", current->value);
-		printf("\n****************************\n");
-		current = current->next;
-	}
-}
-
 // Add token to list function
 static t_token	*add_token_to_list(t_token *head, t_token *new_token)
 {
@@ -43,7 +23,7 @@ static t_token	*add_token_to_list(t_token *head, t_token *new_token)
 	while (last->next)
 		last = last->next;
 	last->next = new_token;
-	return (head);
+return (head);
 }
 
 // Handle redirection function
@@ -125,8 +105,9 @@ void	heredoc_type_set(t_token **token)
 	current = *token;
 	while (current)
 	{
-		if (current->type == HERE_DOC_EXP && has_quotes(current->value))
-			current->type = HERE_DOC;
+		if (current->value)
+			if (current->type == HERE_DOC_EXP && has_quotes(current->value))
+				current->type = HERE_DOC;
 		current = current->next;
 	}
 }

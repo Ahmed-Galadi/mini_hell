@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/04 17:15:01 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/28 20:39:47 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_com	*new_com(t_token *token)
 		token = token->next;
 	}
 	out_args[i] = NULL;
+	/*if (!*out_args)*/
+	/*	out_args = NULL;*/
 	output->command = out_args;
 	output->operator = out_opp;
 	output->next = NULL;
