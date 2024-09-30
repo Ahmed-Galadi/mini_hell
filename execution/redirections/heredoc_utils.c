@@ -1,4 +1,5 @@
 #include "../../minishell.h"
+#include <stdio.h>
 
 int	heredoc_count(t_com *command)
 {
@@ -40,7 +41,7 @@ char	**fill_heredoc_files(int count)
 	return (new);
 }
 
-static void	ftputstr_fd(int fd, char *s)
+void	ftputstr_fd(int fd, char *s)
 {
 	if (!s || fd < 0)
 		return ;
@@ -63,7 +64,7 @@ void	open_heredoc(char **files, t_opp *op, int *count)
 	while (1)
 	{
 		str = readline("> ");
-		if (!str || !ft_strcmp(str, op->arg))
+		if (!str || ft_strcmp(str, op->arg) == 0)
 			return ;
 		ftputstr_fd(fd, str);
 		write(fd, "\n", 1);
@@ -79,6 +80,7 @@ void	ft_open_heredoc(t_shell *data)
 	char	*line;
 
 	count = heredoc_count(data->command);
+	data->heredoc_count = count;
 	if (count > 16)
 	{
 		printf("Error: maximum here-document count exceeded\n");
@@ -98,4 +100,23 @@ void	ft_open_heredoc(t_shell *data)
 		}
 		curr = curr->next;
 	}
+}
+
+
+int	ft_read_from_heredoc(t_shell *data)
+{
+	int	new;
+	int	count;
+
+	if (data->heredoc_index >= data->heredoc_count)
+		return (0);
+	new = open(data->heredoc_files[data->heredoc_index], O_RDONLY);
+	if (new < 0)
+		return (perror("open heredeoc failed!"), 1);
+	unlink(data->heredoc_files[data->heredoc_index]);
+	data->heredoc_index++;
+	if (dup2(new, STDIN_FILENO) < 0)
+		return (perror("dup failed!"), 1);
+	close(new);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:28:46 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 int	change_directory(const char *path, t_shell *data)
 {
     char cwd[1024];
+	if (!path)
+		return (1);
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
     if (chdir(path) != 0)
@@ -93,5 +95,7 @@ int		ft_cd(char **args, t_shell *data)
 		change_directory(home, data);
 		return (0);
 	}
+	// else if (!ft_strcmp(*args, "-"))
+	// 	return (change_directory(ft_get_env_var(data->env, "OLDPWD"), data));
 	return (change_directory(args[0], data));
 }

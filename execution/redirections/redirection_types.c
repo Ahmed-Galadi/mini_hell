@@ -11,10 +11,17 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
+#include <sys/fcntl.h>
 #include <unistd.h>
 
-void	handle_redirections(t_com *command)
+void	handle_redirections(t_shell *data)
 {
+	t_com *command;
+
+	if (!data)
+		return ;
+	command = data->command;
     if (!command || !command->operator)
         return ;
 
@@ -32,11 +39,11 @@ void	handle_redirections(t_com *command)
         }
         else if (current_op->operator == RED_IN)
         {
-            setup_input_redirection(current_op->arg, 0);
+            setup_input_redirection(current_op->arg, 0, data);
         }
         else if (current_op->operator == HERE_DOC)
         {
-            setup_input_redirection(current_op->arg, 1);
+            setup_input_redirection(current_op->arg, 1, data);
         }
         else
         {
@@ -48,116 +55,39 @@ void	handle_redirections(t_com *command)
 }
 
 
-static void	ftputstr_fd(int fd, char *s)
+
+void setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
 {
-	if (!s || fd < 0)
-		return ;
-	while (*s)
+	int fd_in;
+	int pipe_fds[2];
+
+	if (!infile)
+		return;
+
+	if (is_here_doc)
 	{
-		write(fd, s, 1);
-			s++;
+		ft_open_heredoc(data);
+		ft_read_from_heredoc(data);
 	}
-}
-
-void	open_heredoc(char **files, t_opp *op, int *count)
-{
-	char	*str;
-	int		fd;
-
-	fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd < 0)
-		return (perror("open"));
-	(*count)++;
-	while (1)
+	else
 	{
-		str = readline("> ");
-		if (!str || !ft_strcmp(str, op->arg))
-			return ;
-		ftputstr_fd(fd, str);
-		write(fd, "\n", 1);
-	}
-	close(fd);
-}
-
-void	ft_open_heredoc(t_shell *data)
-{
-	int		count;
-	t_com	*curr;
-	t_opp	*op;
-	char	*line;
-
-	count = heredoc_count(data->command);
-	if (count > 16)
-	{
-		printf("Error: maximum here-document count exceeded\n");
-		exit(2);
-	}
-	data->heredoc_files = fill_heredoc_files(count);
-	curr = data->command;
-	count = 0;
-	while (curr)
-	{
-		op = curr->operator;
-		while (op)
+		// Standard input redirection from a file
+		fd_in = open(infile, O_RDONLY);
+		if (fd_in < 0)
 		{
-			if (op->operator == HERE_DOC)
-				open_heredoc(data->heredoc_files, op, &count);
-			op = op->next;
+			perror("Error opening infile for input redirection");
+			return;
 		}
-		curr = curr->next;
+
+		if (dup2(fd_in, STDIN_FILENO) < 0)
+		{
+			perror("Error duplicating file descriptor for input redirection");
+			close(fd_in);
+			return;
+		}
+
+		close(fd_in);
 	}
-}
-
-void setup_input_redirection(const char *infile, int is_here_doc)
-{
-    int fd_in;
-    int pipe_fds[2];
-
-    if (!infile)
-        return;
-
-    if (is_here_doc)
-    {
-        // Here document handling
-        if (pipe(pipe_fds) == -1)
-        {
-            perror("Error creating pipe for here document");
-            return;
-        }
-
-        // Write the content of the here document into the pipe
-        write(pipe_fds[1], infile, ft_strlen(infile));
-        close(pipe_fds[1]);  // Close the write end of the pipe
-
-        // Redirect STDIN to read from the pipe
-        if (dup2(pipe_fds[0], STDIN_FILENO) == -1)
-        {
-            perror("Error duplicating file descriptor for here document");
-            close(pipe_fds[0]);  // Close the read end of the pipe
-            return;
-        }
-
-        close(pipe_fds[0]);  // Close the read end after duplication
-    }
-    else
-    {
-        // Standard input redirection from a file
-        fd_in = open(infile, O_RDONLY);
-        if (fd_in < 0)
-        {
-            perror("Error opening infile for input redirection");
-            return;
-        }
-
-        if (dup2(fd_in, STDIN_FILENO) < 0)
-        {
-            perror("Error duplicating file descriptor for input redirection");
-            close(fd_in);
-            return;
-        }
-
-        close(fd_in);
-    }
 }
 
 void setup_output_redirection(const char *outfile, int is_appended)

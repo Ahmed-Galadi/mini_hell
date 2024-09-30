@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:40:35 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/29 16:20:47 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,21 @@ int	is_spaces(char *str)
 	}
 	return (1);
 }
+void	disable_echo(struct termios term)
+{
+	if (!isatty(STDIN_FILENO))
+		return ;
+	term.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	{
+		perror("tcgetattr");
+		exit(EXIT_FAILURE);
+	}
+}
 
 int main(int argc, char *argv[], char **envp)
 {
+	struct termios	term;
 	char	*cmd_line_args;
    	char	**args;
 	t_shell	data;
@@ -131,8 +143,14 @@ int main(int argc, char *argv[], char **envp)
     	fprintf(stderr, "Failed to initialize data\n");
     	return (1);
     }
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+	{
+		perror("tcgetattr");
+		exit(EXIT_FAILURE);
+	}
 	while (1)
 	{
+		disable_echo(term);
 		signal(SIGINT, handle_sig);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGKILL, SIG_IGN);

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/27 11:52:55 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/29 17:43:27 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 	{
 		*default_fd = STDOUT_FILENO;
 		*flags = O_RDWR | O_CREAT | O_APPEND;
-	}
-	else if (operator_type == HERE_DOC || operator_type == HERE_DOC_EXP)
-	{
-		*default_fd = STDIN_FILENO;
-		*flags = O_WRONLY | O_CREAT | O_TRUNC;
 	}
 	else
 		return (0); 
@@ -83,7 +78,6 @@ void handle_files_redirections(t_opp *curr_op)
 	flags = 0;
 	if (!valid_operator(curr_op->operator, &flags, &default_fd))
 		perror(file);
-
 	if (ft_strcmp(file, "/dev/stdout") != 0)
 		redirect_fd = open(file, flags, 0644);
 	if (redirect_fd >= 0)
@@ -109,6 +103,10 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 	{
 		while (curr_op)
 		{
+			if (curr_op->operator== HERE_DOC)
+				ft_read_from_heredoc(data);
+			else
+				handle_files_redirections(curr_op);
 			if (is_redirection_out(curr_op->operator))
 				flag_out = 1;
 			if (is_redirection_in(curr_op->operator))

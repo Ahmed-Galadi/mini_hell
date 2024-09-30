@@ -22,6 +22,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
+# include <termios.h>
 
 #define YELLOW "\001\033[93m\002"
 #define RESET "\001\033[0m\002"
@@ -88,6 +89,8 @@ typedef struct s_data {
 	char	*pwd;
 	char	**heredoc_files;
 	int		exit_status;
+	int		heredoc_count;
+	int		heredoc_index;
 }	t_shell;
 // execution types - end
 
@@ -124,15 +127,20 @@ char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
 int		ft_execute_pipeline(char ***commands, int num_commands, t_shell *data);
 // redirections
-void	handle_redirections(t_com *command);
-void	setup_input_redirection(const char *infile, int is_here_doc);
+void	handle_redirections(t_shell *data);
+void	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
 void	setup_output_redirection(const char *outfile, int is_appended);
 void	restore_stdout(int stdout_copy);
 void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
 			int *curr_pipe, int curr_cmd, int num_commands, int is_builtin);
 void    close_all_fds(int *fds, int count);
 void    handle_files_redirections(t_opp *curr_op);
-void	ft_read_here_doc_input(char *delimiter);
+int		heredoc_count(t_com *command);
+char	**fill_heredoc_files(int count);
+void	ftputstr_fd(int fd, char *s);
+void	open_heredoc(char **files, t_opp *op, int *count);
+void	ft_open_heredoc(t_shell *data);
+int		ft_read_from_heredoc(t_shell *data);
 
 // LIBFT Prototypes
 size_t	ft_strlen(const char *s);

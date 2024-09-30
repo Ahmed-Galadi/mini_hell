@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/18 18:38:05 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:06:50 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ int ft_execute_builtin(t_shell *data)
 	t_com *command;
 
 	command = data->command;
-	/*if (command->operator)*/
-	/*{*/
-	/*	if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)*/
-	/*	{*/
-	/*		stdout_copy = dup(STDOUT_FILENO);*/
-	/*		handle_redirections(command);*/
-	/*	}*/
-	/*}*/
-	/**/
+	if (command->operator)
+	{
+		if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)
+		{
+			stdout_copy = dup(STDOUT_FILENO);
+			handle_redirections(data);
+		}
+	}
 	if (ft_strcmp(command->command[0], "echo") == 0)
 		ft_echo(&command->command[1]);
 	else if (ft_strcmp(command->command[0], "env") == 0)
@@ -42,7 +41,7 @@ int ft_execute_builtin(t_shell *data)
 		ft_unset(&command->command[1], data);
 	else if (ft_strcmp(command->command[0], "exit") == 0)
 		ft_exit(command->command, data->exit_status);
-	/*if (stdout_copy != -1)*/
-	/*	restore_stdout(stdout_copy);*/
+	if (stdout_copy != -1)
+		restore_stdout(stdout_copy);
 	return (0);
 }

@@ -42,7 +42,7 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 			fprintf(stderr, "Command not found: %s\n", args[0]);
 			exit(127);  // Exit with 127 for command not found
 		}
-		handle_redirections(command);
+		handle_redirections(data);
 		if (execve(cmd_path, args, env_array) == -1)
 		{
 			perror("Error execve");
