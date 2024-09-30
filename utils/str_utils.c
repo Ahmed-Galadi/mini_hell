@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/02 22:08:20 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/28 20:40:32 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	ft_putstr(char *str)
 {
 	while (*str)
 		write(1, str++, 1);
+}
+
+// Check if a char is "|" or "<" or ">"  
+int	is_op(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
 }
 
 int	cstm_strcmp(char *str1, char *str2)

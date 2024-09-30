@@ -6,28 +6,42 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/25 14:07:50 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/28 20:40:35 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/readline.h>
+
+static void	p_token(t_token *token)
+{
+	t_token	*current;
+
+	if (!token)
+	{
+		printf("empty token!\n");
+		return ;
+	}
+	current = token;
+	while (current)
+	{
+		printf("Type: %d", current->type);
+		if (current->value)
+			printf("| Value: %s", current->value);
+		printf("\n****************************\n");
+		current = current->next;
+	}
+}
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
 
-	if (!*cmd_line_args)
-		return (NULL);
-	token = tokenizer(cmd_line_args, data_config->env);
+	token = tokenizer(cmd_line_args, data_config->env, &(data_config->exit_status));
 	expand_str(&token, data_config->env, data_config->exit_status);
 	trim_quotes(&token);
 	if (!token)
-	{
-		data_config->exit_status = 258;
 		return (NULL);
-	}
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
 		return (NULL);

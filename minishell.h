@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 04:34:17 by agaladi           #+#    #+#             */
-/*   Updated: 2024/08/02 03:19:27 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
+/*   Updated: 2024/09/28 20:40:51 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,10 @@
 typedef enum e_tokenType
 {
 	RED_IN,
-	RED_IN_EXP,
 	RED_OUT,
-	RED_OUT_EXP,
 	APPEND,
-	APPEND_EXP,
-	HERE_DOC,
 	HERE_DOC_EXP,
+	HERE_DOC,
 	EXPAND,
 	COMMAND,
 	PIPE
@@ -59,7 +56,7 @@ typedef struct		s_token
 {
 	e_tokenType		type;
 	char			*value;
-	struct s_token	*next;
+struct s_token	*next;
 }					t_token;
 
 typedef struct		s_opp
@@ -93,6 +90,13 @@ typedef struct s_data {
 	int		exit_status;
 }	t_shell;
 // execution types - end
+
+typedef struct	s_expand_data
+{
+    char	**token_val;
+    t_env	*env;
+    int		exit_status;
+}			t_expand_data;
 
 // execution prototypes
 int		ft_echo(char **args);
@@ -142,6 +146,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isalnum(int c);
 char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strncpy(char *dest, const char *src, int n);
 // int		init_shell_data_config(t_shell *data, char **envp);
 char	**env_to_array(t_env *env);
 
@@ -153,21 +158,23 @@ void	add_lstback(t_opp *operators, t_opp *to_add);
 t_token	*last_token(t_token *token);
 char	**cstm_split(const char *str, const char *delims);
 char *ft_itoa(int n);
+int	is_op(char c);
 // tokenizer
 int		is_quote(char *str);
 int		is_rederection(char *str);
 char	*add_spaces(char *str);
 void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
-char	*handle_quotes(char *str);
-t_token	*tokenizer(char *input, t_env *env);
+t_token	*tokenizer(char *input, t_env *env, int *exit_status);
 // expand
 int		ft_isspace(char c);
+char	*get_expand_val(char *syytr, t_env *env, int *i, int exit_status);
+void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
+int		calculate_size(char *str, t_env *env, int exit_status);
 void	expand_str(t_token **token, t_env *env, int exit_status);
 // lexer
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
-int		check_red(t_token *token);
 int		is_red(e_tokenType type);
 e_tokenType red_type(t_token *token);
 t_opp	*new_op(t_token **token);

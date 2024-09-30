@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	error()
+void	error(void)
 {
 	ft_putstr("*ERROR!*\n");
 }

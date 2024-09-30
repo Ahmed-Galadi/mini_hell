@@ -3,68 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   add_spaces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/21 15:38:18 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/28 20:39:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int is_op(char c) {
-    return (c == '|' || c == '<' || c == '>');
+// Toggle quote states (single and double quotes)
+static void	toggle_quotes(char c, bool *open_s_quote, bool *open_d_quote)
+{
+	if (c == '\'')
+		*open_s_quote = !(*open_s_quote);
+	if (c == '\"')
+		*open_d_quote = !(*open_d_quote);
 }
 
-char *add_spaces(char *str) {
-    char *output;
-    bool open_d_quote = false;
-    bool open_s_quote = false;
-    int i = 0, j = 0;
-
-    // Allocate memory for output, double the input size to handle space insertion
-    output = malloc(ft_strlen(str) * 2 + 1);
-    if (!output) {
-        return NULL; // Handle malloc failure
-    }
-
-    while (str[i]) {
-        // Toggle quote states
-        if (str[i] == '\'') {
-            open_s_quote = !open_s_quote;
-        }
-        if (str[i] == '\"') {
-            open_d_quote = !open_d_quote;
-        }
-
-        // Handle cases like ">>" or "<<"
-        if (((str[i] == '>' && str[i + 1] == '>')
-             || (str[i] == '<' && str[i + 1] == '<'))
-            && (!open_d_quote && !open_s_quote)) {
-            output[j++] = ' ';
-            output[j++] = str[i++];
-            output[j++] = str[i++];
-            output[j++] = ' ';
-        }
-        // Handle spacing around individual operators
-        else if (is_op(str[i]) && (!open_d_quote && !open_s_quote)) {
-            // Add space before the operator
-            if (j > 0 && output[j - 1] != ' ') {
-                output[j++] = ' ';
-            }
-            // Add the operator
-            output[j++] = str[i++];
-            // Add space after the operator
-            if (str[i] && str[i] != ' ') {
-                output[j++] = ' ';
-            }
-        } else {
-            // Copy normal characters
-            output[j++] = str[i++];
-        }
-    }
-
-    output[j] = '\0';  // Null-terminate the output string
-    return output;
+// Add space around double operators like ">>" or "<<"
+static int	handle_double_operator(char *str, char *output, int *i, int *j)
+{
+	if ((str[*i] == '>' && str[*i + 1] == '>')
+		|| (str[*i] == '<' && str[*i + 1] == '<'))
+	{
+		output[(*j)++] = ' ';
+		output[(*j)++] = str[(*i)++];
+		output[(*j)++] = str[(*i)++];
+		output[(*j)++] = ' ';
+		return (1);
+	}
+	return (0);
 }
 
+// Add spaces around single operators like "|" or "<" or ">"
+static void	handle_single_operator(char *str, char *output, int *i, int *j)
+{
+	if (*j > 0 && output[*j - 1] != ' ')
+		output[(*j)++] = ' ';
+	output[(*j)++] = str[(*i)++];
+	if (str[*i] && str[*i] != ' ')
+		output[(*j)++] = ' ';
+}
+
+/* Process each character,
+ * add spaces around operators while respecting quotes */
+static void	process_characters(char *str, char *output,
+								bool *open_s_quote, bool *open_d_quote)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		toggle_quotes(str[i], open_s_quote, open_d_quote);
+		if (!(*open_d_quote || *open_s_quote)
+			&& handle_double_operator(str, output, &i, &j))
+			continue ;
+		else if (is_op(str[i]) && !(*open_d_quote || *open_s_quote))
+			handle_single_operator(str, output, &i, &j);
+		else
+			output[j++] = str[i++];
+	}
+	output[j] = '\0';
+}
+
+// Add spaces around operators and handle quotes (main function)
+char	*add_spaces(char *str)
+{
+	char	*output;
+	bool	open_d_quote;
+	bool	open_s_quote;
+
+	open_d_quote = false;
+	open_s_quote = false;
+	output = malloc(ft_strlen(str) * 2 + 1);
+	if (!output)
+		return (NULL);
+	process_characters(str, output, &open_s_quote, &open_d_quote);
+	return (output);
+}

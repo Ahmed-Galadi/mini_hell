@@ -12,91 +12,132 @@
 
 #include "../../minishell.h"
 
-void p_token(t_token *token)
+// Add token to list function
+static t_token	*add_token_to_list(t_token *head, t_token *new_token)
 {
-	t_token *current;
+	t_token	*last;
 
-	if (!token)
+	last = head;
+	if (!head)
+		return (new_token);
+	while (last->next)
+		last = last->next;
+	last->next = new_token;
+return (head);
+}
+
+// Handle redirection function
+static char	*handle_redirection(char **splited_input, int *i)
+{
+	if (splited_input[*i + 1] && !cstm_strcmp(splited_input[*i + 1], "|"))
 	{
-		printf("empty token!\n");
-		return ;
+		(*i) += 2;
+		return (ft_strdup(splited_input[*i - 1]));
 	}
-	current = token;
+	else
+	{
+		(*i)++;
+		return (NULL);
+	}
+}
+
+// Get token type function
+static e_tokenType	get_token_type(char *str)
+{
+	if (cstm_strcmp(str, "|"))
+		return (PIPE);
+	if (cstm_strcmp(str, "<"))
+		return (RED_IN);
+	if (cstm_strcmp(str, ">"))
+		return (RED_OUT);
+	if (cstm_strcmp(str, ">>"))
+		return (APPEND);
+	if (cstm_strcmp(str, "<<"))
+		return (HERE_DOC_EXP);
+	return (COMMAND);
+}
+
+// Create token function
+static t_token	*create_token(char **splited_input, int *i)
+{
+	t_token		*new_token;
+	e_tokenType	type;
+
+	new_token = (t_token *)malloc(sizeof(t_token));
+	if (!new_token)
+		return (NULL);
+	type = get_token_type(splited_input[*i]);
+	new_token->type = type;
+	if (type == COMMAND || type == PIPE)
+		new_token->value = ft_strdup(splited_input[(*i)++]);
+	else
+		new_token->value = handle_redirection(splited_input, i);
+	new_token->next = NULL;
+	return (new_token);
+}
+
+// Format and switch characters function
+static char	*format_and_switch(char *input)
+{
+	char	*formated_input;
+
+	formated_input = format(input);
+	switch_char(&formated_input, ' ', -1);
+	switch_char(&formated_input, '\t', -2);
+	return (formated_input);
+}
+
+bool	has_quotes(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == '\"' || str[i] == '\'')
+			return (true);
+	return (false);
+}
+
+void	heredoc_type_set(t_token **token)
+{
+	t_token	*current;
+
+	current = *token;
 	while (current)
 	{
-		printf("Type: %d", current->type);
 		if (current->value)
-			printf("| Value: %s", current->value);
-		printf("\n****************************\n");
+			if (current->type == HERE_DOC_EXP && has_quotes(current->value))
+				current->type = HERE_DOC;
 		current = current->next;
 	}
 }
 
-t_token *tokenizer(char *input, t_env *env)
+// Split input into tokens
+
+t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 {
-    t_token *head = NULL;
-    char *formated_input;
-    char **splited_input;
-    e_tokenType type;
-    int i = 0;
+	t_token	*head;
+	char	**splited_input;
+	int		i;
+	char	*formated_input;
+	t_token	*new_token;
 
-    formated_input = format(input);
-    switch_char(&formated_input, ' ', -1);
-	switch_char(&formated_input, '\t', -2);
+	head = NULL;
+	i = 0;
+	formated_input = format_and_switch(input);
 	splited_input = cstm_split(formated_input, " \t");
-
-    while (splited_input[i])
-    {
-        t_token *new_token = (t_token *)malloc(sizeof(t_token));
-        if (!new_token)
-            return (NULL);
-        if (cstm_strcmp(splited_input[i], "|"))
-			type = PIPE;
-		else if (cstm_strcmp(splited_input[i], "<"))
-			type = RED_IN;
-        else if (cstm_strcmp(splited_input[i], ">"))
-			type = RED_OUT;
-        else if (cstm_strcmp(splited_input[i], ">>"))
-            type = APPEND;
-        else if (cstm_strcmp(splited_input[i], "<<"))
-            type = HERE_DOC;
-        else
-            type = COMMAND;
-        new_token->type = type;
-        if (type == COMMAND || type == PIPE)
-        {
-            new_token->value = ft_strdup(splited_input[i]);
-            i++;
-        }
-        else
-        {
-            if (splited_input[i + 1] && !cstm_strcmp(splited_input[i + 1],"|"))
-			{
-                new_token->value = ft_strdup(splited_input[i + 1]);
-				i += 2;
-			}
-            else
-			{
-                new_token->value = NULL;
-				i++;
-			}
-        }
-
-        new_token->next = NULL;
-
-        if (head == NULL)
-            head = new_token;
-        else
-        {
-            t_token *last = head;
-            while (last->next)
-                last = last->next;
-            last->next = new_token;
-        }
-    }
-	/*print_token(head);*/
+	while (splited_input[i])
+	{
+		new_token = create_token(splited_input, &i);
+		if (!new_token)
+			return (NULL);
+		head = add_token_to_list(head, new_token);
+	}
 	if (!syntax_error(head))
+	{
+		*exit_status = 258;
 		return (NULL);
-	
-    return (head);
+	}
+	heredoc_type_set(&head);
+	return (head);
 }

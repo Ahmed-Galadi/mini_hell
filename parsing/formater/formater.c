@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   formater.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:42:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 18:53:09 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/28 20:39:34 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 void	switch_char(char **str, char to_find, char character)
- {
+{
 	int		in_quote;
 	int		i;
 
@@ -29,7 +29,7 @@ void	switch_char(char **str, char to_find, char character)
 			(*str)[i] = character;
 		i++;
 	}
- }
+}
 
 char	*format(char *str)
 {

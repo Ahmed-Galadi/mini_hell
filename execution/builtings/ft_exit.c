@@ -52,7 +52,7 @@ int	ft_exit(char **args, int exit_status)
 
 	args++;
 	if (!(*args))
-		return (printf("exit\n"), exit(exit_status), 0);
+		return (exit(exit_status), 0);
 	exit_tmp = custom_atoi(*args);
 	if (exit_tmp < 0)
 		exit(255);

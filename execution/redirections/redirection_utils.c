@@ -20,17 +20,17 @@ static int is_redirection_in(e_tokenType operator);
 
 int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 {
-	if (operator_type == RED_IN || operator_type == RED_IN_EXP)
+	if (operator_type == RED_IN)
 	{
 		*default_fd = STDIN_FILENO;
 		*flags = O_RDONLY;
 	}
-	else if (operator_type == RED_OUT || operator_type == RED_OUT_EXP)
+	else if (operator_type == RED_OUT)
 	{
 		*default_fd = STDOUT_FILENO;
 		*flags = O_RDWR | O_CREAT | O_TRUNC;
 	}
-	else if (operator_type == APPEND || operator_type == APPEND_EXP)
+	else if (operator_type == APPEND)
 	{
 		*default_fd = STDOUT_FILENO;
 		*flags = O_RDWR | O_CREAT | O_APPEND;
@@ -166,13 +166,13 @@ void close_all_fds(int *fds, int count)
 
 static int is_redirection_out(e_tokenType operator)
 {
-	if (operator== RED_OUT || operator== APPEND || operator== APPEND_EXP || operator== RED_OUT_EXP)
+	if (operator== RED_OUT || operator== APPEND)
 		return (1);
 	return (0);
 }
 static int is_redirection_in(e_tokenType operator)
 {
-	if (operator== RED_IN || operator== HERE_DOC || operator== HERE_DOC_EXP || operator== RED_IN_EXP)
+	if (operator== RED_IN || operator== HERE_DOC || operator== HERE_DOC_EXP)
 		return (1);
 	return (0);
 }
