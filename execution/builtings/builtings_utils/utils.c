@@ -89,7 +89,7 @@ int	is_builtin(const char *cmd)
 	char	*builtins[8];
 
 	if(!cmd)
-		return (-1);
+		return (0);
 	builtins[0] = "echo";
 	builtins[1] = "cd";
 	builtins[2] = "pwd";

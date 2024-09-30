@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/25 14:32:57 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:04:26 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	pid_t	pid;
 	char	*cmd_path;
 	int		status;
+	int		count;
 	
-
+	count = heredoc_count(command);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -28,8 +29,14 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	if (pid == 0)
 	{
 		// Child process
+	if (count && !command->command[0])
+	{
+		handle_redirections(data);
+		exit(0);
+	}
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+		handle_redirections(data);
 		char **env_array = env_to_array(data->env);
 		if (!env_array)
 		{
@@ -42,8 +49,6 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 			fprintf(stderr, "Command not found: %s\n", args[0]);
 			exit(127);  // Exit with 127 for command not found
 		}
-		ft_open_heredoc(data);
-		handle_redirections(data);
 		if (execve(cmd_path, args, env_array) == -1)
 		{
 			perror("Error execve");
@@ -62,6 +67,8 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 		if (WIFEXITED(status))
 		{
 			data->exit_status = WEXITSTATUS(status);
+			if (data->exit_status == 2)
+				exit(2);
 		}
 		else if (WIFSIGNALED(status))
 		{

@@ -1,6 +1,21 @@
 #include "../../minishell.h"
 #include <stdio.h>
 
+int	count_docs(t_opp *op)
+{
+	int	count;
+
+	count = 0;
+	while (op)
+	{
+		if (op->operator == HERE_DOC
+			|| op->operator == HERE_DOC_EXP)
+			count++;
+		op = op->next;
+	}
+	return (count);
+}
+
 int	heredoc_count(t_com *command)
 {
 	int		count;
@@ -12,12 +27,7 @@ int	heredoc_count(t_com *command)
 	while (curr)
 	{
 		op = curr->operator;
-		while (op)
-		{
-			if (op->operator == HERE_DOC)
-				count++;
-			op = op->next;
-		}
+		count += count_docs(curr->operator);
 		curr = curr->next;
 	}
 	return (count);
@@ -94,7 +104,8 @@ void	ft_open_heredoc(t_shell *data)
 		op = curr->operator;
 		while (op)
 		{
-			if (op->operator == HERE_DOC)
+			if (op->operator == HERE_DOC
+				|| op->operator == HERE_DOC_EXP)
 				open_heredoc(data->heredoc_files, op, &count);
 			op = op->next;
 		}

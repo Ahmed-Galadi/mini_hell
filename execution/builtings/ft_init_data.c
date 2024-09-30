@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:26:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/29 16:20:59 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/30 21:02:36 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int init_shell_data_config(t_shell *data, char **envp)
 	if (!data || !envp)
 		return (0);
 	data->exit_status = 0;
+	data->heredoc_count = 0;
+	data->heredoc_index = 0;
 	// Initilize command struct
 	data->command = NULL;
 	// Initialize environment variable linked list

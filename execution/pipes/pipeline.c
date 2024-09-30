@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/29 19:01:00 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/30 23:32:16 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int heredoc_one_pipe(t_com *command)
     count_heredocs = 0;
     while (curr_op)
     {
-        if (curr_op->operator == HERE_DOC)
+        if (curr_op->operator == HERE_DOC || curr_op->operator == HERE_DOC_EXP)
             count_heredocs++;
         curr_op = curr_op->next;
     }

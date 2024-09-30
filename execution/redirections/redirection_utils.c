@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/29 17:43:27 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/30 23:26:37 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 		*default_fd = STDOUT_FILENO;
 		*flags = O_RDWR | O_CREAT | O_APPEND;
 	}
+	else if (operator_type == HERE_DOC || operator_type == HERE_DOC_EXP)
+		return (1);
 	else
 		return (0); 
 	return (1);
@@ -103,7 +105,8 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 	{
 		while (curr_op)
 		{
-			if (curr_op->operator== HERE_DOC)
+			if (curr_op->operator== HERE_DOC
+				|| curr_op->operator == HERE_DOC_EXP)
 				ft_read_from_heredoc(data);
 			else
 				handle_files_redirections(curr_op);

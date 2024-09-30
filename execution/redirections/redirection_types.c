@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/25 16:58:08 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:37:11 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ void	handle_redirections(t_shell *data)
 	if (!data)
 		return ;
 	command = data->command;
-    if (!command || !command->operator)
+    if (!command->operator)
         return ;
-
     t_opp *current_op = command->operator;
-
+	ft_open_heredoc(data);
     while (current_op)
     {
         if (current_op->operator == RED_OUT)
@@ -41,7 +40,8 @@ void	handle_redirections(t_shell *data)
         {
             setup_input_redirection(current_op->arg, 0, data);
         }
-        else if (current_op->operator == HERE_DOC)
+        else if (current_op->operator == HERE_DOC
+				|| current_op->operator == HERE_DOC_EXP)
         {
             setup_input_redirection(current_op->arg, 1, data);
         }
@@ -66,7 +66,6 @@ void setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
 
 	if (is_here_doc)
 	{
-		ft_open_heredoc(data);
 		ft_read_from_heredoc(data);
 	}
 	else

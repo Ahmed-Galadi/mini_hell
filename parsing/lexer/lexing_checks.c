@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:49 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/09/30 20:31:04 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	ft_isalpha(char c)
 int	is_red(e_tokenType type)
 {
 	return (type == RED_IN || type == RED_OUT
-		|| type == APPEND || type == HERE_DOC);
+		|| type == APPEND || type == HERE_DOC
+		|| type == HERE_DOC_EXP);
 }
 
 void	add_opp(t_opp **opp, t_opp *to_add)
