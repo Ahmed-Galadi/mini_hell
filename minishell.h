@@ -173,9 +173,12 @@ int		is_rederection(char *str);
 char	*add_spaces(char *str);
 void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
+char	*format_and_switch(char *input);
 t_token	*tokenizer(char *input, t_env *env, int *exit_status);
+void	heredoc_type_set(t_token **token);
+bool	has_quotes(char *str);
 // expand
-void expand(char **token_val, t_env *env, int exit_status);
+void	expand(char **token_val, t_env *env, int exit_status);
 int		ft_isspace(char c);
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);

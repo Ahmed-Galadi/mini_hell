@@ -23,7 +23,7 @@ static t_token	*add_token_to_list(t_token *head, t_token *new_token)
 	while (last->next)
 		last = last->next;
 	last->next = new_token;
-return (head);
+	return (head);
 }
 
 // Handle redirection function
@@ -76,41 +76,16 @@ static t_token	*create_token(char **splited_input, int *i)
 	return (new_token);
 }
 
-// Format and switch characters function
-static char	*format_and_switch(char *input)
-{
-	char	*formated_input;
-
-	formated_input = format(input);
-	switch_char(&formated_input, ' ', -1);
-	switch_char(&formated_input, '\t', -2);
-	return (formated_input);
-}
-
-bool	has_quotes(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		if (str[i] == '\"' || str[i] == '\'')
-			return (true);
-	return (false);
-}
-
-void	heredoc_type_set(t_token **token)
-{
-	t_token	*current;
-
-	current = *token;
-	while (current)
-	{
-		if (current->value)
-			if (current->type == HERE_DOC_EXP && has_quotes(current->value))
-				current->type = HERE_DOC;
-		current = current->next;
-	}
-}
+/*// Format and switch characters function*/
+/*static char	*format_and_switch(char *input)*/
+/*{*/
+/*	char	*formated_input;*/
+/**/
+/*	formated_input = format(input);*/
+/*	switch_char(&formated_input, ' ', -1);*/
+/*	switch_char(&formated_input, '\t', -2);*/
+/*	return (formated_input);*/
+/*}*/
 
 // Split input into tokens
 
