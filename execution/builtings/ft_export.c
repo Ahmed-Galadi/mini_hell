@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/21 16:00:25 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:25:00 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,15 +130,13 @@ char	*extract_value(char *str)
 {
 	char	*value;
 
-	if (!str)
-			return (NULL);
 	if (first_occurence(str, '=') < 0)
 		return (NULL);
+	if (first_occurence(str, '=') > 0 && !str[first_occurence(str, '=') + 1])
+		return ("");
 	value = ft_substr(str, first_occurence(str, '=') + 1, ft_strlen(str));
 	if (!value)
 		return (NULL);
-	if (ft_strcmp(value, str) == 0)
-		return ("");
 	return (value);
 }
 
@@ -178,6 +176,8 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 	char	*prev_value;
 
 	i = 1;
+	if (!str || !crud_operation)
+		return ;
 	if (!ft_strcmp(crud_operation, "Invalid"))
 		return ;
 	if (ft_strcmp(crud_operation, "create") == 0)
@@ -186,8 +186,16 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 		value = extract_value(str);
 		if (!is_var_exist(str, data->export))
 		{
-			ft_set_vars(&data->export, key, value);
-			ft_set_vars(&data->env, key, value);
+			if(!value)
+			{
+				ft_set_vars(&data->export, key, value);
+				ft_set_vars(&data->env, key, value);
+			}
+			else
+			{
+				ft_set_vars(&data->export, key, value);
+				ft_set_vars(&data->env, key, value);
+			}
 		}	
 	}
 	if (ft_strcmp(crud_operation, "append") == 0)
@@ -195,59 +203,64 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 		key = extract_key(str);
 		value = extract_value(str);
 		prev_value = ft_get_var_value(data->export ,key);
-		if (*prev_value)
+		if (prev_value)
 		{
 			ft_set_vars(&data->export, key, ft_strjoin(prev_value, value));
 			ft_set_vars(&data->env, key, ft_strjoin(prev_value, value));
 		}
+		ft_set_vars(&data->export, key, value);
+		ft_set_vars(&data->env, key, value);	
+			
 	}
 }
 
-int	ft_check_arg(char *arg)
+int ft_check_key(const char *arg)
 {
-	int	i;
+    int i;
 
-	if (!((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
-			|| arg[0] == '_'))
-			return (0);
-	i = 1;
-	while (arg[i])
-	{
-		if (arg[i] == '+' && arg[i + 1] == '=' && arg[i + 2] == '\0')
-			return (1);
-		if (arg[i] == '+' && arg[i + 1] == '=')
-			i = i + 2;
-		if (arg[i] == '=' && arg[i + 1] == '\0')
-			return (1);
-		if (arg[i] == '=')
-			return (1);
-		if (arg[i] == '=')
-			i++;
-		if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A' && arg[i] <= 'Z')
-			|| (arg[i] >= '0' && arg[i] <= '9') 
-			|| arg[i] == '_'))
-			return (0);
-		i++;
-	}
-	return (1);
+    if (!((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
+            || arg[0] == '_'))
+        return (0);
+    i = 1;
+    while (arg[i])
+    {
+        if (arg[i] == '+' && arg[i + 1] == '=')
+            return (1);
+        if (arg[i] == '+' && arg[i + 1] == '\0')
+            return (0);
+        if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A' && arg[i] <= 'Z')
+            || (arg[i] >= '0' && arg[i] <= '9') || arg[i] == '_'))
+            return (0);
+        i++;
+    }
+    return (1);
 }
+
+
 
 char	*get_operation(char *arg)
 {
 	char	*key;
 
-	key = ft_substr(arg, 0, first_occurence(arg, '='));
-	if (!ft_check_arg(key))
+	key = extract_key(arg);
+	if (key && !ft_check_key(key))
 	{
 		printf(BOLD RED"Error: "RESET PINK"export:"RESET" \'%s\': not a valid identifier\n", arg);
 		return ("Invalid");
 	}
 	if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] == '+')
+	{
 		return ("append");
+	}
 	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] != '+')
+	{
+		
 		return ("create");
+	}
 	return (NULL);
 }
+
+
 
 int		ft_export(char **args, t_shell *data)
 {

@@ -16,9 +16,17 @@ unset _
 ////
 export a+="dksjdh" b+="sdhjsd"
 export t+=kdfh
-export a="ls -a"
+
+///////////
+ export a="ls -l"
+  ┄─━࿅༻  ~/Desktop/mini-hell༺  ࿅━─┄
+❱ $a
+Command not found: ls -l
+//////////////
+
+
 export a=llll
-Error: export: 'a=ls -a': not a valid identifier
+Error: export: 'a=ls -a': not a valid identifier | should put it in dounle quotes
 /////
 cd 
 mkdir -p a/b/c/d
