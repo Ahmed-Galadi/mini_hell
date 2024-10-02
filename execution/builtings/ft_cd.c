@@ -79,6 +79,13 @@ int	change_directory(const char *path, t_shell *data)
 			return (0);
 		}
 	}
+	else
+	{
+		printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		char	*oldpwd_with_2_points;
+		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"), "/.."); 
+		data->pwd = oldpwd_with_2_points;
+	}
 	return (1);
 }
 	
