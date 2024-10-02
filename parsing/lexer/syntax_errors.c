@@ -33,14 +33,22 @@ int	check_pipes(t_token *token)
 int	check_redirection(t_token *token)
 {
 	t_token	*current;
+	int		i;
 
 	current = token;
 	while (current)
 	{
 		if (is_red(current->type) && is_rederection(current->value))
 			return (0);
-		if (!current->value && is_red(current->type))
+		if (!current->value && is_red(current->type))	
 			return (0);
+		if (is_red(current->type))
+		{
+			i = -1;
+			while ((current->value)[++i])
+				if (ft_isspace((current->value)[i]))
+					return (-1);
+		}
 		current = current->next;
 	}
 	return (1);
@@ -76,12 +84,15 @@ int	syntax_error(t_token *token)
 	output = 1;
 	if (!token)
 		return (1);
-	if (!check_pipes(token) || !check_redirection(token))
+	if (!check_pipes(token) || !check_redirection(token)
+		|| check_redirection(token) == -1)
 	{
 		if (!check_pipes(token))
 			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes!\n"RESET);
 		if (!check_redirection(token))
 			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
+		if (check_redirection(token) == -1)
+			printf(RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
 		return (0);
 	}
 	current = token;

@@ -138,7 +138,7 @@ void    handle_files_redirections(t_opp *curr_op);
 int		heredoc_count(t_com *command);
 char	**fill_heredoc_files(int count);
 void	ftputstr_fd(int fd, char *s);
-void	open_heredoc(char **files, t_opp *op, int *count);
+void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data);
 void	ft_open_heredoc(t_shell *data);
 int		ft_read_from_heredoc(t_shell *data);
 
@@ -173,10 +173,14 @@ int		is_rederection(char *str);
 char	*add_spaces(char *str);
 void	switch_char(char **str, char to_find, char character);
 char	*format(char *str);
+char	*format_and_switch(char *input);
 t_token	*tokenizer(char *input, t_env *env, int *exit_status);
+void	heredoc_type_set(t_token **token);
+bool	has_quotes(char *str);
 // expand
+void	expand(char **token_val, t_env *env, int exit_status);
 int		ft_isspace(char c);
-char	*get_expand_val(char *syytr, t_env *env, int *i, int exit_status);
+char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
 int		calculate_size(char *str, t_env *env, int exit_status);
 void	expand_str(t_token **token, t_env *env, int exit_status);

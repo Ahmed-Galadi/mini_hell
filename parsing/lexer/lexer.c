@@ -50,8 +50,6 @@ t_com	*new_com(t_token *token)
 		token = token->next;
 	}
 	out_args[i] = NULL;
-	/*if (!*out_args)*/
-	/*	out_args = NULL;*/
 	output->command = out_args;
 	output->operator = out_opp;
 	output->next = NULL;

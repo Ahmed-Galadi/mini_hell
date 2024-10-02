@@ -23,30 +23,38 @@ int	is_rederection(char *str)
 		|| cstm_strcmp(str, ">") || cstm_strcmp(str, "<"));
 }
 
-/*bool	has_quotes(char *str)*/
-/*{*/
-/*	int	i;*/
-/**/
-/*	i = -1;*/
-/*	while (str[++i])*/
-/*		if (str[i] == '\"' || str[i] == '\'')*/
-/*			return (true);*/
-/*	return (false);*/
-/*}*/
-/**/
-/*// Get token type function*/
-/*e_tokenType	get_token_type(char *str)*/
-/*{*/
-/*	if (cstm_strcmp(str, "|"))*/
-/*		return (PIPE);*/
-/*	if (cstm_strcmp(str, "<"))*/
-/*		return (RED_IN);*/
-/*	if (cstm_strcmp(str, ">"))*/
-/*		return (RED_OUT);*/
-/*	if (cstm_strcmp(str, ">>"))*/
-/*		return (APPEND);*/
-/*	if (cstm_strcmp(str, "<<"))*/
-/*		return (HERE_DOC_EXP);*/
-/*	return (COMMAND);*/
-/*}*/
+bool	has_quotes(char *str)
+{
+	int	i;
 
+	i = -1;
+	while (str[++i])
+		if (str[i] == '\"' || str[i] == '\'')
+			return (true);
+	return (false);
+}
+
+void	heredoc_type_set(t_token **token)
+{
+	t_token	*current;
+
+	current = *token;
+	while (current)
+	{
+		if (current->value)
+			if (current->type == HERE_DOC_EXP && has_quotes(current->value))
+				current->type = HERE_DOC;
+		current = current->next;
+	}
+}
+
+// Format and switch characters function
+char	*format_and_switch(char *input)
+{
+	char	*formated_input;
+
+	formated_input = format(input);
+	switch_char(&formated_input, ' ', -1);
+	switch_char(&formated_input, '\t', -2);
+	return (formated_input);
+}
