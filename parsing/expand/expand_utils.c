@@ -48,6 +48,36 @@ static char	*get_key(char *str, int *i)
 	return (output);
 }
 
+char *spec_char_quoting(char *spec_str)
+{
+	int tracker;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (spec_str[i])
+	{
+		if (spec_str[i] == '<' || spec_str[i] == '>' || spec_str[i] == '|')
+		{
+			tracker = i;
+			char *output = malloc(ft_strlen(spec_str) + 3);
+			i = 0;
+			while (spec_str[i])
+			{
+				if (i == tracker)
+					output[j++] = '\"';
+				output[j++] = spec_str[i++];
+			}
+			output[j++] = '\"';
+			output[j] = '\0';
+			return (output);
+		}
+		i++;
+	}
+	return (spec_str);
+}
+
 // Expands variable keys and returns their values, including '$?'
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status)
 {
@@ -60,18 +90,12 @@ char	*get_expand_val(char *str, t_env *env, int *i, int exit_status)
 	if (!key)
 		return (NULL);
 	if (!ft_strcmp(key, "?"))
-	{
-		free(key);
 		return (ft_itoa(exit_status));
-	}
 	current = env;
 	while (current)
 	{
 		if (!ft_strcmp(key, current->key))
-		{
-			free(key);
-			return (current->value);
-		}
+			return (spec_char_quoting(current->value));
 		current = current->next;
 	}
 	return (NULL);
