@@ -164,6 +164,7 @@ int main(int argc, char *argv[], char **envp)
 				data.exit_status = ft_execute_command(&data);
 		}
 	}
+
 	return (0);
 }
 

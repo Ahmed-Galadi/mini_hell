@@ -41,6 +41,10 @@
 
 # define MAX_FDS 1024
 
+# define PERM 126
+# define ERROR 1
+# define NOENT 127
+
 typedef enum e_tokenType
 {
 	RED_IN,
@@ -127,9 +131,9 @@ char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
 int		ft_execute_pipeline(char ***commands, int num_commands, t_shell *data);
 // redirections
-void	handle_redirections(t_shell *data);
-void	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
-void	setup_output_redirection(const char *outfile, int is_appended);
+int	handle_redirections(t_shell *data);
+int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
+int	setup_output_redirection(const char *outfile, int is_appended, t_shell *data);
 void	restore_stdout(int stdout_copy);
 void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
 			int *curr_pipe, int curr_cmd, int num_commands, int is_builtin);

@@ -42,9 +42,6 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 	return (1);
 }
 
-
-
-
 // void handle_files_redirections(t_opp *curr_op,)
 // {
 // 	int flags;
