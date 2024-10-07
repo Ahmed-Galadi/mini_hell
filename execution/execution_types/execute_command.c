@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/01 15:51:37 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:50:28 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,27 @@ int ft_execute_command(t_shell *data)
 
 const char *get_path(const char *cmd, t_env *env)
 {
-	int i;
-	char **executables;
-	char *with_back_slash;
-	char *full_path;
-	t_env *curr;
+	int		i;
+	char	**executables;
+	char	*with_back_slash;
+	char	*full_path;
+	char	*key;
+	t_env	*curr;
 
 	executables = NULL;
 	if (cmd[0] == '/')
 		return (cmd);
 	if (!cmd || !env)
 		return (NULL);
-	curr = env;
-	while (curr->next)
-	{
-		if (ft_strncmp(curr->key, "PATH", 4) == 0)
-		{
-			executables = ft_split(curr->value, ':');
-			break;
-		}
-		curr = curr->next;
-	}
+	key = ft_get_var_value(env, "PATH");
+	if (!key)
+		return (NULL);
+	executables = cstm_split(key, ":");
 	i = 0;
 	while (executables[i])
 	{
-		with_back_slash = ft_strjoin(executables[i], "/");
-		full_path = ft_strjoin(with_back_slash, cmd);
+		with_back_slash = ft_strjoin(executables[i], "/", LOCAL);
+		full_path = ft_strjoin(with_back_slash, cmd, LOCAL);
 		if (access(full_path, F_OK | X_OK) == 0)
 			return (full_path);
 		i++;

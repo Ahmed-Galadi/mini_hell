@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 02:23:03 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:37:44 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_token	*create_token(char **splited_input, int *i)
 	t_token		*new_token;
 	e_tokenType	type;
 
-	new_token = (t_token *)malloc(sizeof(t_token));
+	new_token = (t_token *)gc_malloc(sizeof(t_token), LOCAL);
 	if (!new_token)
 		return (NULL);
 	type = get_token_type(splited_input[*i]);

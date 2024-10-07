@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 00:08:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/26 22:36:49 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:52:22 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@ char	**env_to_array(t_env *env)
         count++;
         temp = temp->next;
     }
-    char **env_array = malloc(sizeof(char*) * (count + 1));
+    char **env_array = gc_malloc(sizeof(char*) * (count + 1), LOCAL);
     if (!env_array)
         return NULL;
 
     int i = 0;
     while (env)
     {
-        env_array[i] = malloc(ft_strlen(env->key) + ft_strlen(env->value) + 2);
+        env_array[i] = gc_malloc(ft_strlen(env->key) + ft_strlen(env->value) + 2, LOCAL);
         if (!env_array[i])
         {
-            while (--i >= 0)
-                free(env_array[i]);
-            free(env_array);
-            return NULL;
+            return (gc_free_all(LOCAL), NULL);
         }
         sprintf(env_array[i], "%s=%s", env->key, env->value);
         env = env->next;
@@ -53,8 +50,8 @@ char	*join_path(char *path, char *cmd)
 	if (!path || !cmd)
 		return (NULL);
 	with_back_slash = "/";
-	with_back_slash = ft_strjoin(path, with_back_slash);
-	full_path = ft_strjoin(with_back_slash, cmd);
+	with_back_slash = ft_strjoin(path, with_back_slash, LOCAL);
+	full_path = ft_strjoin(with_back_slash, cmd, LOCAL);
 	return (full_path);
 }
 
@@ -97,7 +94,7 @@ char	*find_command(char *cmd, char **p_env)
 	path_copy = ft_strdup(path_env);
 	if (!path_copy)
 		return (NULL);
-	tokens = ft_split(path_copy, ':');
+	tokens = cstm_split(path_copy, ":");
 	while (*tokens)
 	{
 		if (ft_strchr(cmd, '/') == NULL)

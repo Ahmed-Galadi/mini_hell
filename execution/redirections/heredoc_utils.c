@@ -38,13 +38,13 @@ char	**fill_heredoc_files(int count)
 	int		i;
 	char	**new;
 
-	new = malloc(sizeof(char *) * count);
+	new = gc_malloc(sizeof(char *) * count, LOCAL);
 	if (!new)
 		return (NULL);
 	i = 0;
 	while (i < count)
 	{
-		new[i] = ft_strjoin("/tmp/.tmpheredocfile", ft_itoa(i));
+		new[i] = ft_strjoin("/tmp/.tmpheredocfile", ft_itoa(i), LOCAL);
 		i++;
 	}
 	new[i] = NULL;

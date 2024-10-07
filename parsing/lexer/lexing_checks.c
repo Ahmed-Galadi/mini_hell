@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/30 20:31:04 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:37:39 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_opp	*new_op(t_token **token)
 	{
 		if (is_red(current->type))
 		{
-			tmp = (t_opp *)malloc(sizeof(t_opp));
+			tmp = (t_opp *)gc_malloc(sizeof(t_opp), LOCAL);
 			if (!tmp)
 				return (NULL);
 			tmp->operator = current->type;

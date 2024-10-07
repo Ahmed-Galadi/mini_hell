@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/01 15:42:01 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:33:38 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*simple_pwd(char *pwd, char *home)
 	if (ft_strncmp(pwd, home, ft_strlen(home)))
 		return (pwd);
 	rest_path = ft_substr(pwd, len, ft_strlen(pwd) - len);
-	simplified = ft_strjoin("~", rest_path);
+	simplified = ft_strjoin("~", rest_path, GLOBAL);
 	return (simplified);
 }
 
@@ -83,7 +83,7 @@ char *prompt(t_shell *data)
 	t_env	*tmp;
 
 	output = NULL;
-	output = ft_strjoin(output, PROMPT_MSG_1);
+	output = ft_strjoin(output, PROMPT_MSG_1, GLOBAL);
 	tmp = data->env;
 	while (tmp)
 	{
@@ -91,12 +91,12 @@ char *prompt(t_shell *data)
 			cwd = simple_pwd(cwd, tmp->value);
 		tmp = tmp->next;
 	}
-	output = ft_strjoin(output, cwd);
-	output = ft_strjoin(output, PROMPT_MSG_2);
+	output = ft_strjoin(output, cwd, GLOBAL);
+	output = ft_strjoin(output, PROMPT_MSG_2, GLOBAL);
 	if (data->exit_status != 0)
-		output = ft_strjoin(output, UNVALID_ARROW);
+		output = ft_strjoin(output, UNVALID_ARROW, GLOBAL);
 	else
-		output = ft_strjoin(output, VALID_ARROW);
+		output = ft_strjoin(output, VALID_ARROW, GLOBAL);
 	return (output);
 }
 
@@ -124,9 +124,16 @@ void	disable_echo(struct termios term)
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	{
 		perror("tcgetattr");
+        gc_free_all(LOCAL);
+        gc_free_all(GLOBAL);
 		exit(EXIT_FAILURE);
 	}
 }
+	void	p(void)
+	{
+		system("leaks a.out");
+	}
+
 
 int main(int argc, char *argv[], char **envp)
 {
@@ -138,6 +145,8 @@ int main(int argc, char *argv[], char **envp)
 	(void)args;
 	(void)argv;
 	(void)argc;
+	
+	atexit(p);
     if (!init_shell_data_config(&data, envp))
 	{
     	fprintf(stderr, "Failed to initialize data\n");
@@ -146,6 +155,8 @@ int main(int argc, char *argv[], char **envp)
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	{
 		perror("tcgetattr");
+        gc_free_all(LOCAL);
+        gc_free_all(GLOBAL);
 		exit(EXIT_FAILURE);
 	}
 	while (1)
@@ -163,8 +174,11 @@ int main(int argc, char *argv[], char **envp)
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(&data);
 		}
+		free(cmd_line_args);
+		gc_free_all(LOCAL);
 	}
-
+	gc_free_all(GLOBAL);
+	gc_free_all(LOCAL);
 	return (0);
 }
 

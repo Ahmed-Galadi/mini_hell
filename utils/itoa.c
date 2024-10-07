@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:24 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:40:25 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:19:15 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_itoa(int n)
 
 	nbr = n;
 	len_nbr = nbr_len(nbr);
-	nbr_str = malloc(len_nbr + 1);
+	nbr_str = gc_malloc(len_nbr + 1, LOCAL);
 	nbr_str[len_nbr + 1] = '\0';
 	if (nbr < 0)
 	{

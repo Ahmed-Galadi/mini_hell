@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 06:56:26 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:51:54 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s1)
 	if (!s1)
 		return (NULL);
 	str_length = ft_strlen(s1);
-	str = (char *)malloc(str_length + 1);
+	str = (char *)gc_malloc(str_length + 1, GLOBAL);
 	i = 0;
 	if (!str)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/29 16:28:46 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:41:56 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,16 @@ int	ft_set_var(t_env **my_export_env, const char *key, const char *value)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			free(current->value);
+			//free(current->value);
 			current->value = ft_strdup(value);
 			return (0);
 		}
 		current = current->next;
     }
 	// If the variable does not exist, add it
-	t_env *new_node = malloc(sizeof(t_env));
+	t_env *new_node = gc_malloc(sizeof(t_env), GLOBAL);
 	if (!new_node)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
+		return (perror("gc_malloc"), 1);
 	new_node->key = ft_strdup(key);
 	new_node->value = ft_strdup(value);
 	new_node->next = *my_export_env;
@@ -83,7 +80,7 @@ int	change_directory(const char *path, t_shell *data)
 	{
 		printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		char	*oldpwd_with_2_points;
-		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"), "/.."); 
+		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"), "/..", GLOBAL); 
 		data->pwd = oldpwd_with_2_points;
 	}
 	return (1);

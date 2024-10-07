@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/18 00:57:10 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:37:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void expand(char **token_val, t_env *env, int exit_status) {
     int size = initialize_expansion(&exp_data, &j, &(bool){false}, &(bool){false});
     if (size < 0)
 		return ;
-    char *output = (char *)malloc(size);
+    char *output = (char *)gc_malloc(size, LOCAL);
     if (!output)
 		return ;
     handle_expansion_loop(&exp_data, output);

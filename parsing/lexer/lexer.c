@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:47 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 19:32:57 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ t_com	*new_com(t_token *token)
 	t_opp	*out_opp;
 	int		i;
 
-	output = (t_com *)malloc(sizeof(t_com));
+	output = (t_com *)gc_malloc(sizeof(t_com), LOCAL);
 	if (!output)
 		return (NULL);
-	out_args = (char **)malloc(sizeof(char *) * (args_count(token) + 1));
+	out_args = (char **)gc_malloc(sizeof(char *) * (args_count(token) + 1), LOCAL);
 	if (!out_args)
 		return (NULL);
 	i = 0;

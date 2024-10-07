@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:30:19 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 14:58:32 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:55:59 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ t_env   *create_env_node(char *env_str)
 {
 	t_env   *node;
 
-	node = (t_env *)malloc(sizeof(t_env));
+	if (!env_str)
+		return (NULL);
+	node = (t_env *)gc_malloc(sizeof(t_env), GLOBAL);
 	if (!node)
 		return (NULL);
 	int start = -1;

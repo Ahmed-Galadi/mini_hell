@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/30 23:26:37 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:53:29 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,12 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 		if (curr_cmd > 0 && !flag_in)
 		{
 			if (dup2(prev_pipe[0], STDIN_FILENO) == -1)
-			{
-				perror("dup2");
-				exit(EXIT_FAILURE);
-			}
+				return (perror("dup2"));
 		}
 		if (curr_cmd < num_commands - 1 && !flag_out)
 		{
 			if (dup2(curr_pipe[1], STDOUT_FILENO) == -1)
-			{
-				perror("dup2");
-				exit(EXIT_FAILURE);
-			}
+				return (perror("dup2"));
 		}
 		flag_in = 0;
 		flag_out = 0;

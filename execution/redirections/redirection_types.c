@@ -26,7 +26,6 @@ int	handle_redirections(t_shell *data)
 	command = data->command;
     if (!command->operator)
         return (0);
-	printf("red\n");
     t_opp *current_op = command->operator;
 	ft_open_heredoc(data);
 	s = 0;

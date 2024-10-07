@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_spaces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:52:32 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:27 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:37:17 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*add_spaces(char *str)
 
 	open_d_quote = false;
 	open_s_quote = false;
-	output = malloc(ft_strlen(str) * 2 + 1);
+	output = gc_malloc(ft_strlen(str) * 2 + 1, LOCAL);
 	if (!output)
 		return (NULL);
 	process_characters(str, output, &open_s_quote, &open_d_quote);

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:44:46 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/03 00:40:11 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:25:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);
-	sub_string = (void *)malloc(len + 1);
+	sub_string = (void *)gc_malloc(len + 1, GLOBAL);
 	if (!sub_string)
 		return (NULL);
 	i = 0;

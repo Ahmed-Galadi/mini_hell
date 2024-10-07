@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:40:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:48:08 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <readline/readline.h>
-#include <sys/wait.h>
-#include <errno.h>
-#include <fcntl.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <readline/readline.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <termios.h>
 
-#define YELLOW "\001\033[93m\002"
-#define RESET "\001\033[0m\002"
-#define BOLD "\001\033[1m\002"
-#define ORANGE "\001\033[38;5;214m\002"
-#define GREEN_FG "\001\033[92m\002"
-#define RED "\001\033[31m\002"
-#define F_COLOR "\001\033[96m\002"
-#define PINK "\001\033[38;5;13m\002"
+# define YELLOW "\001\033[93m\002"
+# define RESET "\001\033[0m\002"
+# define BOLD "\001\033[1m\002"
+# define ORANGE "\001\033[38;5;214m\002"
+# define GREEN_FG "\001\033[92m\002"
+# define RED "\001\033[31m\002"
+# define F_COLOR "\001\033[96m\002"
+# define PINK "\001\033[38;5;13m\002"
 
-#define PROMPT_MSG_1 F_COLOR " " RESET YELLOW " ┄─━࿅༻  " RESET ORANGE BOLD 
-#define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET
-#define VALID_ARROW GREEN_FG "❱ " RESET
-#define UNVALID_ARROW RED "❱ " RESET
+# define PROMPT_MSG_1 F_COLOR " " RESET YELLOW " ┄─━࿅༻  " RESET ORANGE BOLD 
+# define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET
+# define VALID_ARROW GREEN_FG "❱ " RESET
+# define UNVALID_ARROW RED "❱ " RESET
 
 
 # define MAX_FDS 1024
@@ -45,13 +45,19 @@
 # define ERROR 1
 # define NOENT 127
 
+typedef enum s_type
+{
+	LOCAL,
+	GLOBAL
+}			t_type;
+
 typedef enum e_tokenType
 {
 	RED_IN,
 	RED_OUT,
 	APPEND,
 	HERE_DOC_EXP,
-	HERE_DOC,
+HERE_DOC,
 	EXPAND,
 	COMMAND,
 	PIPE
@@ -105,9 +111,28 @@ typedef struct	s_expand_data
     int		exit_status;
 }			t_expand_data;
 
+//garbage collector
+
+typedef struct s_node
+{
+        void                    *ptr;
+        struct s_node   *next;
+}                               t_node;
+
+typedef struct s_memory_list
+{
+        t_node  *head;
+        t_node  *tail;
+}                       t_memory_list;
+void	add_memory(void *ptr, t_type type);
+void	*gc_malloc(size_t size, t_type type);
+void	gc_free_all(t_type type);
+
+
 // execution prototypes
 int		ft_echo(char **args);
 int		ft_env(t_env *env);
+char	*ft_get_var_value(t_env *env ,const char *key);
 t_env	*init_env(char **env, char *env_type);
 int		init_shell_data_config(t_shell *data, char **envp);
 void	ft_printf_envs(t_env *env);
@@ -153,8 +178,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_atoi(const char *str);
 char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(char const *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2, t_type type);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isalnum(int c);
 char	*ft_strcpy(char *dest, const char *src);
@@ -164,7 +188,6 @@ char	**env_to_array(t_env *env);
 
 // utils
 int		cstm_strcmp(char *str1, char *str2);
-char	**ft_split(char const *s, char c);
 void	ft_putstr(char *str);
 void	add_lstback(t_opp *operators, t_opp *to_add);
 t_token	*last_token(t_token *token);

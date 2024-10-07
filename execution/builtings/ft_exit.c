@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:49:56 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/07 20:48:55 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:51:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,21 @@ int	ft_exit(char **args, int exit_status)
 
 	args++;
 	if (!(*args))
-		return (exit(exit_status), 0);
+		return (gc_free_all(GLOBAL), gc_free_all(LOCAL), exit(exit_status), 0);
 	exit_tmp = custom_atoi(*args);
 	if (exit_tmp < 0)
+    {
+        gc_free_all(LOCAL);
+        gc_free_all(GLOBAL);
 		exit(255);
+    }
 	args++;
 	if (!*args)
+    {
+        gc_free_all(LOCAL);
+        gc_free_all(GLOBAL);
 		exit (exit_tmp);
+    }
 	fprintf(stderr, "%s: exit: too many arguments\n", RED"ERROR!"RESET);
 	return (1);
 }

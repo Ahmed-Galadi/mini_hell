@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:26:37 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/04 16:14:32 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:17:29 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	***split_commands(t_com *commands, int num_commands)
 	t_com *current = commands;
 
 	// Allocate memory for the command list
-	command_list = malloc(sizeof(char **) * (num_commands + 1));
+	command_list = gc_malloc(sizeof(char **) * (num_commands + 1), LOCAL);
 	if (!command_list)
 		return NULL;
 
@@ -50,7 +50,7 @@ char	***split_commands(t_com *commands, int num_commands)
 			arg_count++;
 
 		// Allocate memory for the command and its arguments
-		command_list[cmd_index] = malloc(sizeof(char *) * (arg_count + 1));
+		command_list[cmd_index] = gc_malloc(sizeof(char *) * (arg_count + 1), LOCAL);
 		if (!command_list[cmd_index])
 			return NULL;
 
@@ -74,22 +74,22 @@ char	***split_commands(t_com *commands, int num_commands)
 	return command_list;
 }
 
-void    free_commands(char ***commands, int num_commands)
-{
-	int i;
-	int j;
+// void    free_commands(char ***commands, int num_commands)
+// {
+// 	int i;
+// 	int j;
 
-	i = 0;
-	while (i < num_commands)
-	{
-		j = 0;
-		while (commands[i][j])
-		{
-			free(commands[i][j]);
-			j++;
-		}
-		free(commands[i]);
-		i++;
-	}
-	free(commands);
-}
+// 	i = 0;
+// 	while (i < num_commands)
+// 	{
+// 		j = 0;
+// 		while (commands[i][j])
+// 		{
+// 			free(commands[i][j]);
+// 			j++;
+// 		}
+// 		free(commands[i]);
+// 		i++;
+// 	}
+// 	free(commands);
+// }

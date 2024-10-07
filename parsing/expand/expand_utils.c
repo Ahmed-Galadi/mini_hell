@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:14 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:47:42 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static char	*get_key(char *str, int *i)
 		&& (ft_isalnum(str[*i + length])
 			|| str[*i + length] == '_' || str[*i + length] == '?'))
 		length++;
-	output = (char *)malloc(length + 1);
+	output = (char *)gc_malloc(length + 1, LOCAL);
 	if (!output)
-		exit(EXIT_FAILURE);
+		return (perror("malloc"), NULL);
 	ft_strncpy(output, &str[*i], length);
 	output[length] = '\0';
 	*i += length;
@@ -61,7 +61,7 @@ char *spec_char_quoting(char *spec_str)
 		if (spec_str[i] == '<' || spec_str[i] == '>' || spec_str[i] == '|')
 		{
 			tracker = i;
-			char *output = malloc(ft_strlen(spec_str) + 3);
+			char *output = gc_malloc(ft_strlen(spec_str) + 3, LOCAL);
 			i = 0;
 			while (spec_str[i])
 			{

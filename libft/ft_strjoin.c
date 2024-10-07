@@ -6,14 +6,14 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 06:55:10 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/02 20:16:43 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:34:46 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <libc.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, t_type type)
 {
 	size_t	i;
 	size_t	j;
@@ -25,7 +25,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	leng_s1 = ft_strlen(s1);
 	leng_s2 = ft_strlen(s2);
-	strjoin = (char *)malloc(leng_s1 + leng_s2 + 1);
+	strjoin = (char *)gc_malloc(leng_s1 + leng_s2 + 1, type);
 	if (!strjoin)
 		return (NULL);
 	i = 0;

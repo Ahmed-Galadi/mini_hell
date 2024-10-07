@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cstm_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:40:21 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/07 18:38:47 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*copy_word(const char *start, const char *end)
 	char	*word;
 
 	len = end - start;
-	word = (char *)malloc(len + 1);
+	word = (char *)gc_malloc(len + 1, LOCAL);
 	if (!word)
 		return (NULL);
 	i = 0;
@@ -74,7 +74,7 @@ char	**cstm_split(const char *str, const char *delims)
 	if (!str || !delims)
 		return (NULL);
 	word_count = count_words(str, delims);
-	result = (char **)malloc((word_count + 1) * sizeof(char *));
+	result = (char **)gc_malloc((word_count + 1) * sizeof(char *), LOCAL);
 	if (!result)
 		return (NULL);
 	i = 0;

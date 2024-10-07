@@ -15,7 +15,7 @@
 int	ft_execute_external(char **args, t_shell *data, t_com *command)
 {
 	pid_t	pid;
-	char	*cmd_path;
+	const char	*cmd_path;
 	int		status;
 	int		count;
 
@@ -43,7 +43,7 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 			fprintf(stderr, "Failed to create environment array\n");
 			exit(ERROR);
 		}
-		cmd_path = find_command(args[0], env_array);
+		cmd_path = get_path(args[0], data->env);
 		if (!cmd_path)
 		{
 			fprintf(stderr, "Command not found: %s\n", args[0]);
