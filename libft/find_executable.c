@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 00:08:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:52:22 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:01:52 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,8 @@ char	**env_to_array(t_env *env)
     int i = 0;
     while (env)
     {
-        env_array[i] = gc_malloc(ft_strlen(env->key) + ft_strlen(env->value) + 2, LOCAL);
-        if (!env_array[i])
-        {
-            return (gc_free_all(LOCAL), NULL);
-        }
-        sprintf(env_array[i], "%s=%s", env->key, env->value);
+		env_array[i] = ft_strjoin(env->key, "=", LOCAL);
+		env_array[i] = ft_strjoin(env_array[i], env->value, LOCAL);
         env = env->next;
         i++;
     }

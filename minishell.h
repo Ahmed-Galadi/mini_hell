@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:48:08 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:18:46 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,16 @@
 # define ERROR 1
 # define NOENT 127
 
-typedef enum s_type
-{
-	LOCAL,
-	GLOBAL
-}			t_type;
-
 typedef enum e_tokenType
 {
-	RED_IN,
-	RED_OUT,
-	APPEND,
-	HERE_DOC_EXP,
-HERE_DOC,
-	EXPAND,
-	COMMAND,
-	PIPE
+	RED_IN,			// 0
+	RED_OUT,		// 1
+	APPEND,			// 2
+	HERE_DOC_EXP,	// 3
+	HERE_DOC,		// 4
+	EXPAND,			// 5
+	COMMAND,		// 6
+	PIPE			// 7
 }	e_tokenType;
 
 typedef struct		s_token
@@ -112,6 +106,12 @@ typedef struct	s_expand_data
 }			t_expand_data;
 
 //garbage collector
+
+typedef enum s_type
+{
+	LOCAL,
+	GLOBAL
+}			t_type;
 
 typedef struct s_node
 {

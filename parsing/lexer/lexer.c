@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 19:32:57 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:54:37 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	args_count(t_token *token)
 	current = token;
 	while (current && current->type != PIPE)
 	{
-		if (!is_red(token->type))
+		if (!is_red(current->type))
 			count++;
 		current = current->next;
 	}

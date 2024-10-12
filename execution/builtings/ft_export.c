@@ -6,11 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:42:58 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:40:25 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <readline/readline.h>
+#include <stdio.h>
 
 void	ft_get_vars(t_env *export)
 {
@@ -203,9 +205,11 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 			ft_set_vars(&data->export, key, ft_strjoin(prev_value, value, GLOBAL));
 			ft_set_vars(&data->env, key, ft_strjoin(prev_value, value, GLOBAL));
 		}
-		ft_set_vars(&data->export, key, value);
-		ft_set_vars(&data->env, key, value);	
-			
+		else
+		{
+			ft_set_vars(&data->export, key, value);
+			ft_set_vars(&data->env, key, value);	
+		}
 	}
 }
 

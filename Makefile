@@ -6,7 +6,7 @@
 #    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/10/07 14:39:20 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/10/09 12:15:07 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c\
 
-CFLAGS = -g
+CFLAGS = -g #-fsanitize=address
 CFLAGS_R = -g -lreadline
 HEADER = minishell.h
 LIB = minishell.a

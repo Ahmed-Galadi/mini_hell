@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/30 23:32:16 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:19:38 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ int ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
     pid_t pid;
     int status;
     int i;
-    t_com *com;
-    t_opp *curr_op;
+   // t_com *com;
+    // t_opp *curr_op;
 
     i = 0;
     data->heredoc_index = 0;
     ft_open_heredoc(data);
     while (i < num_commands)
     {
-        com = &data->command[i];
-        curr_op = com->operator;
+        //com = &data->command[i];
+        //curr_op = com->operator;
 
         if (i < num_commands - 1)
             if (pipe(curr_pipe) == -1)

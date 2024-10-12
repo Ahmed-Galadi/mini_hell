@@ -1,8 +1,6 @@
 Makefile
 TODO
 a
-b
-cat
 execution
 libft
 main.c

@@ -38,7 +38,7 @@ char	**fill_heredoc_files(int count)
 	int		i;
 	char	**new;
 
-	new = gc_malloc(sizeof(char *) * count, LOCAL);
+	new = gc_malloc(sizeof(char *) * (count + 1), LOCAL);
 	if (!new)
 		return (NULL);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:50:28 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:40:53 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_execute_command(t_shell *data)
 		if (is_builtin(data->command->command[0]))
 			builtin_status = ft_execute_builtin(data);
         else
-            return (ft_execute_external(command->command, data, command));
+        	return (ft_execute_external(command->command, data, command));
     }
 	return (0);
 }

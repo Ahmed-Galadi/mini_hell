@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 19:33:38 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:17:39 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int main(int argc, char *argv[], char **envp)
 	(void)argv;
 	(void)argc;
 	
-	atexit(p);
+	// atexit(p);
     if (!init_shell_data_config(&data, envp))
 	{
     	fprintf(stderr, "Failed to initialize data\n");
@@ -167,15 +167,21 @@ int main(int argc, char *argv[], char **envp)
 		signal(SIGKILL, SIG_IGN);
 		cmd_line_args = readline(prompt(&data));
 		if (!cmd_line_args)
+		{
 			break ;
+		}
 		add_history(cmd_line_args);
 		if (set_command(&data, cmd_line_args) != NULL && !is_spaces(cmd_line_args))
 		{
 			if (data.command && data.command->command)
 				data.exit_status = ft_execute_command(&data);
 		}
+		// printf("before\n");
+		// system("leaks minishell");
 		free(cmd_line_args);
 		gc_free_all(LOCAL);
+		// printf("after\n");
+		// system("leaks minishell");
 	}
 	gc_free_all(GLOBAL);
 	gc_free_all(LOCAL);

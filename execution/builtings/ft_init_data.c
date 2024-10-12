@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:26:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:54:59 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:14:57 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,9 @@ int init_shell_data_config(t_shell *data, char **envp)
 	// Initilize command struct
 	data->command = NULL;
 	// Initialize environment variable linked list
-	printf("here 0\n");
 	data->env = init_env(envp, "env");
 	if (!data->env)
 		return (0);
-	printf("here 2\n");
 	// Initialize current working directory
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		data->pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); 
@@ -109,10 +107,8 @@ int init_shell_data_config(t_shell *data, char **envp)
 	// 	}
 	// 	return (0);
 	// }
-
 	data->export = init_env(envp, "export");
 	if (!data->export)
 		return (0);
-printf("here3\n");
 	return (1);
 }

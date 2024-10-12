@@ -4,6 +4,7 @@ static t_memory_list	*get_memory_list(t_type type, int flag)
 {
 	static t_memory_list	*local_mem;
 	static t_memory_list	*global_mem;
+	t_memory_list *tmp;
 
 	if (!local_mem)
 	{
@@ -23,14 +24,14 @@ static t_memory_list	*get_memory_list(t_type type, int flag)
 	}
 	if (type == LOCAL)
 	{
-		t_memory_list * tmp = local_mem;
+		tmp = local_mem;
 		if (flag)
 			local_mem = NULL;
 		return (tmp);
 	}
 	else
 	{
-		t_memory_list * tmp = global_mem;
+		tmp = global_mem;
 		if (flag)
 			global_mem = NULL;
 		return (tmp);
@@ -69,19 +70,21 @@ void	*gc_malloc(size_t size, t_type type)
 void	gc_free_all(t_type type)
 {
 	t_node			*current;
-	t_node			*next;
+	t_node			*tmp;
 	t_memory_list	*memory_list;
 
 	memory_list = get_memory_list(type, 1);
 	current = memory_list->head;
 	while (current)
 	{
-		next = current->next;
 		if (current->ptr)
+		{
 			free(current->ptr);
-		free(current);
-		current = next;
+			current->ptr = NULL;
+		}
+		tmp = current;
+		current = current->next;
+		free(tmp);
 	}
-	free (memory_list);
-	memory_list->head = NULL;
+	free(memory_list);
 }

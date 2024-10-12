@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:24 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:19:15 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:21:27 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	nbr = n;
 	len_nbr = nbr_len(nbr);
 	nbr_str = gc_malloc(len_nbr + 1, LOCAL);
-	nbr_str[len_nbr + 1] = '\0';
+	nbr_str[len_nbr] = '\0';
 	if (nbr < 0)
 	{
 		nbr_str[0] = '-';
