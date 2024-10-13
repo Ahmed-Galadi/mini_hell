@@ -8,8 +8,7 @@ int	count_docs(t_opp *op)
 	count = 0;
 	while (op)
 	{
-		if (op->operator == HERE_DOC
-			|| op->operator == HERE_DOC_EXP)
+		if (op->operator== HERE_DOC || op->operator== HERE_DOC_EXP)
 			count++;
 		op = op->next;
 	}
@@ -58,7 +57,7 @@ void	ftputstr_fd(int fd, char *s)
 	while (*s)
 	{
 		write(fd, s, 1);
-			s++;
+		s++;
 	}
 }
 
@@ -76,7 +75,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 		str = readline("> ");
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return ;
-		if (op->operator == HERE_DOC_EXP)
+		if (op->operator== HERE_DOC_EXP)
 			expand(&str, data->env, data->exit_status);
 		ftputstr_fd(fd, str);
 		write(fd, "\n", 1);
@@ -106,8 +105,7 @@ void	ft_open_heredoc(t_shell *data)
 		op = curr->operator;
 		while (op)
 		{
-			if (op->operator == HERE_DOC
-				|| op->operator == HERE_DOC_EXP)
+			if (op->operator== HERE_DOC || op->operator== HERE_DOC_EXP)
 				open_heredoc(data->heredoc_files, op, &count, data);
 			op = op->next;
 		}

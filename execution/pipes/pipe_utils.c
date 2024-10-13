@@ -12,10 +12,10 @@
 
 #include "../../minishell.h"
 
-int count_pipes(t_com *command)
+int	count_pipes(t_com *command)
 {
-	int count;
-	t_com *curr;
+	int		count;
+	t_com	*curr;
 
 	if (!command)
 		return (0);
@@ -31,29 +31,29 @@ int count_pipes(t_com *command)
 
 char	***split_commands(t_com *commands, int num_commands)
 {
-	char ***command_list;
-	int cmd_index;
-	int	i;
-	t_com *current = commands;
+	char	***command_list;
+	int		cmd_index;
+	int		i;
+	t_com	*current;
+	int		arg_count;
 
+	current = commands;
 	// Allocate memory for the command list
 	command_list = gc_malloc(sizeof(char **) * (num_commands + 1), LOCAL);
 	if (!command_list)
-		return NULL;
-
+		return (NULL);
 	cmd_index = 0;
 	// Iterate through the commands
 	while (current && cmd_index < num_commands)
 	{
-		int arg_count = 0;
+		arg_count = 0;
 		while (current->command[arg_count])
 			arg_count++;
-
 		// Allocate memory for the command and its arguments
-		command_list[cmd_index] = gc_malloc(sizeof(char *) * (arg_count + 1), LOCAL);
+		command_list[cmd_index] = gc_malloc(sizeof(char *) * (arg_count + 1),
+				LOCAL);
 		if (!command_list[cmd_index])
-			return NULL;
-
+			return (NULL);
 		// Copy the command and arguments
 		i = 0;
 		while (i < arg_count)
@@ -62,16 +62,13 @@ char	***split_commands(t_com *commands, int num_commands)
 			i++;
 		}
 		command_list[cmd_index][arg_count] = NULL;
-
 		// Move to the next command
 		current = current->next;
 		cmd_index++;
 	}
-
 	// Null-terminate the list of commands
 	command_list[cmd_index] = NULL;
-
-	return command_list;
+	return (command_list);
 }
 
 // void    free_commands(char ***commands, int num_commands)

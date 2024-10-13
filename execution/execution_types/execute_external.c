@@ -14,17 +14,18 @@
 
 int	ft_execute_external(char **args, t_shell *data, t_com *command)
 {
-	pid_t	pid;
+	pid_t		pid;
 	const char	*cmd_path;
-	int		status;
-	int		count;
+	int			status;
+	int			count;
+	char		**env_array;
 
 	count = heredoc_count(command);
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Fork Error");
-		return 1;
+		return (1);
 	}
 	if (pid == 0)
 	{
@@ -37,7 +38,7 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 		signal(SIGQUIT, SIG_DFL);
 		if (handle_redirections(data))
 			exit(ERROR);
-		char **env_array = env_to_array(data->env);
+		env_array = env_to_array(data->env);
 		if (!env_array)
 		{
 			fprintf(stderr, "Failed to create environment array\n");

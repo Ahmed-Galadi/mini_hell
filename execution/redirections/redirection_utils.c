@@ -15,10 +15,10 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-static int is_redirection_out(e_tokenType operator);
-static int is_redirection_in(e_tokenType operator);
+static int	is_redirection_out(e_tokenType operator);
+static int	is_redirection_in(e_tokenType operator);
 
-int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
+int	valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 {
 	if (operator_type == RED_IN)
 	{
@@ -38,7 +38,7 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 	else if (operator_type == HERE_DOC || operator_type == HERE_DOC_EXP)
 		return (1);
 	else
-		return (0); 
+		return (0);
 	return (1);
 }
 
@@ -66,16 +66,16 @@ int valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 // 		perror(file);
 // }
 
-void handle_files_redirections(t_opp *curr_op)
+void	handle_files_redirections(t_opp *curr_op)
 {
-	int flags;
-	int default_fd;
-	int redirect_fd;
-	char *file;
+	int		flags;
+	int		default_fd;
+	int		redirect_fd;
+	char	*file;
 
 	file = curr_op->arg;
 	flags = 0;
-	if (!valid_operator(curr_op->operator, &flags, &default_fd))
+	if (!valid_operator(curr_op->operator, & flags, &default_fd))
 		perror(file);
 	if (ft_strcmp(file, "/dev/stdout") != 0)
 		redirect_fd = open(file, flags, 0644);
@@ -88,22 +88,24 @@ void handle_files_redirections(t_opp *curr_op)
 		perror(file);
 }
 
-void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int curr_cmd, int num_commands, int is_builtin)
+void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe,
+		int curr_cmd, int num_commands, int is_builtin)
 {
-	t_com *command;
-	t_opp *curr_op;
+	t_com	*command;
+	t_opp	*curr_op;
+	int		flag_in;
+	int		flag_out;
 
 	command = data->command;
 	curr_op = command->operator;
-	int flag_in = 0;
-	int flag_out = 0;
-
-	if (curr_op && curr_op->operator >= 0) // User redirections take precedence
+	flag_in = 0;
+	flag_out = 0;
+	if (curr_op && curr_op->operator>= 0) // User redirections take precedence
 	{
 		while (curr_op)
 		{
 			if (curr_op->operator== HERE_DOC
-				|| curr_op->operator == HERE_DOC_EXP)
+				|| curr_op->operator== HERE_DOC_EXP)
 				ft_read_from_heredoc(data);
 			else
 				handle_files_redirections(curr_op);
@@ -142,9 +144,11 @@ void redirect_to_pipe_fds(t_shell *data, int *prev_pipe, int *curr_pipe, int cur
 	}
 }
 
-void close_all_fds(int *fds, int count)
+void	close_all_fds(int *fds, int count)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < count)
 	{
 		if (fds[i] != -1)
@@ -156,13 +160,13 @@ void close_all_fds(int *fds, int count)
 	}
 }
 
-static int is_redirection_out(e_tokenType operator)
+static int	is_redirection_out(e_tokenType operator)
 {
 	if (operator== RED_OUT || operator== APPEND)
 		return (1);
 	return (0);
 }
-static int is_redirection_in(e_tokenType operator)
+static int	is_redirection_in(e_tokenType operator)
 {
 	if (operator== RED_IN || operator== HERE_DOC || operator== HERE_DOC_EXP)
 		return (1);

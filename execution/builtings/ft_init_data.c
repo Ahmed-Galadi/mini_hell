@@ -12,9 +12,9 @@
 
 #include "../../minishell.h"
 
-void print_token(t_token *token)
+void	print_token(t_token *token)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (!token)
 	{
@@ -32,9 +32,9 @@ void print_token(t_token *token)
 	}
 }
 
-void print_opp(t_opp *opera)
+void	print_opp(t_opp *opera)
 {
-	t_opp *current;
+	t_opp	*current;
 
 	if (!opera)
 		printf("\tempty operations!\n");
@@ -48,23 +48,24 @@ void print_opp(t_opp *opera)
 				printf("\t | File: %s", current->arg);
 			printf("\n\t--------------------------\n");
 			current = current->next;
-		}	
+		}
 	}
 }
 
 void	print_command(t_com *command)
 {
 	t_com	*current;
-	
+	int		i;
+
 	if (!command)
 	{
 		printf("No Command!\n");
 		return ;
 	}
 	current = command;
-	while(current)
+	while (current)
 	{
-		int i = 0;
+		i = 0;
 		printf("args:");
 		while ((current->command)[i])
 			printf(" %s", (current->command)[i++]);
@@ -74,7 +75,7 @@ void	print_command(t_com *command)
 	}
 }
 
-int init_shell_data_config(t_shell *data, char **envp)
+int	init_shell_data_config(t_shell *data, char **envp)
 {
 	char	cwd[1024];
 
@@ -91,9 +92,9 @@ int init_shell_data_config(t_shell *data, char **envp)
 		return (0);
 	// Initialize current working directory
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		data->pwd = ft_strdup(getcwd(cwd, sizeof(cwd))); 
+		data->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	else
-        perror("getcwd failed");
+		perror("getcwd failed");
 	// if (!data->pwd)
 	// {
 	// 	// Free allocated resources in case of failure

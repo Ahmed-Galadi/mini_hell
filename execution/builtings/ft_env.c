@@ -12,14 +12,13 @@
 
 #include "../../minishell.h"
 
-
-// NOTE 
+// NOTE
 // export
 // var=value, if value is null do not print in env. do not update value.
 // var+=value, joins value with the previous one.
 // value. alpha num only and '_' and in one case (var+=value).
 
-int ft_env(t_env *env)
+int	ft_env(t_env *env)
 {
 	ft_printf_envs(env);
 	return (0);

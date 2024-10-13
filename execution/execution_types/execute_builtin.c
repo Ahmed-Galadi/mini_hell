@@ -12,16 +12,17 @@
 
 #include "../../minishell.h"
 
-int ft_execute_builtin(t_shell *data)
+int	ft_execute_builtin(t_shell *data)
 {
-	int stdout_copy = -1;
+	int		stdout_copy;
+	t_com	*command;
 
-	t_com *command;
-
+	stdout_copy = -1;
 	command = data->command;
 	if (command->operator)
 	{
-		if (command->operator->operator == RED_OUT || command->operator->operator == APPEND)
+		if (command->operator->operator== RED_OUT
+			|| command->operator->operator== APPEND)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
 			handle_redirections(data);

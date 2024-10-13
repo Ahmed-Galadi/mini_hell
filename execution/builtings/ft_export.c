@@ -33,22 +33,22 @@ void	ft_get_vars(t_env *export)
 
 int	ft_set_vars(t_env **my_export_env, const char *key, const char *value)
 {
-
-    t_env	*current;
+	t_env	*current;
+	t_env	*new_node;
 
 	current = *my_export_env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			//free(current->value);
+			// free(current->value);
 			current->value = ft_strdup(value);
 			return (0);
 		}
 		current = current->next;
-    }
+	}
 	// If the variable does not exist, add it
-	t_env *new_node = gc_malloc(sizeof(t_env), GLOBAL);
+	new_node = gc_malloc(sizeof(t_env), GLOBAL);
 	if (!new_node)
 		return (perror("gc_malloc"), 1);
 	new_node->key = ft_strdup(key);
@@ -60,7 +60,8 @@ int	ft_set_vars(t_env **my_export_env, const char *key, const char *value)
 
 int	ft_export_command(t_env **my_export_env, const char *key, const char *value)
 {
-    t_env	*current;
+	t_env	*current;
+	t_env	*new_node;
 
 	if (key == NULL)
 	{
@@ -70,26 +71,25 @@ int	ft_export_command(t_env **my_export_env, const char *key, const char *value)
 	else
 	{
 		current = *my_export_env;
-        while (current)
+		while (current)
 		{
-            if (ft_strcmp(current->key, key) == 0)
+			if (ft_strcmp(current->key, key) == 0)
 			{
-                //free(current->value);
-                current->value = ft_strdup(value);
-                return (0);
-            }
-            current = current->next;
-        }
-
-        // If the variable does not exist, add it
-        t_env *new_node = gc_malloc(sizeof(t_env), GLOBAL);
-        if (!new_node)
-            return (perror("gc_malloc"), 1);
-        new_node->key = ft_strdup(key);
-        new_node->value = ft_strdup(value);
-        new_node->next = *my_export_env;
-        *my_export_env = new_node;
-    }
+				// free(current->value);
+				current->value = ft_strdup(value);
+				return (0);
+			}
+			current = current->next;
+		}
+		// If the variable does not exist, add it
+		new_node = gc_malloc(sizeof(t_env), GLOBAL);
+		if (!new_node)
+			return (perror("gc_malloc"), 1);
+		new_node->key = ft_strdup(key);
+		new_node->value = ft_strdup(value);
+		new_node->next = *my_export_env;
+		*my_export_env = new_node;
+	}
 	return (0);
 }
 
@@ -107,19 +107,17 @@ int	first_occurence(char *str, char c)
 	return (-1);
 }
 
-
 char	*extract_key(char *str)
 {
 	char	*key;
 
 	if (!str)
-			return (NULL);
+		return (NULL);
 	if (first_occurence(str, '=') < 0)
 		return (str);
 	key = ft_substr(str, 0, first_occurence(str, '='));
 	if (!key)
 		return (NULL);
-	
 	return (ft_substr(key, 0, first_occurence(key, '+')));
 }
 
@@ -139,7 +137,7 @@ char	*extract_value(char *str)
 
 int	is_var_exist(char *var, t_env *export)
 {
-	t_env *curr;
+	t_env	*curr;
 
 	curr = export;
 	while (curr)
@@ -148,10 +146,10 @@ int	is_var_exist(char *var, t_env *export)
 			return (1);
 		curr = curr->next;
 	}
-	return 0;
+	return (0);
 }
 
-char	*ft_get_var_value(t_env *env ,const char *key)
+char	*ft_get_var_value(t_env *env, const char *key)
 {
 	t_env	*curr;
 
@@ -183,7 +181,7 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 		value = extract_value(str);
 		if (!is_var_exist(str, data->export))
 		{
-			if(!value)
+			if (!value)
 			{
 				ft_set_vars(&data->export, key, value);
 				ft_set_vars(&data->env, key, value);
@@ -193,49 +191,49 @@ void	export_manager(char *str, t_shell *data, char *crud_operation)
 				ft_set_vars(&data->export, key, value);
 				ft_set_vars(&data->env, key, value);
 			}
-		}	
+		}
 	}
 	if (ft_strcmp(crud_operation, "append") == 0)
 	{
 		key = extract_key(str);
 		value = extract_value(str);
-		prev_value = ft_get_var_value(data->export ,key);
+		prev_value = ft_get_var_value(data->export, key);
 		if (prev_value)
 		{
-			ft_set_vars(&data->export, key, ft_strjoin(prev_value, value, GLOBAL));
+			ft_set_vars(&data->export, key, ft_strjoin(prev_value, value,
+					GLOBAL));
 			ft_set_vars(&data->env, key, ft_strjoin(prev_value, value, GLOBAL));
 		}
 		else
 		{
 			ft_set_vars(&data->export, key, value);
-			ft_set_vars(&data->env, key, value);	
+			ft_set_vars(&data->env, key, value);
 		}
 	}
 }
 
-int ft_check_key(const char *arg)
+int	ft_check_key(const char *arg)
 {
-    int i;
+	int	i;
 
-    if (!((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
-            || arg[0] == '_'))
-        return (0);
-    i = 1;
-    while (arg[i])
-    {
-        if (arg[i] == '+' && arg[i + 1] == '=')
-            return (1);
-        if (arg[i] == '+' && arg[i + 1] == '\0')
-            return (0);
-        if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A' && arg[i] <= 'Z')
-            || (arg[i] >= '0' && arg[i] <= '9') || arg[i] == '_'))
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
+			|| arg[0] == '_'))
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] == '+' && arg[i + 1] == '=')
+			return (1);
+		if (arg[i] == '+' && arg[i + 1] == '\0')
+			return (0);
+		if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A'
+					&& arg[i] <= 'Z') || (arg[i] >= '0' && arg[i] <= '9')
+				|| arg[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
-
-
 
 char	*get_operation(char *arg)
 {
@@ -244,26 +242,25 @@ char	*get_operation(char *arg)
 	key = extract_key(arg);
 	if (key && !ft_check_key(key))
 	{
-		printf(BOLD RED"Error: "RESET PINK"export:"RESET" \'%s\': not a valid identifier\n", arg);
+		printf(BOLD RED "Error: " RESET PINK "export:" RESET " \'%s\': not a valid identifier\n",
+			arg);
 		return ("Invalid");
 	}
 	if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] == '+')
 	{
 		return ("append");
 	}
-	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] != '+')
+	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=')
+		- 1] != '+')
 	{
-		
 		return ("create");
 	}
 	return (NULL);
 }
 
-
-
-int		ft_export(char **args, t_shell *data)
+int	ft_export(char **args, t_shell *data)
 {
- 	char	*operation;
+	char	*operation;
 
 	if (!data)
 		return (127);
