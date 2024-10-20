@@ -56,7 +56,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return ;
 		if (op->operator == HERE_DOC_EXP)
-			expand(&str, data->env, data->exit_status);
+			expand(&str, data->env, &data->exit_status);
 		ftputstr_fd(fd, str);
 		write(fd, "\n", 1);
 	}
