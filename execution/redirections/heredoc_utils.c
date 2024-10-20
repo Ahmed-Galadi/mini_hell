@@ -1,37 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 18:09:08 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/10/18 18:09:12 by bzinedda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
-#include <stdio.h>
-
-int	count_docs(t_opp *op)
-{
-	int	count;
-
-	count = 0;
-	while (op)
-	{
-		if (op->operator == HERE_DOC
-			|| op->operator == HERE_DOC_EXP)
-			count++;
-		op = op->next;
-	}
-	return (count);
-}
-
-int	heredoc_count(t_com *command)
-{
-	int		count;
-	t_com	*curr;
-	t_opp	*op;
-
-	curr = command;
-	count = 0;
-	while (curr)
-	{
-		op = curr->operator;
-		count += count_docs(curr->operator);
-		curr = curr->next;
-	}
-	return (count);
-}
 
 char	**fill_heredoc_files(int count)
 {
@@ -58,7 +37,7 @@ void	ftputstr_fd(int fd, char *s)
 	while (*s)
 	{
 		write(fd, s, 1);
-			s++;
+		s++;
 	}
 }
 
@@ -99,15 +78,13 @@ void	ft_open_heredoc(t_shell *data)
 		exit(2);
 	}
 	data->heredoc_files = fill_heredoc_files(count);
-	curr = data->command;
-	count = 0;
+	(1 && (curr = data->command), (count = 0));
 	while (curr)
 	{
 		op = curr->operator;
 		while (op)
 		{
-			if (op->operator == HERE_DOC
-				|| op->operator == HERE_DOC_EXP)
+			if (op->operator == HERE_DOC || op->operator == HERE_DOC_EXP)
 				open_heredoc(data->heredoc_files, op, &count, data);
 			op = op->next;
 		}

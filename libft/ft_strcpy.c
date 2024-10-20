@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 char	*ft_strcpy(char *dest, const char *src)
@@ -22,9 +21,9 @@ char	*ft_strcpy(char *dest, const char *src)
 	ptr = dest;
 	while (*src != '\0')
 	{
-	*dest = *src;
-	dest++;
-	src++;
+		*dest = *src;
+		dest++;
+		src++;
 	}
 	*dest = '\0';
 	return (ptr);

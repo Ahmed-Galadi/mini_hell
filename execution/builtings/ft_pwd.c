@@ -12,11 +12,11 @@
 
 #include "../../minishell.h"
 
-int		ft_pwd(t_shell *data)
+int	ft_pwd(t_shell *data)
 {
-    if (!data)
-        return (127);
-    else
-        printf("%s\n", data->pwd);
-    return (0);    
+	if (!data)
+		return (127);
+	else
+		printf("%s\n", data->pwd);
+	return (0);
 }

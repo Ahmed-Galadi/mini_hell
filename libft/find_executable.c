@@ -14,29 +14,30 @@
 
 char	**env_to_array(t_env *env)
 {
-    int count = 0;
-    t_env *temp = env;
-    while (temp)
-    {
-        count++;
-        temp = temp->next;
-    }
-    char **env_array = gc_malloc(sizeof(char*) * (count + 1), LOCAL);
-    if (!env_array)
-        return NULL;
+	int		count;
+	t_env	*temp;
+	char	**env_array;
+	int		i;
 
-    int i = 0;
-    while (env)
-    {
+	(1 && (count = 0), (temp = env), (i = 0));
+	while (temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	env_array = gc_malloc(sizeof(char *) * (count + 1), LOCAL);
+	if (!env_array)
+		return (NULL);
+	while (env)
+	{
 		env_array[i] = ft_strjoin(env->key, "=", LOCAL);
 		env_array[i] = ft_strjoin(env_array[i], env->value, LOCAL);
-        env = env->next;
-        i++;
-    }
-    env_array[i] = NULL;
-    return env_array;
+		env = env->next;
+		i++;
+	}
+	env_array[i] = NULL;
+	return (env_array);
 }
-
 
 char	*join_path(char *path, char *cmd)
 {

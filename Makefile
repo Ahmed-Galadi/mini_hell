@@ -15,7 +15,8 @@ USER := $(shell whoami)
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
-			 libft/find_executable.c libft/ft_isalnum.c libft/ft_strcpy.c libft/ft_strncpy.c\
+			 libft/find_executable.c libft/ft_isalnum.c libft/ft_strcpy.c libft/ft_strncpy.c \
+			 libft/first_occurence.c
 
 EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/ft_pwd.c execution/builtings/ft_export.c \
@@ -29,6 +30,9 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/redirections/redirection_types.c \
 				 execution/redirections/redirection_utils.c \
 				 execution/redirections/heredoc_utils.c \
+				 execution/redirections/helper.c \
+				 execution/builtings/builtings_utils/env_utils.c \
+				 execution/builtings/builtings_utils/export_utils.c \
 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/expand/expand_utils.c parsing/expand/expand.c parsing/formater/formater.c parsing/formater/quotes_handler.c \
@@ -36,7 +40,7 @@ parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c\
 
-CFLAGS = -g #-fsanitize=address
+CFLAGS = -g -fsanitize=address
 CFLAGS_R = -g -lreadline
 HEADER = minishell.h
 LIB = minishell.a

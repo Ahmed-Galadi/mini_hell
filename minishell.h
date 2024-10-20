@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/08 17:18:46 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:00:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define PROMPT_MSG_2 RESET YELLOW "༺  ࿅━─┄\n" RESET
 # define VALID_ARROW GREEN_FG "❱ " RESET
 # define UNVALID_ARROW RED "❱ " RESET
-
+# define CD_ERROR  "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 
 # define MAX_FDS 1024
 
@@ -78,6 +78,13 @@ typedef struct		s_com
 	struct s_com	*next;
 }					t_com;
 
+typedef struct s_pipe
+{
+	int	*curr_pipe;
+	int	*prev_pipe;
+	int	num_commands;
+	int	curr_command;
+}					t_pipe;
 // execution types - start
 typedef struct s_env
 {
@@ -141,7 +148,7 @@ t_env   *create_env_node(char *env_str);
 int		ft_cd(char **args, t_shell *data);
 int		ft_unset(char **args, t_shell *data);
 int		ft_pwd(t_shell *data);
-int	ft_exit(char **args, int exit_status);
+int		ft_exit(char **args, int exit_status);
 int		ft_export(char **args, t_shell *data);
 int		ft_export_command(t_env **my_env, const char *key, const char *value);
 int		ft_execute_builtin(t_shell *data);
@@ -150,20 +157,33 @@ int		ft_execute_external(char **args, t_shell *data, t_com *command);
 char	*find_command(char *cmd, char **p_env);
 char	**env_to_array(t_env *env);
 int		is_builtin(const char *cmd);
+void	ft_get_vars(t_env *exp);
+int		ft_set_vars(t_env **my_export_env, const char *key, const char *value);
+char	*extract_key(char *str);
+char	*extract_value(char *str);
+int		is_var_exist(char *var, t_env *expo);
+int		ft_check_key(const char *arg);
+char	*ft_get_var_value(t_env *env, const char *key);
+char    *get_operation(char *arg);
+
 // pipes prototypes
 int		count_pipes(t_com *command);
 char	***split_commands(t_com *commands, int num_commands);
 void    free_commands(char ***commands, int num_commands);
 int		ft_execute_pipeline(char ***commands, int num_commands, t_shell *data);
+void	update_prev_pipe(int *prev_pipe, int *curr_pipe, int is_not_last);
+void	ft_init_pipe(t_pipe **pipe, int num_commands);
 // redirections
-int	handle_redirections(t_shell *data);
-int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
-int	setup_output_redirection(const char *outfile, int is_appended, t_shell *data);
+int		handle_redirections(t_shell *data);
+int		setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
+int		setup_output_redirection(const char *outfile, int is_appended, t_shell *data);
 void	restore_stdout(int stdout_copy);
-void	redirect_to_pipe_fds(t_shell *data, int *prev_pipe,
-			int *curr_pipe, int curr_cmd, int num_commands, int is_builtin);
+void	redirect_to_pipe_fds(t_shell *data, int is_builtin, t_pipe *pipe);
+int		is_redirection_in(e_tokenType operator);
+int		is_redirection_out(e_tokenType operator);
+int		valid_operator(e_tokenType operator_type, int *flags, int *default_fd);
 void    close_all_fds(int *fds, int count);
-void    handle_files_redirections(t_opp *curr_op);
+void    handle_files_redirections(t_opp *curr_op, t_shell *data);
 int		heredoc_count(t_com *command);
 char	**fill_heredoc_files(int count);
 void	ftputstr_fd(int fd, char *s);
@@ -183,6 +203,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isalnum(int c);
 char	*ft_strcpy(char *dest, const char *src);
 char	*ft_strncpy(char *dest, const char *src, int n);
+int		first_occurence(char *str, char c);
 // int		init_shell_data_config(t_shell *data, char **envp);
 char	**env_to_array(t_env *env);
 

@@ -6,61 +6,55 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/09 11:40:53 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/19 22:03:16 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
 
-int ft_execute_command(t_shell *data)
+int	ft_execute_command(t_shell *data)
 {
-    int		builtin_status;
-    int		pipe_count;
+	int		pipe_count;
 	t_com	*command;
+	char	***commands;
+	int		result;
 
 	command = data->command;
-    if (!command)
-        return (1);
-    pipe_count = count_pipes(command);
-    if (pipe_count > 0)
-    {
-        char ***commands = split_commands(command, pipe_count + 1);
-        int result = ft_execute_pipeline(commands, pipe_count + 1, data);
-        return (result);
-    }
-    else
-    { 
+	if (!command)
+		return (1);
+	pipe_count = count_pipes(command);
+	if (pipe_count > 0)
+	{
+		commands = split_commands(command, pipe_count + 1);
+		result = ft_execute_pipeline(commands, pipe_count + 1, data);
+		return (result);
+	}
+	else
+	{
 		if (is_builtin(data->command->command[0]))
-			builtin_status = ft_execute_builtin(data);
-        else
-        	return (ft_execute_external(command->command, data, command));
-    }
-	return (0);
+			data->exit_status = ft_execute_builtin(data);
+		else
+			return (ft_execute_external(command->command, data, command));
+	}
+	return (data->exit_status);
 }
 
-const char *get_path(const char *cmd, t_env *env)
+static char	*get_full_path(char *path, const char *cmd)
 {
-	int		i;
-	char	**executables;
-	char	*with_back_slash;
 	char	*full_path;
-	char	*key;
-	t_env	*curr;
+	char	**paths;
+	char	*tmp;
+	int		i;
 
-	executables = NULL;
-	if (cmd[0] == '/')
-		return (cmd);
-	if (!cmd || !env)
-		return (NULL);
-	key = ft_get_var_value(env, "PATH");
-	if (!key)
-		return (NULL);
-	executables = cstm_split(key, ":");
+	paths = cstm_split(path, ":");
 	i = 0;
-	while (executables[i])
+	while (paths[i])
 	{
-		with_back_slash = ft_strjoin(executables[i], "/", LOCAL);
-		full_path = ft_strjoin(with_back_slash, cmd, LOCAL);
+		if (access(cmd, F_OK | X_OK) == 0)
+			return ((char *)cmd);
+		tmp = ft_strjoin(paths[i], "/", LOCAL);
+		full_path = ft_strjoin(tmp, cmd, LOCAL);
 		if (access(full_path, F_OK | X_OK) == 0)
 			return (full_path);
 		i++;
@@ -68,9 +62,30 @@ const char *get_path(const char *cmd, t_env *env)
 	return (NULL);
 }
 
-void execute_command(t_shell *data, char **commands)
+const char	*get_path(const char *cmd, t_env *env)
 {
-	const char *full_path;
+	int		i;
+	char	*value;
+	t_env	*curr;
+
+	if (ft_strcmp(cmd, "") == 0)
+		return (NULL);
+	if (cmd[0] == '/')
+		return (cmd);
+	if (!cmd || !env)
+		return (NULL);
+	value = ft_get_var_value(env, "PATH");
+	if (!value)
+	{
+		printf("%s: No such file or directory\n", cmd);
+		return (exit (127), NULL);
+	}
+	return (get_full_path(value, cmd));
+}
+
+void	execute_command(t_shell *data, char **commands)
+{
+	const char	*full_path;
 
 	full_path = get_path(commands[0], data->env);
 	if (full_path != NULL)

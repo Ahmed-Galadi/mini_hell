@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   first_occurence.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 21:27:24 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/08/04 05:32:20 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/10/18 18:39:31 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/10/18 18:39:33 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-// NOTE
-// export
-// var=value, if value is null do not print in env. do not update value.
-// var+=value, joins value with the previous one.
-// value. alpha num only and '_' and in one case (var+=value).
-
-int	ft_env(t_env *env)
+int	first_occurence(char *str, char c)
 {
-	ft_printf_envs(env);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

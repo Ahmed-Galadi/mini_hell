@@ -35,19 +35,19 @@ int	ft_check_n_flag(char *flag)
 	return (0);
 }
 
-int ft_echo(char **args)
+int	ft_echo(char **args)
 {
-	int		i;
-	int		newline;
+	int	i;
+	int	newline;
 
 	(1 && (i = 0), (newline = 1));
 	while (args[i])
 	{
 		if ((ft_check_n_flag(args[i]) == 1))
- 		{
- 			newline = 0;
- 			i++;
- 		}
+		{
+			newline = 0;
+			i++;
+		}
 		else
 			break ;
 	}

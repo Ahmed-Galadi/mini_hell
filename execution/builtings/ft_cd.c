@@ -6,31 +6,28 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:41:56 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:45:47 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
 int	ft_set_var(t_env **my_export_env, const char *key, const char *value)
 {
-
-    t_env	*current;
+	t_env	*current;
+	t_env	*new_node;
 
 	current = *my_export_env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			//free(current->value);
 			current->value = ft_strdup(value);
 			return (0);
 		}
 		current = current->next;
-    }
-	// If the variable does not exist, add it
-	t_env *new_node = gc_malloc(sizeof(t_env), GLOBAL);
+	}
+	new_node = gc_malloc(sizeof(t_env), GLOBAL);
 	if (!new_node)
 		return (perror("gc_malloc"), 1);
 	new_node->key = ft_strdup(key);
@@ -56,41 +53,37 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 
 int	change_directory(const char *path, t_shell *data)
 {
-    char cwd[1024];
+	char	cwd[1024];
+	char	*oldpwd_with_2_points;
+
 	if (!path)
 		return (1);
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
-    if (chdir(path) != 0)
-	{
-        printf("cd: %s: No such file or directory\n", path);
-		return (1);
-	}
+	if (chdir(path) != 0)
+		return (printf("cd: %s: No such file or directory\n", path), 1);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		data->pwd = ft_strdup(cwd);
 		if (data->pwd)
-		{
-			ft_set_var(&data->env, "PWD", data->pwd);
-			ft_set_var(&data->export, "PWD", data->pwd);
-			return (0);
-		}
+			return (ft_set_var(&data->env, "PWD",
+					data->pwd), ft_set_var(&data->export, "PWD", data->pwd), 0);
 	}
 	else
 	{
-		printf("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-		char	*oldpwd_with_2_points;
-		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"), "/..", GLOBAL); 
+		printf(CD_ERROR);
+		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"),
+				"/..", GLOBAL);
 		data->pwd = oldpwd_with_2_points;
 	}
 	return (1);
 }
-	
-int		ft_cd(char **args, t_shell *data)
+
+int	ft_cd(char **args, t_shell *data)
 {
 	char	*home;
-	args++;
 
+	args++;
 	if (!(*args))
 	{
 		home = ft_get_env_var(data->env, "HOME");
@@ -99,7 +92,5 @@ int		ft_cd(char **args, t_shell *data)
 		change_directory(home, data);
 		return (0);
 	}
-	// else if (!ft_strcmp(*args, "-"))
-	// 	return (change_directory(ft_get_env_var(data->env, "OLDPWD"), data));
 	return (change_directory(args[0], data));
 }

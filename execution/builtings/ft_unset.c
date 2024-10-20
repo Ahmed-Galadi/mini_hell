@@ -12,31 +12,24 @@
 
 #include "../../minishell.h"
 
-
 int	unset_var(t_env **env, char *var_to_unset)
 {
 	t_env	*curr_env;
 	t_env	*node_to_delete;
-	curr_env = *env;
 
+	curr_env = *env;
 	if (curr_env && (ft_strcmp(var_to_unset, curr_env->key) == 0))
 	{
 		*env = curr_env->next;
-		free(curr_env->key);
-		free(curr_env->value);
-		free(curr_env);
 		return (0);
 	}
-
 	while (curr_env)
 	{
-		if (curr_env->next && (ft_strcmp(var_to_unset, curr_env->next->key) == 0))
+		if (curr_env->next && (ft_strcmp(var_to_unset,
+					curr_env->next->key) == 0))
 		{
 			node_to_delete = curr_env->next;
 			curr_env->next = node_to_delete->next;
-			free(node_to_delete->key);
-			free(node_to_delete->value);
-			free(node_to_delete);
 			return (0);
 		}
 		curr_env = curr_env->next;
@@ -44,7 +37,7 @@ int	unset_var(t_env **env, char *var_to_unset)
 	return (1);
 }
 
-int		ft_unset(char **args, t_shell *data)
+int	ft_unset(char **args, t_shell *data)
 {
 	char	**tmp_var;
 
@@ -59,4 +52,3 @@ int		ft_unset(char **args, t_shell *data)
 	}
 	return (0);
 }
-

@@ -5,24 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 05:30:19 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:55:59 by bzinedda         ###   ########.fr       */
+/*   Created: 2024/10/20 00:55:40 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/10/20 00:55:43 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-#include <stdio.h>
 
-t_env   *create_env_node(char *env_str) 
+t_env	*create_env_node(char *env_str)
 {
-	t_env   *node;
+	t_env	*node;
+	int		start;
 
 	if (!env_str)
 		return (NULL);
 	node = (t_env *)gc_malloc(sizeof(t_env), GLOBAL);
 	if (!node)
 		return (NULL);
-	int start = -1;
+	start = -1;
 	while (env_str[++start])
 		if (env_str[start] == '=')
 			break ;
@@ -35,19 +35,20 @@ t_env   *create_env_node(char *env_str)
 	return (node);
 }
 
-t_env   *convert_env_to_list(char **envp, char *env_type)
+t_env	*convert_env_to_list(char **envp, char *env_type)
 {
-	t_env *head = NULL;
-	t_env *current;
-	t_env *new_node;
-	int i;
+	t_env	*head;
+	t_env	*current;
+	t_env	*new_node;
+	int		i;
 
+	head = NULL;
 	i = 0;
 	while (envp[i])
 	{
 		new_node = create_env_node(envp[i]);
 		if (!new_node)
-			continue;
+			continue ;
 		if (!head)
 		{
 			head = new_node;
@@ -59,7 +60,7 @@ t_env   *convert_env_to_list(char **envp, char *env_type)
 			current = new_node;
 		}
 		i++;
-	} 
+	}
 	return (head);
 }
 
@@ -75,10 +76,11 @@ void	ft_printf_envs(t_env *env)
 		tmp = tmp->next;
 	}
 }
-t_env *init_env(char **env, char *env_type)
+
+t_env	*init_env(char **env, char *env_type)
 {
 	t_env	*envs;
-	
+
 	if (!env)
 		return (NULL);
 	envs = convert_env_to_list(env, env_type);
@@ -90,7 +92,7 @@ int	is_builtin(const char *cmd)
 	int		i;
 	char	*builtins[8];
 
-	if(!cmd)
+	if (!cmd)
 		return (0);
 	builtins[0] = "echo";
 	builtins[1] = "cd";
@@ -100,7 +102,6 @@ int	is_builtin(const char *cmd)
 	builtins[5] = "unset";
 	builtins[6] = "exit";
 	builtins[7] = NULL;
-
 	i = -1;
 	while (++i < 8)
 		if (ft_strcmp((const char *)builtins[i], cmd) == 0)
