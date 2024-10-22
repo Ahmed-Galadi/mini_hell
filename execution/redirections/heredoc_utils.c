@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:09:08 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/18 18:09:12 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/22 01:22:58by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ftputstr_fd(int fd, char *s)
 void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 {
 	char	*str;
+	char	*tmp;
 	int		fd;
 
 	fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
@@ -54,13 +55,14 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 	{
 		str = readline("> ");
 		if (!str || ft_strcmp(str, op->arg) == 0)
-			return ;
+			return ((void)close(fd));
+		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
-			expand(&str, data->env, data->exit_status);
-		ftputstr_fd(fd, str);
+			expand(&tmp, data->env, data->exit_status);
+		ftputstr_fd(fd, tmp);
 		write(fd, "\n", 1);
+		free (str);
 	}
-	close(fd);
 }
 
 void	ft_open_heredoc(t_shell *data)
@@ -102,7 +104,8 @@ int	ft_read_from_heredoc(t_shell *data)
 	new = open(data->heredoc_files[data->heredoc_index], O_RDONLY);
 	if (new < 0)
 		return (perror("open heredeoc failed!"), 1);
-	unlink(data->heredoc_files[data->heredoc_index]);
+	if (unlink(data->heredoc_files[data->heredoc_index]) < 0)
+		return (perror("unlink"), 1);
 	data->heredoc_index++;
 	if (dup2(new, STDIN_FILENO) < 0)
 		return (perror("dup failed!"), 1);

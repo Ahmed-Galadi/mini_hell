@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/19 22:03:16 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/22 00:32:23 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ const char	*get_path(const char *cmd, t_env *env)
 
 	if (ft_strcmp(cmd, "") == 0)
 		return (NULL);
-	if (cmd[0] == '/')
-		return (cmd);
 	if (!cmd || !env)
 		return (NULL);
+	if (cmd[0] == '/')
+		return (cmd);
 	value = ft_get_var_value(env, "PATH");
 	if (!value)
 	{

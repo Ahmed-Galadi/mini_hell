@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/09 12:17:39 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:44:53 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,7 @@ int main(int argc, char *argv[], char **envp)
 	(void)argc;
 	
 	// atexit(p);
-    if (!init_shell_data_config(&data, envp))
-	{
-    	fprintf(stderr, "Failed to initialize data\n");
-    	return (1);
-    }
+    init_shell_data_config(&data, envp);
 	if (tcgetattr(STDIN_FILENO, &term) == -1)
 	{
 		perror("tcgetattr");
@@ -161,6 +157,7 @@ int main(int argc, char *argv[], char **envp)
 	}
 	while (1)
 	{
+		data.heredoc_index = 0;
 		disable_echo(term);
 		signal(SIGINT, handle_sig);
 		signal(SIGQUIT, SIG_IGN);
@@ -177,7 +174,7 @@ int main(int argc, char *argv[], char **envp)
 				data.exit_status = ft_execute_command(&data);
 		}
 		// printf("before\n");
-		// system("leaks minishell");
+		   /*system("leaks minishell");*/
 		free(cmd_line_args);
 		gc_free_all(LOCAL);
 		// printf("after\n");
@@ -187,4 +184,3 @@ int main(int argc, char *argv[], char **envp)
 	gc_free_all(LOCAL);
 	return (0);
 }
-
