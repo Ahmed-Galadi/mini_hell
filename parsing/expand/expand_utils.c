@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 // Checks if the character is a numeric digit
 static int	ft_isnum(char c)
 {

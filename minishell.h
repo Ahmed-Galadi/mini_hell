@@ -105,12 +105,15 @@ typedef struct s_data {
 }	t_shell;
 // execution types - end
 
-typedef struct	s_expand_data
+typedef struct s_expand_data
 {
-    char	**token_val;
-    t_env	*env;
-    int		exit_status;
-}			t_expand_data;
+    char **token_val;
+    t_env *env;
+    int exit_status;
+    int j; // Output index
+    bool in_double_q; // Double quote state
+    bool in_single_q; // Single quote state
+} t_expand_data;
 
 //garbage collector
 
@@ -226,7 +229,7 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status);
 void	heredoc_type_set(t_token **token);
 bool	has_quotes(char *str);
 // expand
-void	expand(char **token_val, t_env *env, int exit_status);
+void	expand(char **token_val, t_env *env, int *exit_status);
 int		ft_isspace(char c);
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);

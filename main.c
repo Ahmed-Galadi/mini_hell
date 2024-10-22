@@ -37,7 +37,7 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 	t_token *token;
 	t_com	*com;
 
-	expand(&cmd_line_args, data_config->env, data_config->exit_status);
+	expand(&cmd_line_args, data_config->env, &data_config->exit_status);
 	token = tokenizer(cmd_line_args, data_config->env, &(data_config->exit_status));
 	trim_quotes(&token);
 	if (!token)
