@@ -100,6 +100,7 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 	head = NULL;
 	i = 0;
 	formated_input = format_and_switch(input);
+
 	splited_input = cstm_split(formated_input, " \t");
 	while (splited_input[i])
 	{
@@ -107,6 +108,13 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 		if (!new_token)
 			return (NULL);
 		head = add_token_to_list(head, new_token);
+	}	
+	t_token *current = head;
+	while (current)
+	{
+		if (current->type != HERE_DOC && current->type != HERE_DOC_EXP)
+			expand(&(current->value), env, exit_status);
+		current = current->next;
 	}
 	if (!syntax_error(head))
 	{
@@ -114,5 +122,6 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 		return (NULL);
 	}
 	heredoc_type_set(&head);
+	trim_quotes(&head);
 	return (head);
 }

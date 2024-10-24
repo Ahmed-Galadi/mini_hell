@@ -12,37 +12,20 @@
 
 #include "minishell.h"
 
-static void	p_token(t_token *token)
-{
-	t_token	*current;
-
-	if (!token)
-	{
-		printf("empty token!\n");
-		return ;
-	}
-	current = token;
-	while (current)
-	{
-		printf("Type: %d", current->type);
-		if (current->value)
-			printf("| Value: %s", current->value);
-		printf("\n****************************\n");
-		current = current->next;
-	}
-}
-
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
 	t_token *token;
 	t_com	*com;
 
 	expand(&cmd_line_args, data_config->env, &data_config->exit_status);
-	token = tokenizer(cmd_line_args, data_config->env, &(data_config->exit_status));
-	trim_quotes(&token);
+	/*printf("\n%s\n", cmd_line_args);*/
+	token = tokenizer(cmd_line_args, data_config->env, &(data_config->exit_status));	
 	if (!token)
 		return (NULL);
+	
 	com = create_cmds(token);
+	/*print_token(token);*/
+	/*print_command(com);*/
 	if (!data_config || !cmd_line_args)
 		return (NULL);
 	data_config->command = com;
