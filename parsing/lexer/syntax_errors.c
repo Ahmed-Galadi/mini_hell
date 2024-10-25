@@ -38,6 +38,8 @@ int	check_redirection(t_token *token)
 	current = token;
 	while (current)
 	{
+		if (is_red(current->type) && cstm_strcmp(current->value, ""))
+			return (-1);
 		if (is_red(current->type) && is_rederection(current->value))
 			return (0);
 		if (!current->value && is_red(current->type))	
