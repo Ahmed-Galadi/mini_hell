@@ -83,7 +83,7 @@ int	syntax_error(t_token *token)
 	t_token	*current;
 	int		output;
 
-	output = 1;
+	output = 0;
 	if (!token)
 		return (1);
 	if (!check_pipes(token) || !check_redirection(token)
@@ -94,7 +94,7 @@ int	syntax_error(t_token *token)
 		if (!check_redirection(token))
 			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
 		if (check_redirection(token) == -1)
-			printf(RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
+			return (-1);	
 		return (0);
 	}
 	current = token;
