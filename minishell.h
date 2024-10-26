@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/26 16:51:54 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:25:57 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,12 +235,12 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status);
 void	heredoc_type_set(t_token **token);
 bool	has_quotes(char *str);
 // expand
+void	expand_tokens(t_token *token, t_env *env, int *exit_status);
 void	expand(char **token_val, t_env *env, int *exit_status);
 int		ft_isspace(char c);
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
 int		calculate_size(char *str, t_env *env, int exit_status);
-void	expand_str(t_token **token, t_env *env, int exit_status);
 // lexer
 void	trim_quotes(t_token **token);
 int		check_pipes(t_token *token);
@@ -254,6 +254,7 @@ void	print_command(t_com *command);
 void	print_opp(t_opp *opera);
 void	print_token(t_token *token);
 // errors
+void	*error_handler(t_token *head, int *exit_status);
 void	error(void);
 int	syntax_error(t_token *token);
 void	rl_replace_line(char *s, int a);

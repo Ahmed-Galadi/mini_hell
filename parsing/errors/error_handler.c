@@ -16,3 +16,19 @@ void	error(void)
 {
 	ft_putstr("*ERROR!*\n");
 }
+
+void	*error_handler(t_token *head, int *exit_status)
+{
+	if (!syntax_error(head))
+	{
+		*exit_status = 258;
+		return (NULL);
+	}
+	if (syntax_error(head) == -1)
+	{
+		*exit_status = 1;
+		printf(RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
+		return (NULL);
+	}
+	return ("WORKING");
+}

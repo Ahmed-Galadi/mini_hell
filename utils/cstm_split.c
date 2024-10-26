@@ -64,17 +64,13 @@ static char	*copy_word(const char *start, const char *end)
 	return (word);
 }
 
-char	**cstm_split(const char *str, const char *delims)
+char	**split_loop(const char *str, const char *delims, char **result)
 {
-	int		word_count;
-	char	**result;
-	int		i;
+	int			i;
 	const char	*start;
 
-	if (!str || !delims)
-		return (NULL);
-	word_count = count_words(str, delims);
-	result = (char **)gc_malloc((word_count + 1) * sizeof(char *), LOCAL);
+	result = (char **)gc_malloc((
+				count_words(str, delims) + 1) * sizeof(char *), LOCAL);
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -95,4 +91,16 @@ char	**cstm_split(const char *str, const char *delims)
 	}
 	result[i] = NULL;
 	return (result);
+}
+
+char	**cstm_split(const char *str, const char *delims)
+{
+	char	**output;
+
+	if (!str || !delims)
+		return (NULL);
+	output = split_loop(str, delims, output);
+	if (!output)
+		return (NULL);
+	return (output);
 }
