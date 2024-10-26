@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/26 14:42:13 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:51:54 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ int		is_var_exist(char *var, t_env *expo);
 int		ft_check_key(const char *arg);
 char	*ft_get_var_value(t_env *env, const char *key);
 char    *get_operation(char *arg);
+
+
 
 // pipes prototypes
 int		count_pipes(t_com *command);

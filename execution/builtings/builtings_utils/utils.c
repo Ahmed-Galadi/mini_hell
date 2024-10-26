@@ -6,11 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 00:55:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/20 00:55:43 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:08:48 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
+#include <stdio.h>
 
 t_env	*create_env_node(char *env_str)
 {
@@ -71,7 +72,9 @@ void	ft_printf_envs(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (tmp->value)
+		if (*(tmp->key) == '_')
+			printf("%s=%s\n", "_", "/usr/bin/env");
+		else if (tmp->value)
 			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:45:04 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/16 15:45:06 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:17:37 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_get_vars(t_env *exp)
 	tmp = exp;
 	while (tmp)
 	{
-		if (!tmp->value)
+		if (!tmp->value && ft_strcmp(tmp->key, "_"))
 			printf("declare -x %s\n", tmp->key);
-		else if (tmp->key)
+		else if (tmp->key && ft_strcmp(tmp->key, "_"))
 			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
