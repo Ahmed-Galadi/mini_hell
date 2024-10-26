@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:37:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/25 02:07:17 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void expand(char **token_val, t_env *env, int *exit_status)
     
     exp_data->token_val = token_val;
     exp_data->env = env;
+    exp_data->exit_status = *exit_status;
     int size = initialize_expansion(exp_data);
     if (size < 0)
         return;

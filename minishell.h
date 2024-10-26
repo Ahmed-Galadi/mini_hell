@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/20 17:00:05 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 00:43:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <termios.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 # define YELLOW "\001\033[93m\002"
 # define RESET "\001\033[0m\002"
@@ -140,6 +142,7 @@ void	gc_free_all(t_type type);
 
 
 // execution prototypes
+int		set_exit_status(int status);
 int		ft_echo(char **args);
 int		ft_env(t_env *env);
 char	*ft_get_var_value(t_env *env ,const char *key);

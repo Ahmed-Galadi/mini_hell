@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/22 14:44:53 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 01:18:19 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 	return (com);
 }
 
+int	g_exit_status = SIGINT;
+
 void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
@@ -40,6 +42,7 @@ void	handle_sig(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_status = 0;
 	}
 }
 
@@ -101,8 +104,6 @@ int	is_spaces(char *str)
 }
 void	disable_echo(struct termios term)
 {
-	if (!isatty(STDIN_FILENO))
-		return ;
 	term.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	{
@@ -112,17 +113,25 @@ void	disable_echo(struct termios term)
 		exit(EXIT_FAILURE);
 	}
 }
-	void	p(void)
-	{
-		system("leaks a.out");
-	}
+void p(void) { system("leaks a.out"); }
 
+void signals_init(int *status, struct termios term)
+{
+	disable_echo(term);
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, SIG_IGN);
+	if (!g_exit_status)
+	{
+		*status = 1;
+		g_exit_status = SIGINT;
+	}
+}
 
 int main(int argc, char *argv[], char **envp)
 {
-	struct termios	term;
 	char	*cmd_line_args;
    	char	**args;
+	struct termios	term;
 	t_shell	data;
 
 	(void)args;
@@ -141,11 +150,9 @@ int main(int argc, char *argv[], char **envp)
 	while (1)
 	{
 		data.heredoc_index = 0;
-		disable_echo(term);
-		signal(SIGINT, handle_sig);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGKILL, SIG_IGN);
+		signals_init(&data.exit_status, term);
 		cmd_line_args = readline(prompt(&data));
+		signals_init(&data.exit_status, term);
 		if (!cmd_line_args)
 		{
 			break ;

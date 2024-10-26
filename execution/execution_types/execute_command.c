@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/22 00:32:23 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 00:38:38 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	execute_command(t_shell *data, char **commands)
 {
 	const char	*full_path;
 
+	if (!commands[0])
+		return ;
 	full_path = get_path(commands[0], data->env);
 	if (full_path != NULL)
 	{

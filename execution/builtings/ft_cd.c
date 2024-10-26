@@ -6,11 +6,14 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/19 17:45:47 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/25 03:53:34 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
+#include <sys/unistd.h>
+#include <unistd.h>
 
 int	ft_set_var(t_env **my_export_env, const char *key, const char *value)
 {
@@ -60,8 +63,9 @@ int	change_directory(const char *path, t_shell *data)
 		return (1);
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
+
 	if (chdir(path) != 0)
-		return (printf("cd: %s: No such file or directory\n", path), 1);
+			return (printf("cd: %s: No such file or directory\n", path), 1);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		data->pwd = ft_strdup(cwd);
@@ -78,6 +82,7 @@ int	change_directory(const char *path, t_shell *data)
 	}
 	return (1);
 }
+
 
 int	ft_cd(char **args, t_shell *data)
 {

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/22 00:43:17 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 00:52:24 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	set_exit_status(int status)
 {
 	if (WIFSIGNALED(status))
 	{
-		if (WTERMSIG(status) == SIGINT)
-			write(1, "\n", 1);
+		 (void)(WTERMSIG(status) == SIGINT);
+			// write(1, "\n", 1);
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3\n");
 		return (128 + WTERMSIG(status));

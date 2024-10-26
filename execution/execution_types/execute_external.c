@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/20 00:55:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 01:19:06 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,15 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	const char	*cmd_path;
 
 	count = heredoc_count(command);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		return (perror("Fork Error"), 1);
 	if (pid == 0)
 		run_child_ps(&count, data, args);
 	else
-	{
 		if (waitpid(pid, &status, 0) == -1)
 			return (perror("Waitpid Error"), 1);
-		if (WIFEXITED(status))
-		{
-			data->exit_status = WEXITSTATUS(status);
-			if (data->exit_status == 2 && count)
-				exit(2);
-		}
-		else if (WIFSIGNALED(status))
-			data->exit_status = 128 + WTERMSIG(status);
-	}
-	return (data->exit_status);
+	return (set_exit_status(status));
 }
