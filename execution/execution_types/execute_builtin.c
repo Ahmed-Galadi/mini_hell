@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/19 17:51:17 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:45:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_execute_builtin(t_shell *data)
 	copy_stdout(data, &stdout_copy);
 	command = data->command;
 	if (ft_strcmp(command->command[0], "echo") == 0)
-		data->exit_status = ft_echo(&command->command[1]);
+		data->exit_status = ft_echo(&command->command[1], data);
 	else if (ft_strcmp(command->command[0], "env") == 0)
 		data->exit_status = ft_env(data->env);
 	else if (ft_strcmp(command->command[0], "export") == 0)

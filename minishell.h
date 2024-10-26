@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/26 00:43:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:42:13 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_data {
 	int		exit_status;
 	int		heredoc_count;
 	int		heredoc_index;
+	char	*last_exec_cmd;
 }	t_shell;
 // execution types - end
 
@@ -142,8 +143,8 @@ void	gc_free_all(t_type type);
 
 
 // execution prototypes
-int		set_exit_status(int status);
-int		ft_echo(char **args);
+int		set_exit_status(int *status);
+int		ft_echo(char **args, t_shell *data);
 int		ft_env(t_env *env);
 char	*ft_get_var_value(t_env *env ,const char *key);
 t_env	*init_env(char **env, char *env_type);

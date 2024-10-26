@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/26 01:19:06 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:42:52 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	check_env_creation(char **env)
 
 static void	check_cmd_path(const char *path, char **args)
 {
+	if (!*args)
+		exit (0);
 	if (!path)
 	{
 		fprintf(stderr, "%s: command not found\n", args[0]);
@@ -50,6 +52,8 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	env_array = env_to_array(data->env);
 	check_env_creation(env_array);
 	cmd_path = get_path(args[0], data->env);
+	data->last_exec_cmd = (char *)cmd_path;
+
 	check_cmd_path(cmd_path, args);
 	if (execve(cmd_path, args, env_array) == -1)
 	{
@@ -76,5 +80,5 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	else
 		if (waitpid(pid, &status, 0) == -1)
 			return (perror("Waitpid Error"), 1);
-	return (set_exit_status(status));
+	return (set_exit_status(&status));
 }

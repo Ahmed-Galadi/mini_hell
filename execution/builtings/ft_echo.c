@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 13:28:58 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:41:57 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,18 @@ int	ft_check_n_flag(char *flag)
 	return (0);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_shell *data)
 {
 	int	i;
 	int	newline;
-
+	int	file_fd;
+	int	status;
 	(1 && (i = 0), (newline = 1));
 	while (args[i])
 	{
+		status = handle_redirections(data);
+		if (status)
+			return (status);
 		if ((ft_check_n_flag(args[i]) == 1))
 		{
 			newline = 0;

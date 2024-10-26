@@ -12,19 +12,19 @@
 
 #include "../../minishell.h"
 
-int	set_exit_status(int status)
+int	set_exit_status(int *status)
 {
-	if (WIFSIGNALED(status))
+	if (WIFSIGNALED(*status))
 	{
-		(void)(WTERMSIG(status) == SIGINT);
-		if (WTERMSIG(status) == SIGPIPE)
+		(void)(WTERMSIG(*status) == SIGINT);
+		if (WTERMSIG(*status) == SIGPIPE)
 			return (0);
-		if (WTERMSIG(status) == SIGQUIT)
+		if (WTERMSIG(*status) == SIGQUIT)
 			printf("Quit: 3\n");
-		return (128 + WTERMSIG(status));
+		return (128 + WTERMSIG(*status));
 	}
 
-	return (WEXITSTATUS(status));
+	return (WEXITSTATUS(*status));
 }
 
 int	heredoc_one_pipe(t_com *command)
@@ -100,5 +100,5 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	while (wait(&status) > 0)
 		;
 	
-	return (set_exit_status(status));
+	return (set_exit_status(&status));
 }
