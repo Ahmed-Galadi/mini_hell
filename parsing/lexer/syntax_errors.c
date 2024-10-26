@@ -42,7 +42,7 @@ int	check_redirection(t_token *token)
 			return (-1);
 		if (is_red(current->type) && is_rederection(current->value))
 			return (0);
-		if (!current->value && is_red(current->type))	
+		if (!current->value && is_red(current->type))
 			return (0);
 		if (is_red(current->type))
 		{
@@ -78,9 +78,25 @@ bool	check_quote_syntax(char *input)
 	return (!single_quote_open && !double_quote_open);
 }
 
-int	syntax_error(t_token *token)
+int	is_valid_quotes(t_token *token)
 {
 	t_token	*current;
+
+	current = token;
+	while (current)
+	{
+		if (!check_quote_syntax(current->value))
+		{
+			printf(RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
+			return (0);
+		}
+		current = current->next;
+	}
+	return (1);
+}
+
+int	syntax_error(t_token *token)
+{
 	int		output;
 
 	output = 0;
@@ -94,18 +110,10 @@ int	syntax_error(t_token *token)
 		if (!check_redirection(token))
 			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
 		if (check_redirection(token) == -1)
-			return (-1);	
+			return (-1);
 		return (0);
 	}
-	current = token;
-	while (current)
-	{
-		if (!check_quote_syntax(current->value))
-		{
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
-			return (0);
-		}
-		current = current->next;
-	}
+	if (!is_valid_quotes(token))
+		return (0);
 	return (1);
 }

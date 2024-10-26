@@ -224,6 +224,7 @@ t_token	*last_token(t_token *token);
 char	**cstm_split(const char *str, const char *delims);
 char *ft_itoa(int n);
 int	is_op(char c);
+int	ft_isnum(char c);
 // tokenizer
 int		is_quote(char *str);
 int		is_rederection(char *str);
@@ -237,6 +238,7 @@ bool	has_quotes(char *str);
 // expand
 void	expand_tokens(t_token *token, t_env *env, int *exit_status);
 void	expand(char **token_val, t_env *env, int *exit_status);
+void	handle_expansion_loop(t_expand_data *exp_data, char *output);
 int		ft_isspace(char c);
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);

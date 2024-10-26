@@ -18,6 +18,12 @@ void	ft_putstr(char *str)
 		write(1, str++, 1);
 }
 
+// Checks if the character is a numeric digit
+int	ft_isnum(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
 // Check if a char is "|" or "<" or ">"  
 int	is_op(char c)
 {

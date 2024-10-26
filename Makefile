@@ -35,7 +35,7 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/builtings/builtings_utils/export_utils.c \
 				 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
-parsing/expand/expand_utils.c parsing/expand/expand.c parsing/formater/formater.c parsing/formater/quotes_handler.c \
+parsing/expand/expand_utils.c parsing/expand/expand_loop.c parsing/expand/expand.c parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c\
