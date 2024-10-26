@@ -99,6 +99,6 @@ void	execute_command(t_shell *data, char **commands)
 	else
 	{
 		fprintf(stderr, "Command not found: %s\n", commands[0]);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
 
 static void	check_env_creation(char **env)
 {

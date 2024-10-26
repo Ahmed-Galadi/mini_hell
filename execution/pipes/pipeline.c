@@ -16,12 +16,14 @@ int	set_exit_status(int status)
 {
 	if (WIFSIGNALED(status))
 	{
-		 (void)(WTERMSIG(status) == SIGINT);
-			// write(1, "\n", 1);
+		(void)(WTERMSIG(status) == SIGINT);
+		if (WTERMSIG(status) == SIGPIPE)
+			return (0);
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3\n");
 		return (128 + WTERMSIG(status));
 	}
+
 	return (WEXITSTATUS(status));
 }
 
@@ -97,5 +99,6 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	update_prev_pipe(pipe->prev_pipe, pipe->curr_pipe, 0);
 	while (wait(&status) > 0)
 		;
+	
 	return (set_exit_status(status));
 }
