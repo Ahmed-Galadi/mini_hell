@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/25 02:07:17 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/26 11:50:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,60 +66,42 @@ void handle_expansion_loop(t_expand_data *exp_data, char *output)
 
     while ((*(exp_data->token_val))[i])
     {
-        // Update quote states
         handle_quotes_state((*(exp_data->token_val))[i], &exp_data->in_single_q, &exp_data->in_double_q);
-
-        // Check for redirection operator and set redirection flag
         if ((*(exp_data->token_val))[i] == '<' || (*(exp_data->token_val))[i] == '>')
         {
             is_redirect = 1;  // Redirection found
             tmp_index = i + 1;
-
-            // Handle cases like '>>' or '<<'
             if ((*(exp_data->token_val))[tmp_index] == '<' || (*(exp_data->token_val))[tmp_index] == '>')
                 tmp_index++;
-
-            // Skip spaces after the redirection operator
             while (ft_isspace((*(exp_data->token_val))[tmp_index]))
                 tmp_index++;
-
-            // If a variable follows the redirection, prevent expansion
             if ((*(exp_data->token_val))[tmp_index] == '$' && 
                 (exp_data->in_double_q || (!exp_data->in_double_q && !exp_data->in_single_q)))
-            {
                 is_redirect = 1;  // Variable after redirection, do not expand
-            }
             else
-            {
                 is_redirect = 0;  // No variable, reset the redirection flag
-            }
         }
-		// handle $
 		if ((*(exp_data->token_val))[i] == '$'
 			&& ((*(exp_data->token_val))[i + 1] == '\"' || (*(exp_data->token_val))[i + 1] == '\'')
 			&& (!exp_data->in_double_q && !exp_data->in_single_q))
 			i++;
-        // Handle variable expansion if not in a redirection context
 		else if ((*(exp_data->token_val))[i] == '$' && 
             (exp_data->in_double_q || (!exp_data->in_double_q && !exp_data->in_single_q)) && !is_redirect)
         {
-            if (!(*(exp_data->token_val))[i + 1] || !is_valid_for_expansion((*(exp_data->token_val))[i + 1]))
+			if ((*(exp_data->token_val))[i + 1] == '$')
+				i = i + 2;
+			else if (!(*(exp_data->token_val))[i + 1] || !is_valid_for_expansion((*(exp_data->token_val))[i + 1]))
             {
-                output[exp_data->j++] = '$';
+				output[exp_data->j++] = '$';
                 i++;
             }
             else
-            {
-                // Handle the actual variable expansion
                 handle_variable_expansion(exp_data, output, &i);
-            }
         }
         else
         {
-            // If we're processing a redirection target, skip expansion
             if (is_redirect)
             {
-                // Skip the variable after redirection without expanding
                 if ((*(exp_data->token_val))[i] == '$')
                 {
                     while ((*(exp_data->token_val))[i] && !ft_isspace((*(exp_data->token_val))[i]))
@@ -128,8 +110,6 @@ void handle_expansion_loop(t_expand_data *exp_data, char *output)
                     continue;
                 }
             }
-
-            // Handle regular characters
             handle_regular_characters(exp_data, output, &i);
         }
     }
@@ -145,8 +125,8 @@ void expand(char **token_val, t_env *env, int *exit_status)
         return;
     
     exp_data->token_val = token_val;
+	exp_data->exit_status = *exit_status;
     exp_data->env = env;
-    exp_data->exit_status = *exit_status;
     int size = initialize_expansion(exp_data);
     if (size < 0)
         return;

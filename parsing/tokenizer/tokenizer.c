@@ -76,19 +76,7 @@ static t_token	*create_token(char **splited_input, int *i)
 	return (new_token);
 }
 
-/*// Format and switch characters function*/
-/*static char	*format_and_switch(char *input)*/
-/*{*/
-/*	char	*formated_input;*/
-/**/
-/*	formated_input = format(input);*/
-/*	switch_char(&formated_input, ' ', -1);*/
-/*	switch_char(&formated_input, '\t', -2);*/
-/*	return (formated_input);*/
-/*}*/
-
 // Split input into tokens
-
 t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 {
 	t_token	*head;
@@ -119,6 +107,12 @@ t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 	if (!syntax_error(head))
 	{
 		*exit_status = 258;
+		return (NULL);
+	}
+	if (syntax_error(head) == -1)
+	{
+		*exit_status = 1;
+		printf(RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
 		return (NULL);
 	}
 	heredoc_type_set(&head);
