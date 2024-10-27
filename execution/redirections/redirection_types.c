@@ -33,7 +33,7 @@ int	handle_redirections(t_shell *data)
 	ft_open_heredoc(data);
 	while (cur_op)
 	{
-		if (data->exit_status)
+		if (data->exit_status && !data->trap_sigint)
 			return (data->exit_status);
 		if (cur_op->operator == RED_OUT)
 			data->exit_status = setup_output_redirection(cur_op->arg, 0, data);

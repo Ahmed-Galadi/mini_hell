@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/26 18:25:57 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:36:25 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <termios.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <signal.h>
 
 # define YELLOW "\001\033[93m\002"
 # define RESET "\001\033[0m\002"
@@ -102,6 +103,7 @@ typedef struct s_data {
 	char	*pwd;
 	char	**heredoc_files;
 	int		exit_status;
+	int		trap_sigint;
 	int		heredoc_count;
 	int		heredoc_index;
 	char	*last_exec_cmd;

@@ -44,9 +44,6 @@ int	ft_echo(char **args, t_shell *data)
 	(1 && (i = 0), (newline = 1));
 	while (args[i])
 	{
-		status = handle_redirections(data);
-		if (status)
-			return (status);
 		if ((ft_check_n_flag(args[i]) == 1))
 		{
 			newline = 0;
