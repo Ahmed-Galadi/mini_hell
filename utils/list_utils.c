@@ -14,7 +14,7 @@
 
 void	add_lstback(t_opp *operators, t_opp *to_add)
 {
-	t_opp *current;
+	t_opp	*current;
 
 	current = operators;
 	if (!operators)

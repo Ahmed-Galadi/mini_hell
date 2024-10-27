@@ -6,14 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 22:27:38 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/27 22:52:04 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <termios.h>
 
-// int	g_exit_status = 0;
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {

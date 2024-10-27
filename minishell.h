@@ -6,12 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 20:36:25 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/27 23:03:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -241,6 +241,10 @@ bool	has_quotes(char *str);
 void	expand_tokens(t_token *token, t_env *env, int *exit_status);
 void	expand(char **token_val, t_env *env, int *exit_status);
 void	handle_expansion_loop(t_expand_data *exp_data, char *output);
+int		is_valid_for_expansion(char c);
+void	handle_variable_expansion(t_expand_data *exp_data, char *output, int *i);
+void	handle_regular_characters(t_expand_data *exp_data, char *output, int *i);
+void	copy_non_space(t_expand_data *exp_data, char *output, int *i);
 int		ft_isspace(char c);
 char	*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void	handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);

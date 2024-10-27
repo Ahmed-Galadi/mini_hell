@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 19:47:15 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/27 22:01:38 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*spec_char_quoting(char *spec_str)
 	int		i;
 	int		j;
 
-	(1 && (i = 0) && (j = 0));
+	(1 && (i = 0), (j = 0));
 	while (spec_str[i])
 	{
 		if (spec_str[i] == '<' || spec_str[i] == '>' || spec_str[i] == '|')
