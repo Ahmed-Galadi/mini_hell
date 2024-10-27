@@ -63,9 +63,8 @@ int	change_directory(const char *path, t_shell *data)
 		return (1);
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
-
 	if (chdir(path) != 0)
-			return (printf("cd: %s: No such file or directory\n", path), 1);
+		return (printf("cd: %s: No such file or directory\n", path), 1);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		data->pwd = ft_strdup(cwd);
@@ -82,7 +81,6 @@ int	change_directory(const char *path, t_shell *data)
 	}
 	return (1);
 }
-
 
 int	ft_cd(char **args, t_shell *data)
 {

@@ -6,12 +6,11 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:09:08 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/22 01:22:58by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 00:11:18 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
 
 char	**fill_heredoc_files(int count)
 {

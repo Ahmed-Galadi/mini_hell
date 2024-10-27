@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
 
 static void	check_env_creation(char **env)
 {
@@ -53,7 +52,6 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	check_env_creation(env_array);
 	cmd_path = get_path(args[0], data->env);
 	data->last_exec_cmd = (char *)cmd_path;
-
 	check_cmd_path(cmd_path, args);
 	if (execve(cmd_path, args, env_array) == -1)
 	{

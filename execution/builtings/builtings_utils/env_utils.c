@@ -56,7 +56,8 @@ char	*get_operation(char *arg)
 	key = extract_key(arg);
 	if (key && !ft_check_key(key))
 	{
-		printf(BOLD RED "Error: " RESET PINK "export:" RESET " \'%s\': not a valid identifier\n",
+		printf(BOLD RED "Error: " RESET PINK "export:"\
+			RESET " \'%s\': not a valid identifier\n",
 			arg);
 		return ("Invalid");
 	}
@@ -64,10 +65,11 @@ char	*get_operation(char *arg)
 		return ("create");
 	else if (ft_check_key(arg) == 2)
 		return ("append");
-	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=') - 1] == '+')
+	else if (first_occurence(arg, '=')
+		&& arg[first_occurence(arg, '=') - 1] == '+')
 		return ("append");
-	else if (first_occurence(arg, '=') && arg[first_occurence(arg, '=')
-			- 1] != '+')
+	else if (first_occurence(arg, '=')
+		&& arg[first_occurence(arg, '=') - 1] != '+')
 		return ("create");
 	return (NULL);
 }

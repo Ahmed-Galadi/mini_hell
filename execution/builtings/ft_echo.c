@@ -39,8 +39,7 @@ int	ft_echo(char **args, t_shell *data)
 {
 	int	i;
 	int	newline;
-	int	file_fd;
-	int	status;
+
 	(1 && (i = 0), (newline = 1));
 	while (args[i])
 	{
