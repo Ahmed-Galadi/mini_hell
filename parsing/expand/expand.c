@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/26 11:50:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/27 22:01:19 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	copy_non_space(t_expand_data *exp_data, char *output, int *i)
+{
+	while ((*(exp_data->token_val))[*i]
+		&& !ft_isspace((*(exp_data->token_val))[*i]))
+		output[exp_data->j++] = (*(exp_data->token_val))[(*i)++];
+}
 
 // Function to initialize variables and calculate size
 int	initialize_expansion(t_expand_data *exp_data)
@@ -28,25 +35,26 @@ int	initialize_expansion(t_expand_data *exp_data)
 }
 
 // Main expand function
-void expand(char **token_val, t_env *env, int *exit_status)
+void	expand(char **token_val, t_env *env, int *exit_status)
 {
-	t_expand_data *exp_data;
+	t_expand_data	*exp_data;
+	char			*output;
+	int				size;
 
-	exp_data = (t_expand_data *)malloc(sizeof(t_expand_data));
+	exp_data = (t_expand_data *)gc_malloc(sizeof(t_expand_data), LOCAL);
 	if (!exp_data)
-		return;
+		return ;
 	exp_data->token_val = token_val;
 	exp_data->exit_status = *exit_status;
 	exp_data->env = env;
-	int size = initialize_expansion(exp_data);
+	size = initialize_expansion(exp_data);
 	if (size < 0)
-		return;
-	char *output = (char *)gc_malloc(size, LOCAL);
+		return ;
+	output = (char *)gc_malloc(size, LOCAL);
 	if (!output)
-		return;
+		return ;
 	handle_expansion_loop(exp_data, output);
 	*token_val = output;
-	free(exp_data); // Free the allocated memory for exp_data
 }
 
 void	expand_tokens(t_token *token, t_env *env, int *exit_status)
