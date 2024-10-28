@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 23:03:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 02:42:48 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	ft_init_pipe(t_pipe **pipe, int num_commands);
 int		handle_redirections(t_shell *data);
 int		setup_input_redirection(const char *infile, int is_here_doc, t_shell *data);
 int		setup_output_redirection(const char *outfile, int is_appended, t_shell *data);
-void	restore_stdout(int stdout_copy);
+void	restore_stdout(int stdout_copy, int stdin_copy);
 void	redirect_to_pipe_fds(t_shell *data, int is_builtin, t_pipe *pipe);
 int		is_redirection_in(e_tokenType operator);
 int		is_redirection_out(e_tokenType operator);

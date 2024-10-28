@@ -6,19 +6,30 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/04 11:29:02 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 03:25:35 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	restore_stdout(int stdout_copy)
+void	restore_stdout(int stdout_copy, int stdin_copy)
 {
-	if (dup2(stdout_copy, STDOUT_FILENO) < 0)
+	if (stdout_copy != -1)
 	{
-		perror("Error restoring stdout");
+		if (dup2(stdout_copy, STDOUT_FILENO) < 0)
+		{
+			perror("Error restoring stdout");
+		}
+		close(stdout_copy);
 	}
-	close(stdout_copy);
+	if (stdin_copy != -1)
+	{
+		if (dup2(stdin_copy, STDIN_FILENO) < 0)
+		{
+			perror("Error restoring stdin");
+		}
+		close(stdin_copy);
+	}
 }
 
 int	handle_redirections(t_shell *data)

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 22:52:04 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 03:35:52 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,9 @@ void signals_init(t_shell *data, struct termios term)
     //     exit(EXIT_FAILURE);
     // }
 	//
-	disable_echo(term);
+	// disable_echo(term); 
+
+
 
     signal(SIGINT, handle_sig);
     signal(SIGQUIT, SIG_IGN);
@@ -154,13 +156,26 @@ int main(int argc, char *argv[], char **envp)
 
 	data.trap_sigint = 0;
     init_shell_data_config(&data, envp);
-	if (tcgetattr(STDIN_FILENO, &term) == -1)
-	{
-		perror("tcgetattr");
+	// if (tcgetattr(STDIN_FILENO, &term) == -1)
+	// {
+	// 	perror("tcgetattr");
+    //     gc_free_all(LOCAL);
+    //     gc_free_all(GLOBAL);
+	// 	exit(EXIT_FAILURE);
+	// }
+
+		if (isatty(STDIN_FILENO))
+{
+    if (tcgetattr(STDIN_FILENO, &term) == -1)
+    {
+        perror("tcgetattr");
         gc_free_all(LOCAL);
         gc_free_all(GLOBAL);
-		exit(EXIT_FAILURE);
-	}
+        exit(EXIT_FAILURE);
+    }
+    disable_echo(term);  // Disables echo if in a terminal context
+}
+
 	while (1)
 	{
 	

@@ -6,11 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/26 16:51:19 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 02:39:37 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <unistd.h>
 
 static void	check_env_creation(char **env)
 {
@@ -66,7 +67,9 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	int			status;
 	int			count;
 	const char	*cmd_path;
+//	int		stdin_copy;
 
+//	stdin_copy = dup(STDIN_FILENO);
 	count = heredoc_count(command);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -78,5 +81,7 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	else
 		if (waitpid(pid, &status, 0) == -1)
 			return (perror("Waitpid Error"), 1);
+	//dup2(stdin_copy, STDIN_FILENO);
+	//close(stdin_copy);
 	return (set_exit_status(&status));
 }
