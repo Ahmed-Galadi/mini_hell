@@ -30,47 +30,6 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 	return (com);
 }
 
-
-char	*simple_pwd(char *pwd, char *home)
-{
-	char	*rest_path;
-	char	*simplified;
-	int		len;
-
-	if (!home)
-		return (pwd);
-	len = ft_strlen(home);
-	if (ft_strncmp(pwd, home, ft_strlen(home)))
-		return (pwd);
-	rest_path = ft_substr(pwd, len, ft_strlen(pwd) - len);
-	simplified = ft_strjoin("~", rest_path, GLOBAL);
-	return (simplified);
-}
-
-char *prompt(t_shell *data)
-{
-	char	*cwd = data->pwd;
-	char	*output;
-	t_env	*tmp;
-
-	output = NULL;
-	output = ft_strjoin(output, PROMPT_MSG_1, GLOBAL);
-	tmp = data->env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, "HOME"))
-			cwd = simple_pwd(cwd, tmp->value);
-		tmp = tmp->next;
-	}
-	output = ft_strjoin(output, cwd, GLOBAL);
-	output = ft_strjoin(output, PROMPT_MSG_2, GLOBAL);
-	if (data->exit_status != 0)
-		output = ft_strjoin(output, UNVALID_ARROW, GLOBAL);
-	else
-		output = ft_strjoin(output, VALID_ARROW, GLOBAL);
-	return (output);
-}
-
 int	is_spaces(char *str)
 {
 	int	i;

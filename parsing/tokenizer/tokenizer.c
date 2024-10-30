@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 01:51:35 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:37:44 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/30 01:34:20 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*handle_redirection(char **splited_input, int *i)
 }
 
 // Get token type function
-static e_tokenType	get_token_type(char *str)
+static t_tokenType	get_token_type(char *str)
 {
 	if (cstm_strcmp(str, "|"))
 		return (PIPE);
@@ -61,7 +61,7 @@ static e_tokenType	get_token_type(char *str)
 static t_token	*create_token(char **splited_input, int *i)
 {
 	t_token		*new_token;
-	e_tokenType	type;
+	t_tokenType	type;
 
 	new_token = (t_token *)gc_malloc(sizeof(t_token), LOCAL);
 	if (!new_token)

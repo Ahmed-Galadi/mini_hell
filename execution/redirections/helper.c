@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:08:48 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/18 18:08:50 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/30 01:34:20 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
+int	valid_operator(t_tokenType operator_type, int *flags, int *default_fd)
 {
 	if (operator_type == RED_IN)
 	{
@@ -36,14 +36,14 @@ int	valid_operator(e_tokenType operator_type, int *flags, int *default_fd)
 	return (1);
 }
 
-int	is_redirection_out(e_tokenType operator)
+int	is_redirection_out(t_tokenType operator)
 {
 	if (operator == RED_OUT || operator == APPEND)
 		return (1);
 	return (0);
 }
 
-int	is_redirection_in(e_tokenType operator)
+int	is_redirection_in(t_tokenType operator)
 {
 	if (operator == RED_IN || operator == HERE_DOC || operator == HERE_DOC_EXP)
 		return (1);
