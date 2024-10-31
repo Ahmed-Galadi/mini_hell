@@ -1,0 +1,3 @@
+echo "exit_code ->$? user ->$USER home -> $HOME"
+echo $?HELLO
+export A- (exit status)

@@ -6,11 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 02:38:45 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/31 01:12:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <sys/unistd.h>
+#include <unistd.h>
 
 int	ft_execute_command(t_shell *data)
 {
@@ -51,11 +53,11 @@ static char	*get_full_path(char *path, const char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
+		if (access(cmd, F_OK) == 0)
 			return ((char *)cmd);
 		tmp = ft_strjoin(paths[i], "/", LOCAL);
 		full_path = ft_strjoin(tmp, cmd, LOCAL);
-		if (access(full_path, F_OK | X_OK) == 0)
+		if (access(full_path, F_OK) == 0)
 			return (full_path);
 		i++;
 	}
@@ -68,6 +70,8 @@ const char	*get_path(const char *cmd, t_env *env)
 	char	*value;
 	t_env	*curr;
 
+	if (access(ft_strjoin("./", cmd, LOCAL), F_OK) == 0)
+		return (ft_strjoin("./", cmd, LOCAL));
 	if (ft_strcmp(cmd, "") == 0)
 		return (NULL);
 	if (!cmd || !env)

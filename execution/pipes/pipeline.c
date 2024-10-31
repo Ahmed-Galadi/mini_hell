@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/26 00:52:24 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:59:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	set_exit_status(int *status)
 {
 	if (WIFSIGNALED(*status))
 	{
-		(void)(WTERMSIG(*status) == SIGINT);
 		if (WTERMSIG(*status) == SIGPIPE)
 			return (0);
 		if (WTERMSIG(*status) == SIGQUIT)
@@ -97,6 +96,6 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	}
 	update_prev_pipe(pipe->prev_pipe, pipe->curr_pipe, 0);
 	while (wait(&status) > 0)
-		;
+		dprintf(2, "%d\n", status);
 	return (set_exit_status(&status));
 }

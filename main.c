@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/28 03:35:52 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:33:56 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,17 +164,17 @@ int main(int argc, char *argv[], char **envp)
 	// 	exit(EXIT_FAILURE);
 	// }
 
-		if (isatty(STDIN_FILENO))
-{
-    if (tcgetattr(STDIN_FILENO, &term) == -1)
-    {
-        perror("tcgetattr");
-        gc_free_all(LOCAL);
-        gc_free_all(GLOBAL);
-        exit(EXIT_FAILURE);
-    }
-    disable_echo(term);  // Disables echo if in a terminal context
-}
+	if (isatty(STDIN_FILENO))
+	{
+ 	   if (tcgetattr(STDIN_FILENO, &term) == -1)
+		{
+			perror("tcgetattr");
+			gc_free_all(LOCAL);
+			gc_free_all(GLOBAL);
+			exit(EXIT_FAILURE);
+		}
+		disable_echo(term);  // Disables echo if in a terminal context
+	}
 
 	while (1)
 	{
