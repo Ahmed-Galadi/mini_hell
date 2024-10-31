@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 00:55:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/26 17:08:48 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/28 03:59:16 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-#include <stdio.h>
 
 t_env	*create_env_node(char *env_str)
 {
@@ -80,13 +79,13 @@ void	ft_printf_envs(t_env *env)
 	}
 }
 
-t_env	*init_env(char **env, char *env_type)
+t_env	*init_env(char **envp, char *env_type)
 {
 	t_env	*envs;
 
-	if (!env)
+	if (!envp)
 		return (NULL);
-	envs = convert_env_to_list(env, env_type);
+	envs = convert_env_to_list(envp, env_type);
 	return (envs);
 }
 

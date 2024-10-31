@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:17:28 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:37:39 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/30 01:34:20 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_isalpha(char c)
 	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
-int	is_red(e_tokenType type)
+int	is_red(t_tokenType type)
 {
 	return (type == RED_IN || type == RED_OUT
 		|| type == APPEND || type == HERE_DOC

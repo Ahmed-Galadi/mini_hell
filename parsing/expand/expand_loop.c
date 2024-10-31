@@ -17,8 +17,9 @@ void	track_redirect(t_expand_data *exp_data,
 {
 	handle_quotes_state((*(exp_data->token_val))[*i],
 		&exp_data->in_single_q, &exp_data->in_double_q);
-	if ((*(exp_data->token_val))[*i] == '<'
+	if (((*(exp_data->token_val))[*i] == '<'
 		|| (*(exp_data->token_val))[*i] == '>')
+		&& (!exp_data->in_double_q && !exp_data->in_single_q))
 	{
 		*is_redirect = 1;
 		*tmp_index = *i + 1;
