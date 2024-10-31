@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/30 01:34:20 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/10/31 15:51:24 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,10 @@ int			is_var_exist(char *var, t_env *expo);
 int			ft_check_key(const char *arg);
 char		*ft_get_var_value(t_env *env, const char *key);
 char		*get_operation(char *arg);
+void	ft_set_mini_env_config(t_env **path, t_env **pwd,
+		t_env **shlvl, t_env **last_command);
+t_env	*create_mini_env(void);
+
 // pipes prototypes
 int			count_pipes(t_com *command);
 char		***split_commands(t_com *commands, int num_commands);
@@ -195,7 +199,7 @@ int			setup_input_redirection(const char *infile,
 				int is_here_doc, t_shell *data);
 int			setup_output_redirection(const char *outfile,
 				int is_appended, t_shell *data);
-void		restore_stdout(int stdout_copy, int stdin_copy);
+void		restore_std_in_out(int stdout_copy, int stdin_copy);
 void		redirect_to_pipe_fds(t_shell *data, int is_builtin, t_pipe *pipe);
 int			is_redirection_in(t_tokenType operator);
 int			is_redirection_out(t_tokenType operator);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
+#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/10/27 21:35:41 by agaladi          ###   ########.fr        #
+#    Updated: 2024/10/31 15:45:42 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/expand/expand_utils.c parsing/expand/expand_loop.c parsing/expand/expand_loop_utils.c parsing/expand/expand.c parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
-utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c\
+utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c \
+utils/shell_utils.c
 
 CFLAGS = -g -fsanitize=address
 CFLAGS_R = -g -lreadline

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:23:12 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/29 13:33:29 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:41:19 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_pwd(t_shell *data)
 {
 	char	buffer[1024];
-	
+
 	if (!data)
 		return (127);
 	if (getcwd(buffer, sizeof(buffer)))

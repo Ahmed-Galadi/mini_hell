@@ -80,25 +80,28 @@ static void	handle_append_operation(t_shell *data, char *key,
 	}
 }
 
-void	export_manager(char *str, t_shell *data, char *crud_operation)
+int	export_manager(char *str, t_shell *data, char *crud_operation)
 {
 	char	*key;
 	char	*value;
 
 	if (!str || !crud_operation)
-		return ;
+		return (1);
 	if (!ft_strcmp(crud_operation, "Invalid"))
-		return ;
+		return (1);
 	if (ft_strcmp(crud_operation, "create") == 0)
 		handle_create_operation(data, key, value, str);
 	if (ft_strcmp(crud_operation, "append") == 0)
 		handle_append_operation(data, key, value, str);
+	return (0);
 }
 
 int	ft_export(char **args, t_shell *data)
 {
+	int		err;
 	char	*operation;
 
+	err = 0;
 	if (!data)
 		return (127);
 	if (!args)
@@ -110,8 +113,11 @@ int	ft_export(char **args, t_shell *data)
 		operation = get_operation(*args);
 		if (!operation)
 			return (1);
-		export_manager(*args, data, operation);
+		if (export_manager(*args, data, operation))
+			err = 1;
 		args++;
 	}
+	if (err)
+		return (1);
 	return (0);
 }

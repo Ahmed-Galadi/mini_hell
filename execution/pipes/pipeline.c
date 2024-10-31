@@ -96,6 +96,6 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	}
 	update_prev_pipe(pipe->prev_pipe, pipe->curr_pipe, 0);
 	while (wait(&status) > 0)
-		dprintf(2, "%d\n", status);
+		;
 	return (set_exit_status(&status));
 }

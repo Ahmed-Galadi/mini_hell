@@ -42,8 +42,10 @@ int	ft_unset(char **args, t_shell *data)
 	char	**tmp_var;
 
 	tmp_var = args;
-	if (!(*args) || !(data->export))
+	if (!(data->export))
 		return (1);
+	if (!(*args))
+		return (0);
 	while (*tmp_var)
 	{
 		unset_var(&data->export, *tmp_var);

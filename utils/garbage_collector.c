@@ -1,27 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/31 16:08:22 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/10/31 16:08:24 by bzinedda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
+
+void	*ft_init_memos(t_memory_list **local_mem, t_memory_list **global_mem)
+{
+	if (!local_mem || !global_mem)
+		return ;
+	if (!(*local_mem))
+	{
+		(*local_mem) = malloc(sizeof(t_memory_list));
+		if (!(*local_mem))
+			return (perror("malloc"), NULL);
+		(*local_mem)->head = NULL;
+		(*local_mem)->tail = NULL;
+	}
+	if (!(*global_mem))
+	{
+		(*global_mem) = malloc(sizeof(t_memory_list));
+		if (!(*global_mem))
+			return (perror("malloc"), NULL);
+		(*global_mem)->head = NULL;
+		(*global_mem)->tail = NULL;
+	}
+	return ("Success");
+}
 
 static t_memory_list	*get_memory_list(t_type type, int flag)
 {
 	static t_memory_list	*local_mem;
 	static t_memory_list	*global_mem;
-	t_memory_list *tmp;
+	t_memory_list			*tmp;
 
-	if (!local_mem)
-	{
-		local_mem = malloc(sizeof(t_memory_list));
-		if (!local_mem)
-			return (perror("malloc"), NULL);
-		local_mem->head = NULL;
-		local_mem->tail = NULL;
-	}
-	if (!global_mem)
-	{
-		global_mem = malloc(sizeof(t_memory_list));
-		if (!global_mem)
-			return (perror("malloc"), NULL);
-		global_mem->head = NULL;
-		global_mem->tail = NULL;
-	}
+	if (!ft_init_memos(&local_mem, &global_mem))
+		return (NULL);
 	if (type == LOCAL)
 	{
 		tmp = local_mem;
@@ -45,7 +66,7 @@ void	add_memory(void *ptr, t_type type)
 
 	memory_list = get_memory_list(type, 0);
 	new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node)
+	if (!new_node || !memory_list)
 		return (perror("malloc"));
 	new_node->ptr = ptr;
 	new_node->next = NULL;

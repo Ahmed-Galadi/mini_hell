@@ -6,13 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 03:25:35 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:51:44 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	restore_stdout(int stdout_copy, int stdin_copy)
+void	restore_std_in_out(int stdout_copy, int stdin_copy)
 {
 	if (stdout_copy != -1)
 	{

@@ -6,14 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 03:36:27 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:54:05 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <unistd.h>
 
-int	copy_stdout(t_shell *data, int *stdout_copy, int *stdin_copy)
+int	copy_std_in_out(t_shell *data, int *stdout_copy, int *stdin_copy)
 {
 	t_com	*command;
 
@@ -43,10 +42,9 @@ int	ft_execute_builtin(t_shell *data)
 	int		stdout_copy;
 	int		stdin_copy;
 
-	if (data->exit_status)
-		data->exit_status = 0;
-	if (copy_stdout(data, &stdout_copy, &stdin_copy))
-		return (restore_stdout(stdout_copy, stdin_copy), 1);
+	((data->exit_status) && (data->exit_status = 0));
+	if (copy_std_in_out(data, &stdout_copy, &stdin_copy))
+		return (restore_std_in_out(stdout_copy, stdin_copy), 1);
 	command = data->command;
 	if (ft_strcmp(command->command[0], "echo") == 0)
 		data->exit_status = ft_echo(&command->command[1], data);
@@ -63,6 +61,6 @@ int	ft_execute_builtin(t_shell *data)
 	else if (ft_strcmp(command->command[0], "exit") == 0)
 		data->exit_status = ft_exit(command->command, data->exit_status);
 	if (stdout_copy != -1 || stdin_copy != -1)
-		restore_stdout(stdout_copy, stdin_copy);
+		restore_std_in_out(stdout_copy, stdin_copy);
 	return (data->exit_status);
 }
