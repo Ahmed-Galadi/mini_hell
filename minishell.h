@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/31 15:51:24 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:23:57 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,11 @@ int			ft_isspace(char c);
 char		*get_expand_val(char *str, t_env *env, int *i, int exit_status);
 void		handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
 int			calculate_size(char *str, t_env *env, int exit_status);
+t_com		*set_command(t_shell *data_config, char *cmd_line_args);
+int			is_spaces(char *str);
+void		disable_echo(struct termios term);
+void		signals_init(t_shell *data, struct termios term);
+
 // lexer
 void		trim_quotes(t_token **token);
 int			check_pipes(t_token *token);

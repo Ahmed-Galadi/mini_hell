@@ -15,7 +15,7 @@
 void	*ft_init_memos(t_memory_list **local_mem, t_memory_list **global_mem)
 {
 	if (!local_mem || !global_mem)
-		return ;
+		return (NULL);
 	if (!(*local_mem))
 	{
 		(*local_mem) = malloc(sizeof(t_memory_list));

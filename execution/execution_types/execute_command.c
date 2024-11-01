@@ -6,13 +6,11 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/31 01:12:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:39:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <sys/unistd.h>
-#include <unistd.h>
 
 int	ft_execute_command(t_shell *data)
 {
@@ -20,7 +18,6 @@ int	ft_execute_command(t_shell *data)
 	t_com	*command;
 	char	***commands;
 	int		result;
-	int		stdin_copy;
 
 	command = data->command;
 	if (!command)
