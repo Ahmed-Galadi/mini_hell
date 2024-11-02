@@ -248,8 +248,8 @@ void		heredoc_type_set(t_token **token);
 bool		has_quotes(char *str);
 // expand
 void		expand_tokens(t_token *token, t_env *env, int *exit_status);
-void		expand(char **token_val, t_env *env, int *exit_status);
-void		handle_expansion_loop(t_expand_data *exp_data, char *output);
+void		expand(char **token_val, t_env *env, int *exit_status, bool is_herdoc);
+void	handle_expansion_loop(t_expand_data *exp_data, char *output, bool is_herdoc);
 int			is_valid_for_expansion(char c);
 void		handle_variable_expansion(t_expand_data *exp_data,
 				char *output, int *i);

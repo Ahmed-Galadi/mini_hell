@@ -59,15 +59,15 @@ int	check_quts_after_dlr(t_expand_data *exp_data, int i)
 			&& (!exp_data->in_double_q && !exp_data->in_single_q));
 }
 
-int	expand_check(t_expand_data *exp_data, int is_redirect, int i)
+int	expand_check(t_expand_data *exp_data, int is_redirect, int i, bool is_heredoc)
 {
 	return ((*(exp_data->token_val))[i] == '$' &&
 			(exp_data->in_double_q
-			|| (!exp_data->in_double_q && !exp_data->in_single_q))
+			|| (!exp_data->in_double_q && !exp_data->in_single_q) || is_heredoc)
 			&& !is_redirect);
 }
 
-void	handle_expansion_loop(t_expand_data *exp_data, char *output)
+void	handle_expansion_loop(t_expand_data *exp_data, char *output, bool is_herdoc)
 {
 	int	i;
 	int	is_redirect;
@@ -79,7 +79,7 @@ void	handle_expansion_loop(t_expand_data *exp_data, char *output)
 		track_redirect(exp_data, &tmp_index, &is_redirect, &i);
 		if (check_quts_after_dlr(exp_data, i))
 			i++;
-		else if (expand_check(exp_data, is_redirect, i))
+		else if (expand_check(exp_data, is_redirect, i, is_herdoc))
 			handle_var_expansion(exp_data, output, &i);
 		else
 		{
