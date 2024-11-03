@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_print_percentage.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/22 05:55:12 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/06/23 16:19:34 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+int	ft_print_percentage(int fd)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+	ft_putchar('%', fd);
+	return (1);
 }

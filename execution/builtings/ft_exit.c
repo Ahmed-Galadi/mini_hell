@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:49:56 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/07 18:51:14 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:45:59 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	custom_atoi(const char *str)
 		if ((result > (LLONG_MAX / 10) || (result == LLONG_MAX / 10 && (*str
 						- '0') > LLONG_MAX % 10)) || !(*str >= '0'
 				&& *str <= '9'))
-			return (fprintf(stderr,
-					"exit\nexit: %s: numeric argument required\n", str), -1);
+			return (ft_printf(2,
+					" numeric argument required\n"), -1);
 		result = result * 10 + (*str - '0');
 		str++;
 	}
@@ -63,6 +63,6 @@ int	ft_exit(char **args, int exit_status)
 		gc_free_all(GLOBAL);
 		exit(exit_tmp);
 	}
-	fprintf(stderr, "%s: exit: too many arguments\n", RED "ERROR!" RESET);
+	ft_printf(2, "%s: exit: too many arguments\n", RED "ERROR!" RESET);
 	return (1);
 }

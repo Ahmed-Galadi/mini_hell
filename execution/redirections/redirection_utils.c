@@ -6,12 +6,11 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/22 01:06:00 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:34:27 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
 
 void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 {

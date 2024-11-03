@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_print_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/22 06:07:56 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/06/23 16:14:53 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+static	int	lennbr(int nb)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
+	int	i;
+
+	i = 0;
+	if (nb == 0)
 		return (1);
-	return (0);
+	if (nb < 0)
+		i++;
+	while (nb)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_print_nbr(int nb, int fd)
+{
+	ft_putnbr(nb, fd);
+	return (lennbr(nb));
 }

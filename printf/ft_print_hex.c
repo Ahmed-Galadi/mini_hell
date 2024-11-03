@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/22 06:07:20 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/06/23 16:18:16 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+int	ft_print_hex(unsigned int nbr, char const *format, int fd)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+	int	size;
+
+	size = 0;
+	if (nbr == 0)
+		size++;
+	if (*format == 'x')
+		ft_putnbr_base(nbr, 16, "0123456789abcdef", fd);
+	if (*format == 'X')
+		ft_putnbr_base(nbr, 16, "0123456789ABCDEF", fd);
+	while (nbr != 0)
+	{
+		nbr = nbr / 16;
+		size++;
+	}
+	return (size);
 }

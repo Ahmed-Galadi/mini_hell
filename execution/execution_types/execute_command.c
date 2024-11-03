@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/01 11:39:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:49:36 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_execute_command(t_shell *data)
 	int		pipe_count;
 	t_com	*command;
 	char	***commands;
-	int		result;
 
 	command = data->command;
 	if (!command)
@@ -26,8 +25,8 @@ int	ft_execute_command(t_shell *data)
 	if (pipe_count > 0)
 	{
 		commands = split_commands(command, pipe_count + 1);
-		result = ft_execute_pipeline(commands, pipe_count + 1, data);
-		return (result);
+		data->exit_status = ft_execute_pipeline(commands, pipe_count + 1, data);
+		return (data->exit_status);
 	}
 	else
 	{
@@ -78,7 +77,7 @@ const char	*get_path(const char *cmd, t_env *env)
 	value = ft_get_var_value(env, "PATH");
 	if (!value)
 	{
-		printf("%s: No such file or directory\n", cmd);
+		ft_printf(2, "%s: No such file or directory\n", cmd);
 		return (exit (127), NULL);
 	}
 	return (get_full_path(value, cmd));
@@ -99,7 +98,7 @@ void	execute_command(t_shell *data, char **commands)
 	}
 	else
 	{
-		fprintf(stderr, "Command not found: %s\n", commands[0]);
+		ft_printf(2, "Command not found: %s\n", commands[0]);
 		exit(127);
 	}
 }

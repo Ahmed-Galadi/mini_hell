@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_ptr_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/22 06:05:26 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/02/25 18:26:55 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+int	ft_ptr_len(unsigned long ptr)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+	int	len;
+
+	len = 0;
+	if (ptr == 0)
+		len++;
+	while (ptr != 0)
+	{
+		ptr = ptr / 16;
+		len++;
+	}
+	return (len);
 }

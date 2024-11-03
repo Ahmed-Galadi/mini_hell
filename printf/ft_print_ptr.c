@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_print_ptr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/22 06:06:30 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/06/23 16:21:28 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+int	ft_print_ptr(unsigned long p, int fd)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+	int	size;
+
+	size = 0;
+	ft_putstr("0x", fd);
+	ft_putnbr_base(p, 16, "0123456789abcdef", fd);
+	size += ft_ptr_len(p);
+	return (size + 2);
 }

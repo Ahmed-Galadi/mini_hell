@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:45:04 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/26 17:17:37 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 22:16:40 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*extract_key(char *str)
 	key = ft_substr(str, 0, first_occurence(str, '='));
 	if (!key)
 		return (NULL);
-	return (ft_substr(key, 0, first_occurence(key, '+')));
+	return (key);
 }
 
 char	*extract_value(char *str)

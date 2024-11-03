@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/31 15:54:05 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:03:45 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_execute_builtin(t_shell *data)
 	int		stdout_copy;
 	int		stdin_copy;
 
-	((data->exit_status) && (data->exit_status = 0));
 	if (copy_std_in_out(data, &stdout_copy, &stdin_copy))
 		return (restore_std_in_out(stdout_copy, stdin_copy), 1);
 	command = data->command;

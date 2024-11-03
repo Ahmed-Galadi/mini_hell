@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:16:52 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:32:17 by bzinedda         ###   ########.fr       */
+/*   Created: 2023/12/18 04:50:59 by bzinedda          #+#    #+#             */
+/*   Updated: 2024/06/28 02:14:42 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "ft_printf.h"
+
+void	ft_putnbr_base(unsigned long nbr,
+						int base_value, char *base_rep, int fd)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+	if ((nbr / base_value) != 0)
+	{
+		ft_putnbr_base(nbr / base_value, base_value, base_rep, fd);
+		ft_putchar(base_rep[nbr % base_value], fd);
+	}
+	else
+		ft_putchar(base_rep[nbr % base_value], fd);
 }

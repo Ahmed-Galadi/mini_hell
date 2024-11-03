@@ -6,11 +6,12 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/20 00:39:18 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 23:14:43 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
 
 int	ft_export_command(t_env **my_export_env, const char *key, const char *value)
 {
@@ -65,6 +66,8 @@ static void	handle_append_operation(t_shell *data, char *key,
 	char	*prev_value;
 
 	key = extract_key(str);
+	key = ft_substr(key, 0, ft_strlen(key) - 1);
+	printf("key %s\n", key);
 	value = extract_value(str);
 	prev_value = ft_get_var_value(data->export, key);
 	if (prev_value)

@@ -6,11 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:09:08 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 00:11:18 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:26:29by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int g_exit_status;
 
 char	**fill_heredoc_files(int count)
 {
@@ -51,7 +53,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 	if (fd < 0)
 		return (perror("open"));
 	(*count)++;
-	while (1)
+	while (g_exit_status == 0)
 	{
 		str = readline("> ");
 		if (!str || ft_strcmp(str, op->arg) == 0)

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/25 03:53:34 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:45:25 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ int	change_directory(const char *path, t_shell *data)
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
 	if (chdir(path) != 0)
-		return (printf("cd: %s: No such file or directory\n", path), 1);
+	{
+		ftputstr_fd(2, "cd: ");
+		ftputstr_fd(2, (char *)path);
+		ftputstr_fd(2, ": No such file or directory\n");
+		return  (1);
+	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		data->pwd = ft_strdup(cwd);
@@ -74,7 +79,7 @@ int	change_directory(const char *path, t_shell *data)
 	}
 	else
 	{
-		printf(CD_ERROR);
+		ft_printf(2, CD_ERROR);
 		oldpwd_with_2_points = ft_strjoin(ft_get_env_var(data->env, "OLDPWD"),
 				"/..", GLOBAL);
 		data->pwd = oldpwd_with_2_points;
@@ -91,7 +96,7 @@ int	ft_cd(char **args, t_shell *data)
 	{
 		home = ft_get_env_var(data->env, "HOME");
 		if (!home)
-			return (printf("Error: cd: HOME not set\n"), 1);
+			return (ft_printf(2, "Error: cd: HOME not set\n"), 1);
 		change_directory(home, data);
 		return (0);
 	}

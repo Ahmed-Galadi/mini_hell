@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:26:37 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/20 16:59:09 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:51:21 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_init_pipe(t_pipe **pipe, int num_commands)
 {
 	if (!(*pipe))
 	{
-		printf("error in initializing pipe\n");
+		ft_printf(2, "error in initializing pipe\n");
 		return ;
 	}
 	*pipe = gc_malloc(sizeof(t_pipe), LOCAL);

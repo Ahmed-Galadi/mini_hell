@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/31 15:52:49 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:51:03 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	check_env_creation(char **env)
 {
 	if (!env)
 	{
-		fprintf(stderr, "Failed to create environment array\n");
+		ft_printf(2, "Failed to create environment array\n");
 		exit(ERROR);
 	}
 }
@@ -27,7 +27,7 @@ static void	check_cmd_path(const char *path, char **args)
 		exit (0);
 	if (!path)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
+		ft_printf(2, "%s: command not found\n", args[0]);
 		exit(NOENT);
 	}
 }
@@ -53,7 +53,7 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	cmd_path = get_path(args[0], data->env);
 	check_cmd_path(cmd_path, args);
 	execve(cmd_path, args, env_array);
-	printf("Error: %s: Permission denied\n", args[0]);
+	ft_printf(2, "Error: %s: Permission denied\n", args[0]);
 	exit(PERM);
 }
 

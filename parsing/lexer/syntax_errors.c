@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:03:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:52 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/03 20:53:06 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_valid_quotes(t_token *token)
 	{
 		if (!check_quote_syntax(current->value))
 		{
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
+			ft_printf(2, RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
 			return (0);
 		}
 		current = current->next;
@@ -106,9 +106,9 @@ int	syntax_error(t_token *token)
 		|| check_redirection(token) == -1)
 	{
 		if (!check_pipes(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes!\n"RESET);
+			ft_printf(2, RED BOLD"Syntax Error:"RESET PINK" invalid pipes!\n"RESET);
 		if (!check_redirection(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
+			ft_printf(2, RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
 		if (check_redirection(token) == -1)
 			return (-1);
 		return (0);

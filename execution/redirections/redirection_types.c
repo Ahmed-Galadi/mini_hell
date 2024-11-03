@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/31 15:51:44 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:56:00 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ int	handle_redirections(t_shell *data)
 	ft_open_heredoc(data);
 	while (cur_op)
 	{
-		if (data->exit_status && !data->trap_sigint)
-			return (data->exit_status);
+		// if (!data->trap_sigint)
+		// 	return (data->exit_status);
 		if (cur_op->operator == RED_OUT)
 			data->exit_status = setup_output_redirection(cur_op->arg, 0, data);
 		else if (cur_op->operator == APPEND)
 			data->exit_status = setup_output_redirection(cur_op->arg, 1, data);
 		else if (cur_op->operator == RED_IN)
+		{
 			data->exit_status = setup_input_redirection(cur_op->arg, 0, data);
+			if (data->exit_status) // cat < Makefile < fds > a > b > c
+				return (data->exit_status);
+		}
 		else if (cur_op->operator == HERE_DOC
 			|| cur_op->operator == HERE_DOC_EXP)
 			data->exit_status = setup_input_redirection(cur_op->arg, 1, data);
@@ -98,7 +102,7 @@ int	setup_output_redirection(const char *outfile, int is_appended,
 		return (perror("dup"), 1);
 	if (access(outfile, F_OK) == 0)
 		if (access(outfile, W_OK) != 0)
-			return (printf("%s: Permission denied\n", outfile), 1);
+			return (ft_printf(2, "%s: Permission denied\n", outfile), 1);
 	if (is_appended)
 		fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	else

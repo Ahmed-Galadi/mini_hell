@@ -6,32 +6,32 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:44:48 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/19 21:46:37 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 23:13:55 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
 
-int	ft_check_key(const char *arg)
+int	ft_check_key(const char *arg, const char *value)
 {
 	int	i;
 
-	if (!((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
-			|| arg[0] == '_'))
+	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
 		return (0);
-	i = 1;
-	while (arg[i])
+	if (!arg[1])
+		return (1);
+	i = 0;
+	while (++i < ft_strlen(arg) - 1)
+		if (!(ft_isalnum(arg[i]) || arg[i] == '_'))
+			return (0);
+	if (arg[i] == '+')
 	{
-		if (arg[i] == '+' && arg[i + 1] == '=')
+		if (value)
 			return (2);
-		if (arg[i] == '+' && arg[i + 1] == '\0')
-			return (0);
-		if (!((arg[i] >= 'a' && arg[i] <= 'z') || (arg[i] >= 'A'
-					&& arg[i] <= 'Z') || (arg[i] >= '0' && arg[i] <= '9')
-				|| arg[i] == '_'))
-			return (0);
-		i++;
+		return (0);
 	}
+	if (!(ft_isalnum(arg[i]) || arg[i] == '_'))
+		return (0);
 	return (1);
 }
 
@@ -52,24 +52,22 @@ char	*ft_get_var_value(t_env *env, const char *key)
 char	*get_operation(char *arg)
 {
 	char	*key;
+	char	*value;
+	int		op;
 
 	key = extract_key(arg);
-	if (key && !ft_check_key(key))
+	value = extract_value(arg);
+	op = ft_check_key(key, value);
+	if (key && !op)
 	{
-		printf(BOLD RED "Error: " RESET PINK "export:"\
-			RESET " \'%s\': not a valid identifier\n",
-			arg);
+		ft_printf(2, "Error: " "export:"\
+			" \'%s\': not a valid identifier\n",
+				arg);
 		return ("Invalid");
 	}
-	if (ft_check_key(arg) == 1)
+	if (op == 1)
 		return ("create");
-	else if (ft_check_key(arg) == 2)
+	else if (op == 2)
 		return ("append");
-	else if (first_occurence(arg, '=')
-		&& arg[first_occurence(arg, '=') - 1] == '+')
-		return ("append");
-	else if (first_occurence(arg, '=')
-		&& arg[first_occurence(arg, '=') - 1] != '+')
-		return ("create");
 	return (NULL);
 }

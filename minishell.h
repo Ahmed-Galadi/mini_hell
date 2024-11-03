@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/01 11:23:57 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/03 22:48:13 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include "printf/ft_printf.h"
 
 # define YELLOW "\033[93m"
 # define RESET "\033[0m"
@@ -178,7 +179,7 @@ int			ft_set_vars(t_env **my_export_env,
 char		*extract_key(char *str);
 char		*extract_value(char *str);
 int			is_var_exist(char *var, t_env *expo);
-int			ft_check_key(const char *arg);
+int			ft_check_key(const char *arg, const char *value);
 char		*ft_get_var_value(t_env *env, const char *key);
 char		*get_operation(char *arg);
 void	ft_set_mini_env_config(t_env **path, t_env **pwd,
@@ -229,7 +230,6 @@ int			first_occurence(char *str, char c);
 char		**env_to_array(t_env *env);
 // utils
 int			cstm_strcmp(char *str1, char *str2);
-void		ft_putstr(char *str);
 void		add_lstback(t_opp *operators, t_opp *to_add);
 t_token		*last_token(t_token *token);
 char		**cstm_split(const char *str, const char *delims);
@@ -286,5 +286,6 @@ void		execute_command(t_shell *data, char **commands);
 const char	*get_path(const char *cmd, t_env *env);
 // prompt
 char		*prompt(t_shell *data);
+int			ft_isalpha(char c);
 
 #endif
