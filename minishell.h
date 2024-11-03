@@ -182,9 +182,9 @@ int			is_var_exist(char *var, t_env *expo);
 int			ft_check_key(const char *arg, const char *value);
 char		*ft_get_var_value(t_env *env, const char *key);
 char		*get_operation(char *arg);
-void	ft_set_mini_env_config(t_env **path, t_env **pwd,
-		t_env **shlvl, t_env **last_command);
-t_env	*create_mini_env(void);
+void		ft_set_mini_env_config(t_env **path, t_env **pwd,
+				t_env **shlvl, t_env **last_command);
+t_env		*create_mini_env(void);
 
 // pipes prototypes
 int			count_pipes(t_com *command);
@@ -248,8 +248,10 @@ void		heredoc_type_set(t_token **token);
 bool		has_quotes(char *str);
 // expand
 void		expand_tokens(t_token *token, t_env *env, int *exit_status);
-void		expand(char **token_val, t_env *env, int *exit_status);
-void		handle_expansion_loop(t_expand_data *exp_data, char *output);
+void		expand(char **token_val, t_env *env,
+				int *exit_status, bool is_herdoc);
+void		handle_expansion_loop(t_expand_data *exp_data,
+				char *output, bool is_herdoc);
 int			is_valid_for_expansion(char c);
 void		handle_variable_expansion(t_expand_data *exp_data,
 				char *output, int *i);

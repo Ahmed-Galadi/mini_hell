@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdbool.h>
 
 void	copy_non_space(t_expand_data *exp_data, char *output, int *i)
 {
@@ -35,7 +36,7 @@ int	initialize_expansion(t_expand_data *exp_data)
 }
 
 // Main expand function
-void	expand(char **token_val, t_env *env, int *exit_status)
+void	expand(char **token_val, t_env *env, int *exit_status, bool is_herdoc)
 {
 	t_expand_data	*exp_data;
 	char			*output;
@@ -53,7 +54,7 @@ void	expand(char **token_val, t_env *env, int *exit_status)
 	output = (char *)gc_malloc(size, LOCAL);
 	if (!output)
 		return ;
-	handle_expansion_loop(exp_data, output);
+	handle_expansion_loop(exp_data, output, is_herdoc);
 	*token_val = output;
 }
 
@@ -65,7 +66,7 @@ void	expand_tokens(t_token *token, t_env *env, int *exit_status)
 	while (current)
 	{
 		if (current->type != HERE_DOC && current->type != HERE_DOC_EXP)
-			expand(&(current->value), env, exit_status);
+			expand(&(current->value), env, exit_status, false);
 		current = current->next;
 	}
 }

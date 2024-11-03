@@ -31,9 +31,7 @@ static char	*get_key(char *str, int *i)
 		&& str[*i + length] != '$' && str[*i + length] != '\''
 		&& str[*i + length] != '\"' && str[*i + length] != -1
 		&& (ft_isalnum(str[*i + length])
-			|| str[*i + length] == '_'))
-		length++;
-	if (str[*i + length] == '?')
+			|| str[*i + length] == '_' || str[*i + length] == '?'))
 		length++;
 	output = (char *)gc_malloc(length + 1, LOCAL);
 	if (!output)

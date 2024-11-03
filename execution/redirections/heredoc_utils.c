@@ -60,7 +60,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 			return ((void)close(fd));
 		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
-			expand(&tmp, data->env, &data->exit_status);
+			expand(&tmp, data->env, &data->exit_status, true);
 		ftputstr_fd(fd, tmp);
 		write(fd, "\n", 1);
 		free (str);
