@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdio.h>
+#include <unistd.h>
 
 extern int g_exit_status;
 
@@ -43,21 +45,35 @@ void	ftputstr_fd(int fd, char *s)
 	}
 }
 
+void handle_heredoc_sig()
+{
+	g_exit_status = 1;
+   	close(0);
+}
+
 void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 {
 	char	*str;
 	char	*tmp;
 	int		fd;
+	int		copy_stdin;
 
+	copy_stdin = dup(STDIN_FILENO);
 	fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd < 0)
 		return (perror("open"));
 	(*count)++;
+	signal(SIGINT, handle_heredoc_sig);
 	while (g_exit_status == 0)
 	{
 		str = readline("> ");
+		if (g_exit_status)
+			break ;
+		if (g_exit_status)
+			data->trap_sigint = 0;
 		if (!str || ft_strcmp(str, op->arg) == 0)
-			return ((void)close(fd));
+			return (dup2(copy_stdin, STDIN_FILENO),
+				close(fd), free(str));
 		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
 			expand(&tmp, data->env, &data->exit_status, true);
@@ -65,6 +81,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 		write(fd, "\n", 1);
 		free (str);
 	}
+	dup2(copy_stdin, STDIN_FILENO);
 }
 
 void	ft_open_heredoc(t_shell *data)

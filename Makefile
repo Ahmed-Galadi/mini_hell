@@ -6,12 +6,13 @@
 #    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/10/31 15:45:42 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/11/04 20:48:48 by bzinedda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc 
+CC = cc #-Wall -Wextra -Werror
 USER := $(shell whoami)
+
 LIBFT_SRCS = libft/ft_strchr.c libft/ft_strlen.c libft/ft_split.c \
 		     libft/ft_strjoin.c libft/ft_strncmp.c libft/ft_strcmp.c \
 			 libft/ft_strdup.c libft/ft_atoi.c libft/ft_substr.c \
@@ -33,16 +34,17 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/redirections/helper.c \
 				 execution/builtings/builtings_utils/env_utils.c \
 				 execution/builtings/builtings_utils/export_utils.c \
+				 printf/ft_print_chr.c printf/ft_print_hex.c printf/ft_print_nbr.c printf/ft_print_percentage.c printf/ft_print_ptr.c printf/ft_print_str.c printf/ft_print_un_nbr.c printf/ft_printf.c printf/ft_ptr_len.c printf/ft_putchar.c printf/ft_putnbr.c printf/ft_putnbr_base.c printf/ft_putstr.c printf/ft_space.c
 				 
 PARSING_SRCS = parsing/errors/error_handler.c  parsing/formater/add_spaces.c \
 parsing/expand/expand_utils.c parsing/expand/expand_loop.c parsing/expand/expand_loop_utils.c parsing/expand/expand.c parsing/formater/formater.c parsing/formater/quotes_handler.c \
 parsing/tokenizer/token_check.c parsing/tokenizer/tokenizer.c \
 parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.c \
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c \
-utils/shell_utils.c
+utils/shell_utils.c utils/signals_utils.c
 
-CFLAGS = -g -fsanitize=address
-CFLAGS_R = -g -lreadline
+CFLAGS = -g #-fsanitize=address
+CFLAGS_R = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline -lhistory
 HEADER = minishell.h
 LIB = minishell.a
 NAME = minishell
@@ -50,12 +52,6 @@ NAME = minishell
 PARSING_OBJS =  $(addprefix obj/, $(PARSING_SRCS:.c=.o))
 EXECUTION_OBJS = $(addprefix obj/, $(EXECUTION_SRCS:.c=.o))
 LIBFT_OBJS = $(addprefix obj/, $(LIBFT_SRCS:.c=.o))
-
-ifeq ($(USER), agaladi)
-	CFLAGS_R += -L/Users/agaladi/.brew/opt/readline/lib
-else
-	CFLAGS_R += -L/Users/bzinedda/.brew/opt/readline/lib
-endif
 
 all: $(NAME)
 
@@ -67,7 +63,7 @@ $(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 
 obj/%.o: %.c $(HEADER)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -I/Users/$(USER)/.brew/opt/readline/include $< -o $@
 
 clean:
 	rm -rf obj $(LIB)

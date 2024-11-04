@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/03 22:48:13 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:26:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <readline/readline.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -283,7 +286,6 @@ void		print_token(t_token *token);
 void		*error_handler(t_token *head, int *exit_status);
 void		error(void);
 int			syntax_error(t_token *token);
-void		rl_replace_line(char *s, int a);
 void		execute_command(t_shell *data, char **commands);
 const char	*get_path(const char *cmd, t_env *env);
 // prompt
