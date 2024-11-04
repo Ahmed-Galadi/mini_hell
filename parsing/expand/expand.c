@@ -6,12 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 22:01:19 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/04 22:26:44 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdbool.h>
 
 void	copy_non_space(t_expand_data *exp_data, char *output, int *i)
 {
@@ -51,7 +50,7 @@ void	expand(char **token_val, t_env *env, int *exit_status, bool is_herdoc)
 	size = initialize_expansion(exp_data);
 	if (size < 0)
 		return ;
-	output = (char *)gc_malloc(size, LOCAL);
+	output = (char *)gc_malloc(size * 2, LOCAL);
 	if (!output)
 		return ;
 	handle_expansion_loop(exp_data, output, is_herdoc);

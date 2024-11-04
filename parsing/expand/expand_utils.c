@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/27 22:01:38 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/04 22:25:13 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,5 @@ int	calculate_size(char *str, t_env *env, int exit_status)
 		else
 			i++;
 	}
-	return (output_size);
+	return (output_size + 1);
 }
