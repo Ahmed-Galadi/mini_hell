@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 20:42:25 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:02:38 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	handle_child_process(t_shell *data, char ***commands, t_pipe *pipe)
 		pipe->prev_pipe = NULL;
 	if (pipe->curr_command == pipe->num_commands - 1)
 		pipe->curr_pipe = NULL;
-	if (!data->trap_sigint)
+	if (data->trap_sigint)
 		exit(0);
 	redirect_to_pipe_fds(data, is_builtin(data->command->command[0]), pipe);
 	if (is_builtin(data->command->command[0]))

@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-extern int g_exit_status;
+extern int g_signal_received;
 
 char	**fill_heredoc_files(int count)
 {
@@ -47,7 +47,7 @@ void	ftputstr_fd(int fd, char *s)
 
 void handle_heredoc_sig()
 {
-	g_exit_status = 1;
+	g_signal_received = 1;
    	close(0);
 }
 
@@ -64,13 +64,13 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 		return (perror("open"));
 	(*count)++;
 	signal(SIGINT, handle_heredoc_sig);
-	while (g_exit_status == 0)
+	while (g_signal_received == 0)
 	{
 		str = readline("> ");
-		if (g_exit_status)
+		if (g_signal_received)
 			break ;
-		if (g_exit_status)
-			data->trap_sigint = 0;
+		if (g_signal_received)
+			data->trap_sigint = 1;
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return (dup2(copy_stdin, STDIN_FILENO),
 				close(fd), free(str));

@@ -6,13 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 19:28:07 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:17:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	g_exit_status = 0;
+int	g_signal_received = 0;
 
 t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 {
@@ -64,7 +64,7 @@ static void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_status = 1;
+		g_signal_received = 1;
 		rl_catch_signals = 0;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
@@ -77,10 +77,10 @@ void	signals_init(t_shell *data, struct termios term)
 {
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
-	if (g_exit_status == 1)
+	if (g_signal_received == 1)
 	{
 		data->trap_sigint = 1;
 		data->exit_status = 1;
 	}
-	g_exit_status = 0;
+	g_signal_received = 0;
 }

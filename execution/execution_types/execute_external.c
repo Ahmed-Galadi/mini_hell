@@ -6,11 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 20:51:03 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:17:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_signal_received;
 
 static void	check_env_creation(char **env)
 {
@@ -48,6 +50,8 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	signal(SIGQUIT, SIG_DFL);
 	if (handle_redirections(data))
 		exit(ERROR);
+	if (g_signal_received)
+		exit(1);
 	env_array = env_to_array(data->env);
 	check_env_creation(env_array);
 	cmd_path = get_path(args[0], data->env);

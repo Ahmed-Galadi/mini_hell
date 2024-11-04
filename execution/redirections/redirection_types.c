@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 20:36:36 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:02:47 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_redirections(t_shell *data)
 	ft_open_heredoc(data);
 	while (cur_op)
 	{
-		if (!data->trap_sigint)
+		if (data->trap_sigint)
 			return (data->exit_status);
 		if (cur_op->operator == RED_OUT)
 			data->exit_status = setup_output_redirection(cur_op->arg, 0, data);
