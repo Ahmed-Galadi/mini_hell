@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 20:45:25 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:44:55 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 	return (NULL);
 }
 
+int	no_file_dir(char *path)
+{
+	ftputstr_fd(2, "cd: ");
+	ftputstr_fd(2, (char *)path);
+	ftputstr_fd(2, ": No such file or directory\n");
+	return (1);
+}
+
 int	change_directory(const char *path, t_shell *data)
 {
 	char	cwd[1024];
@@ -64,12 +72,7 @@ int	change_directory(const char *path, t_shell *data)
 	ft_set_var(&data->env, "OLDPWD", data->pwd);
 	ft_set_var(&data->export, "OLDPWD", data->pwd);
 	if (chdir(path) != 0)
-	{
-		ftputstr_fd(2, "cd: ");
-		ftputstr_fd(2, (char *)path);
-		ftputstr_fd(2, ": No such file or directory\n");
-		return  (1);
-	}
+		return (no_file_dir(path));
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		data->pwd = ft_strdup(cwd);

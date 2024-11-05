@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/04 22:25:13 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/05 04:08:39 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static char	*get_key(char *str, int *i)
 		return (NULL);
 	(*i)++;
 	if (ft_isnum(str[*i]))
-	{
-		(*i)++;
-		return (NULL);
-	}
+		return ((*i)++, NULL);
 	if (str[*i] == '?')
 		return ((*i)++, ft_strdup("?"));
 	while (str[*i + length] && !ft_isspace(str[*i + length])

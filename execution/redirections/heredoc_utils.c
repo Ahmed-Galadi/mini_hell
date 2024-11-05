@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 18:09:08 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 21:26:29by bzinedda         ###   ########.fr       */
+/*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
+/*   Updated: 2024/11/05 04:56:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-extern int g_signal_received;
+extern int	g_signal_received;
 
 char	**fill_heredoc_files(int count)
 {
@@ -34,21 +34,11 @@ char	**fill_heredoc_files(int count)
 	return (new);
 }
 
-void	ftputstr_fd(int fd, char *s)
+void	handle_heredoc_sig(int sig)
 {
-	if (!s || fd < 0)
-		return ;
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
-}
-
-void handle_heredoc_sig()
-{
+	(void)sig;
 	g_signal_received = 1;
-   	close(0);
+	close(0);
 }
 
 void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
@@ -58,11 +48,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 	int		fd;
 	int		copy_stdin;
 
-	copy_stdin = dup(STDIN_FILENO);
-	fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd < 0)
-		return (perror("open"));
-	(*count)++;
+	open_heredoc_helper(files, &copy_stdin, &fd, count);
 	signal(SIGINT, handle_heredoc_sig);
 	while (g_signal_received == 0)
 	{

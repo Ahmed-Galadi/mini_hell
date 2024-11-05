@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/04 19:26:14 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:36:15 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdbool.h>
 // # include <readline/readline.h>
 // # include <readline/history.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -214,6 +214,9 @@ void		handle_files_redirections(t_opp *curr_op, t_shell *data);
 int			heredoc_count(t_com *command);
 char		**fill_heredoc_files(int count);
 void		ftputstr_fd(int fd, char *s);
+int			handle_redirection_loop(t_shell *data, t_opp *cur_op);
+void		open_heredoc_helper(char **files, int *copy_stdin,
+				int *fd, int *count);
 void		open_heredoc(char **files, t_opp *op, int *count, t_shell *data);
 void		ft_open_heredoc(t_shell *data);
 int			ft_read_from_heredoc(t_shell *data);

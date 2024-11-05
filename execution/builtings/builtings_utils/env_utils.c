@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:44:48 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 23:13:55 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:44:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_operation(char *arg)
 	{
 		ft_printf(2, "Error: " "export:"\
 			" \'%s\': not a valid identifier\n",
-				arg);
+			arg);
 		return ("Invalid");
 	}
 	if (op == 1)

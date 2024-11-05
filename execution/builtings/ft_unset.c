@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 20:17:26 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 22:49:16 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:47:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	ft_unset(char **args, t_shell *data)
 	char	**tmp_var;
 	int		err;
 
-	err = 0;
-	tmp_var = args;
+	(1 && (err = 0), (tmp_var = args));
 	if (!(data->export))
 		return (1);
 	if (!(*args))

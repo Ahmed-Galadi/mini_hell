@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 22:02:47 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:36:50 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,7 @@ int	handle_redirections(t_shell *data)
 		return (0);
 	cur_op = command->operator;
 	ft_open_heredoc(data);
-	while (cur_op)
-	{
-		if (data->trap_sigint)
-			return (data->exit_status);
-		if (cur_op->operator == RED_OUT)
-			data->exit_status = setup_output_redirection(cur_op->arg, 0, data);
-		else if (cur_op->operator == APPEND)
-			data->exit_status = setup_output_redirection(cur_op->arg, 1, data);
-		else if (cur_op->operator == RED_IN)
-		{
-			data->exit_status = setup_input_redirection(cur_op->arg, 0, data);
-			if (data->exit_status) // cat < Makefile < fds > a > b > c
-				return (data->exit_status);
-		}
-		else if (cur_op->operator == HERE_DOC
-			|| cur_op->operator == HERE_DOC_EXP)
-			data->exit_status = setup_input_redirection(cur_op->arg, 1, data);
-		cur_op = cur_op->next;
-	}
-	return (data->exit_status);
+	return (handle_redirection_loop(data, cur_op));
 }
 
 int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
