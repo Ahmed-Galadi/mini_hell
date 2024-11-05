@@ -27,11 +27,13 @@ static char	*get_key(char *str, int *i)
 		(*i)++;
 		return (NULL);
 	}
+	if (str[*i] == '?')
+		return ((*i)++, ft_strdup("?"));
 	while (str[*i + length] && !ft_isspace(str[*i + length])
 		&& str[*i + length] != '$' && str[*i + length] != '\''
 		&& str[*i + length] != '\"' && str[*i + length] != -1
 		&& (ft_isalnum(str[*i + length])
-			|| str[*i + length] == '_' || str[*i + length] == '?'))
+			|| str[*i + length] == '_' ))
 		length++;
 	output = (char *)gc_malloc(length + 1, LOCAL);
 	if (!output)
@@ -76,14 +78,16 @@ char	*get_expand_val(char *str, t_env *env, int *i, int exit_status)
 {
 	char	*key;
 	t_env	*current;
+	char	*tmp;
 
 	if (!str)
 		return (NULL);
 	key = get_key(str, i);
 	if (!key)
 		return (NULL);
-	if (!ft_strcmp(key, "?"))
+	if (key[0] == '?')
 		return (ft_itoa(exit_status));
+	key = ft_substr(key, 0, first_occurence(key, '?'));
 	current = env;
 	while (current)
 	{
