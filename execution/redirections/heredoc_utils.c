@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/05 04:56:06 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 01:23:15 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,20 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 
 	open_heredoc_helper(files, &copy_stdin, &fd, count);
 	signal(SIGINT, handle_heredoc_sig);
+	signal(SIGQUIT, SIG_IGN);
 	while (g_signal_received == 0)
 	{
 		str = readline("> ");
+		data->trap_sigint = g_signal_received;
 		if (g_signal_received)
 			break ;
-		if (g_signal_received)
-			data->trap_sigint = 1;
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return (dup2(copy_stdin, STDIN_FILENO),
 				close(fd), free(str));
 		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
 			expand(&tmp, data->env, &data->exit_status, true);
-		ftputstr_fd(fd, tmp);
-		write(fd, "\n", 1);
+		ft_printf(fd, "%s\n", tmp);
 		free (str);
 	}
 	dup2(copy_stdin, STDIN_FILENO);

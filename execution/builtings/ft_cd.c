@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/05 05:44:55 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 01:25:17 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 	return (NULL);
 }
 
-int	no_file_dir(char *path)
+int	no_file_dir(const char *path)
 {
 	ftputstr_fd(2, "cd: ");
 	ftputstr_fd(2, (char *)path);

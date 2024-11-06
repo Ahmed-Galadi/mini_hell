@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 20:49:36 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 01:42:10 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ int	ft_execute_command(t_shell *data)
 	return (data->exit_status);
 }
 
+void	ft_is_directory(const char *cmd)
+{
+	struct stat	sb;
+	int			i;
+
+	i = stat(cmd, &sb);
+	if (!i && S_ISDIR(sb.st_mode))
+	{
+		ft_printf(2, "%s: ", cmd);
+		ft_printf(2, "is a directory\n");
+		gc_free_all(LOCAL);
+		exit(126);
+	}
+}
+
 static char	*get_full_path(char *path, const char *cmd)
 {
 	char	*full_path;
@@ -47,17 +62,21 @@ static char	*get_full_path(char *path, const char *cmd)
 
 	paths = cstm_split(path, ":");
 	i = 0;
-	while (paths[i])
+	ft_is_directory(cmd);
+	while (paths && paths[i])
 	{
-		if (access(cmd, F_OK) == 0)
-			return ((char *)cmd);
 		tmp = ft_strjoin(paths[i], "/", LOCAL);
 		full_path = ft_strjoin(tmp, cmd, LOCAL);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
+		if (access(full_path, F_OK | X_OK) == 0)
+			return ((char *)full_path);
 		i++;
+		if (!paths[i])
+		{
+			ft_printf(2, "%s: Command not found\n", cmd);
+			return (exit (127), NULL);
+		}
 	}
-	return (NULL);
+	return ((char *) cmd);
 }
 
 const char	*get_path(const char *cmd, t_env *env)
@@ -66,8 +85,6 @@ const char	*get_path(const char *cmd, t_env *env)
 	char	*value;
 	t_env	*curr;
 
-	if (access(ft_strjoin("./", cmd, LOCAL), F_OK) == 0)
-		return (ft_strjoin("./", cmd, LOCAL));
 	if (ft_strcmp(cmd, "") == 0)
 		return (NULL);
 	if (!cmd || !env)
@@ -75,11 +92,6 @@ const char	*get_path(const char *cmd, t_env *env)
 	if (cmd[0] == '/')
 		return (cmd);
 	value = ft_get_var_value(env, "PATH");
-	if (!value)
-	{
-		ft_printf(2, "%s: No such file or directory\n", cmd);
-		return (exit (127), NULL);
-	}
 	return (get_full_path(value, cmd));
 }
 
@@ -94,11 +106,13 @@ void	execute_command(t_shell *data, char **commands)
 	{
 		execve(full_path, commands, NULL);
 		perror("execve");
+		gc_free_all(LOCAL);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		ft_printf(2, "Command not found: %s\n", commands[0]);
+		ft_printf(2, "command not found: %s\n", commands[0]);
+		gc_free_all(LOCAL);
 		exit(127);
 	}
 }

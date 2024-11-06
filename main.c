@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/05 04:31:21 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 01:24:48 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	minishell_loop(t_shell *data, struct termios term, char	**cmd_line_args)
 	{
 		data->heredoc_index = 0;
 		signals_init(data, term);
-		*cmd_line_args = readline(prompt(data));
+		*cmd_line_args = readline("m> ");
 		signals_init(data, term);
 		if (!*cmd_line_args)
 			break ;
 		add_history(*cmd_line_args);
-		if (set_command(data, *cmd_line_args) && !is_spaces(*cmd_line_args))
+		if (set_command(data, *cmd_line_args)
+			&& !is_spaces(*cmd_line_args))
 		{
 			if (data->command && data->command->command)
 				data->exit_status = ft_execute_command(data);

@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 22:17:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 01:46:20 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	check_env_creation(char **env)
 	if (!env)
 	{
 		ft_printf(2, "Failed to create environment array\n");
+		gc_free_all(LOCAL);
 		exit(ERROR);
 	}
 }
@@ -30,6 +31,7 @@ static void	check_cmd_path(const char *path, char **args)
 	if (!path)
 	{
 		ft_printf(2, "%s: command not found\n", args[0]);
+		gc_free_all(LOCAL);
 		exit(NOENT);
 	}
 }
@@ -44,21 +46,21 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	if (*count_hd && !command->command[0])
 	{
 		handle_redirections(data);
+		gc_free_all(LOCAL);
 		exit(0);
 	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (handle_redirections(data))
-		exit(ERROR);
+		(gc_free_all(LOCAL)), (exit(ERROR));
 	if (g_signal_received)
-		exit(1);
+		(gc_free_all(LOCAL)), (exit(1));
 	env_array = env_to_array(data->env);
 	check_env_creation(env_array);
 	cmd_path = get_path(args[0], data->env);
 	check_cmd_path(cmd_path, args);
 	execve(cmd_path, args, env_array);
-	ft_printf(2, "Error: %s: Permission denied\n", args[0]);
-	exit(PERM);
+	((perror("Error")), (gc_free_all(LOCAL)), (exit(PERM)));
 }
 
 int	ft_execute_external(char **args, t_shell *data, t_com *command)

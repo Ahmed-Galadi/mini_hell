@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 22:02:38 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 01:42:31 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	handle_child_process(t_shell *data, char ***commands, t_pipe *pipe)
 	if (pipe->curr_command == pipe->num_commands - 1)
 		pipe->curr_pipe = NULL;
 	if (data->trap_sigint)
-		exit(0);
+		(gc_free_all(LOCAL)), (exit(0));
 	redirect_to_pipe_fds(data, is_builtin(data->command->command[0]), pipe);
 	if (is_builtin(data->command->command[0]))
 		ft_execute_builtin(data);
@@ -86,6 +86,8 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 	ft_init_pipe(&pipe, num_commands);
 	data->heredoc_index = 0;
 	ft_open_heredoc(data);
+	if (data->trap_sigint)
+		return (1);
 	while (pipe->curr_command < pipe->num_commands)
 	{
 		if (setup_pipes_and_fork(data, commands, pipe) != 0)
