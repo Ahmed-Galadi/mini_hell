@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 22:17:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:39:29 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 		return (NULL);
 	com = create_cmds(token);
 	if (!data_config || !cmd_line_args)
+		return (NULL);
+	remove_abg_command(&com);
+	if (!com)
 		return (NULL);
 	data_config->command = com;
 	return (com);
@@ -73,7 +76,7 @@ static void	handle_sig(int sig)
 	}
 }
 
-void	signals_init(t_shell *data, struct termios term)
+void	signals_init(t_shell *data)
 {
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);

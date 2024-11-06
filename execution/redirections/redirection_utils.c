@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/04 20:42:33 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:50:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 
 	file = curr_op->arg;
 	flags = 0;
+	redirect_fd = 0;
 	if (!valid_operator(curr_op->operator, & flags, &default_fd))
 		perror(file);
 	if (ft_strcmp(file, "/dev/stdout") != 0)
@@ -91,7 +92,7 @@ void	use_pipe(t_pipe *pipe, int *flag_in, int *flag_out)
 	*flag_out = 0;
 }
 
-void	redirect_to_pipe_fds(t_shell *data, int is_builtin, t_pipe *pipe)
+void	redirect_to_pipe_fds(t_shell *data, t_pipe *pipe)
 {
 	t_com	*command;
 	t_opp	*curr_op;

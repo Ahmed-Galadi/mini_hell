@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 05:26:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/31 15:48:52 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:46:55 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	init_shell_data_config(t_shell *data, char **envp)
 			(data->export = create_mini_env()));
 	else
 	{
-		data->env = init_env(envp, "env");
+		data->env = init_env(envp);
 		if (!data->env)
 			return (1);
-		data->export = init_env(envp, "export");
+		data->export = init_env(envp);
 		if (!data->export)
 			return (1);
 		increment_shlvl(data);

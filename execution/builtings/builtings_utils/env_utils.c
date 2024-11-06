@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:44:48 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/05 05:44:27 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 07:52:08 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_check_key(const char *arg, const char *value)
 {
-	int	i;
+	size_t	i;
 
 	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
 		return (0);

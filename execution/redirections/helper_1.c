@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:54:38 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 01:29:11 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:49:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,30 @@ void	open_heredoc_helper(char **files, int *copy_stdin, int *fd, int *count)
 	(*count)++;
 }
 
-/*
-	trap_sigint: to not redirect output to files when signaled(ctrl-c).
-*/
+//	trap_sigint: to not redirect output to files when signaled(ctrl-c).
+
+int	handle_red_helper(t_shell **data, t_opp **cur_op)
+{
+	if ((*data)->trap_sigint)
+		return ((*data)->exit_status);
+	if ((*cur_op)->operator == RED_OUT)
+	{
+		(*data)->exit_status = setup_output_redirection((*cur_op)->arg, 0);
+		if ((*data)->exit_status)
+			return ((*data)->exit_status);
+	}
+	return ((*data)->exit_status);
+}
+
 int	handle_redirection_loop(t_shell *data, t_opp *cur_op)
 {
 	while (cur_op)
 	{
-		if (data->trap_sigint)
+		if (handle_red_helper(&data, &cur_op))
 			return (data->exit_status);
-		if (cur_op->operator == RED_OUT)
-		{
-			data->exit_status = setup_output_redirection(cur_op->arg, 0, data);
-			if (data->exit_status)
-				return (data->exit_status);
-		}
 		else if (cur_op->operator == APPEND)
 		{
-			data->exit_status = setup_output_redirection(cur_op->arg, 1, data);
+			data->exit_status = setup_output_redirection(cur_op->arg, 1);
 			if (data->exit_status)
 				return (data->exit_status);
 		}

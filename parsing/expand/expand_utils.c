@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/05 04:08:39 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 00:26:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*get_expand_val(char *str, t_env *env, int *i, int exit_status)
 {
 	char	*key;
 	t_env	*current;
-	char	*tmp;
 
 	if (!str)
 		return (NULL);

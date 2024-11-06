@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:48:47 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 21:03:45 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:44:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_execute_builtin(t_shell *data)
 		return (restore_std_in_out(stdout_copy, stdin_copy), 1);
 	command = data->command;
 	if (ft_strcmp(command->command[0], "echo") == 0)
-		data->exit_status = ft_echo(&command->command[1], data);
+		data->exit_status = ft_echo(&command->command[1]);
 	else if (ft_strcmp(command->command[0], "env") == 0)
 		data->exit_status = ft_env(data->env);
 	else if (ft_strcmp(command->command[0], "export") == 0)

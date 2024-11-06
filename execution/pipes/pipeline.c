@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 01:42:31 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:50:56 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	handle_child_process(t_shell *data, char ***commands, t_pipe *pipe)
 		pipe->curr_pipe = NULL;
 	if (data->trap_sigint)
 		(gc_free_all(LOCAL)), (exit(0));
-	redirect_to_pipe_fds(data, is_builtin(data->command->command[0]), pipe);
+	redirect_to_pipe_fds(data, pipe);
 	if (is_builtin(data->command->command[0]))
 		ft_execute_builtin(data);
 	else
@@ -65,7 +65,6 @@ static int	setup_pipes_and_fork(t_shell *data, char ***commands,
 	t_pipe *pipex)
 {
 	pid_t	pid;
-	int		num_commands;
 
 	if (pipex->curr_command < pipex->num_commands - 1)
 		if (pipe(pipex->curr_pipe) == -1)

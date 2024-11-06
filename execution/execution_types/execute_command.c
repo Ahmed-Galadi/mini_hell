@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 01:42:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:48:04 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ static char	*get_full_path(char *path, const char *cmd)
 
 const char	*get_path(const char *cmd, t_env *env)
 {
-	int		i;
 	char	*value;
-	t_env	*curr;
 
 	if (ft_strcmp(cmd, "") == 0)
 		return (NULL);

@@ -76,19 +76,6 @@ static t_token	*create_token(char **splited_input, int *i)
 	return (new_token);
 }
 
-/*void	expand_tokens(t_token *token, t_env *env, int *exit_status)*/
-/*{*/
-/*	t_token	*current;*/
-/**/
-/*	current = token;*/
-/*	while (current)*/
-/*	{*/
-/*		if (current->type != HERE_DOC && current->type != HERE_DOC_EXP)*/
-/*			expand(&(current->value), env, exit_status);*/
-/*		current = current->next;*/
-/*	}*/
-/*}*/
-
 // Split input into tokens
 t_token	*tokenizer(char *input, t_env *env, int *exit_status)
 {

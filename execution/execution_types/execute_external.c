@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 01:46:20 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:47:19 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	ft_execute_external(char **args, t_shell *data, t_com *command)
 	pid_t		pid;
 	int			status;
 	int			count;
-	const char	*cmd_path;
 
 	count = heredoc_count(command);
 	signal(SIGINT, SIG_IGN);

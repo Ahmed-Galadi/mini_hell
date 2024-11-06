@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cstm_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/04 20:28:42 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 04:11:44 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char	**cstm_split(const char *str, const char *delims)
 {
 	char	**output;
 
+	output = NULL;
 	if (!str || !delims)
 		return (NULL);
 	output = split_loop(str, delims, output);

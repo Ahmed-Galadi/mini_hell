@@ -28,7 +28,7 @@ void	*error_handler(t_token *head, int *exit_status)
 	{
 		*exit_status = 1;
 		ft_printf(2, RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
-		return (NULL);
+		return (head);
 	}
 	return ("WORKING");
 }

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 01:24:48 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:55:51 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell_loop(t_shell *data, struct termios term, char	**cmd_line_args)
+void	minishell_loop(t_shell *data, char **cmd_line_args)
 {
 	while (1)
 	{
 		data->heredoc_index = 0;
-		signals_init(data, term);
-		*cmd_line_args = readline("m> ");
-		signals_init(data, term);
+		signals_init(data);
+		*cmd_line_args = readline(prompt(data));
+		signals_init(data);
 		if (!*cmd_line_args)
 			break ;
 		add_history(*cmd_line_args);
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char **envp)
 		}
 		disable_echo(term);
 	}
-	minishell_loop(&data, term, &cmd_line_args);
+	minishell_loop(&data, &cmd_line_args);
 	gc_free_all(GLOBAL);
 	gc_free_all(LOCAL);
 	return (0);

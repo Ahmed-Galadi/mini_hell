@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 00:55:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 03:59:16 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 07:46:34 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_env	*create_env_node(char *env_str)
 	return (node);
 }
 
-t_env	*convert_env_to_list(char **envp, char *env_type)
+t_env	*convert_env_to_list(char **envp)
 {
 	t_env	*head;
 	t_env	*current;
@@ -79,13 +79,13 @@ void	ft_printf_envs(t_env *env)
 	}
 }
 
-t_env	*init_env(char **envp, char *env_type)
+t_env	*init_env(char **envp)
 {
 	t_env	*envs;
 
 	if (!envp)
 		return (NULL);
-	envs = convert_env_to_list(envp, env_type);
+	envs = convert_env_to_list(envp);
 	return (envs);
 }
 

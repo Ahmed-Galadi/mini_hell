@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/28 03:16:53 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:43:39 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_check_n_flag(char *flag)
 	return (0);
 }
 
-int	ft_echo(char **args, t_shell *data)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	newline;

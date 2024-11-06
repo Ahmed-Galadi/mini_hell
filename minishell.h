@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/05 05:36:15 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 07:50:48 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		*gc_malloc(size_t size, t_type type);
 void		gc_free_all(t_type type);
 // execution prototypes
 int			set_exit_status(int *status);
-int			ft_echo(char **args, t_shell *data);
+int			ft_echo(char **args);
 int			ft_env(t_env *env);
 char		*ft_get_var_value(t_env *env, const char *key);
 int			init_shell_data_config(t_shell *data, char **envp);
@@ -163,8 +163,8 @@ void		ft_printf_envs(t_env *env);
 int			ft_cd(char **args, t_shell *data);
 int			ft_unset(char **args, t_shell *data);
 t_env		*create_env_node(char *env_str);
-t_env		*convert_env_to_list(char **envp, char *env_type);
-t_env		*init_env(char **envp, char *env_type);
+t_env		*convert_env_to_list(char **envp);
+t_env		*init_env(char **envp);
 int			ft_pwd(t_shell *data);
 int			ft_exit(char **args, int exit_status);
 int			ft_export(char **args, t_shell *data);
@@ -201,10 +201,9 @@ void		ft_init_pipe(t_pipe **pipe, int num_commands);
 int			handle_redirections(t_shell *data);
 int			setup_input_redirection(const char *infile,
 				int is_here_doc, t_shell *data);
-int			setup_output_redirection(const char *outfile,
-				int is_appended, t_shell *data);
+int			setup_output_redirection(const char *outfile, int is_appended);
 void		restore_std_in_out(int stdout_copy, int stdin_copy);
-void		redirect_to_pipe_fds(t_shell *data, int is_builtin, t_pipe *pipe);
+void		redirect_to_pipe_fds(t_shell *data, t_pipe *pipe);
 int			is_redirection_in(t_tokenType operator);
 int			is_redirection_out(t_tokenType operator);
 int			valid_operator(t_tokenType operator_type,
@@ -242,6 +241,7 @@ char		**cstm_split(const char *str, const char *delims);
 char		*ft_itoa(int n);
 int			is_op(char c);
 int			ft_isnum(char c);
+void		remove_abg_command(t_com **com);
 // tokenizer
 int			is_quote(char *str);
 int			is_rederection(char *str);
@@ -271,7 +271,7 @@ int			calculate_size(char *str, t_env *env, int exit_status);
 t_com		*set_command(t_shell *data_config, char *cmd_line_args);
 int			is_spaces(char *str);
 void		disable_echo(struct termios term);
-void		signals_init(t_shell *data, struct termios term);
+void		signals_init(t_shell *data);
 
 // lexer
 void		trim_quotes(t_token **token);

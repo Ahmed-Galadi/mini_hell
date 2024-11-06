@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 01:23:15 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:51:42 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	ft_open_heredoc(t_shell *data)
 	int		count;
 	t_com	*curr;
 	t_opp	*op;
-	char	*line;
 
 	count = heredoc_count(data->command);
 	data->heredoc_count = count;
@@ -101,7 +100,6 @@ void	ft_open_heredoc(t_shell *data)
 int	ft_read_from_heredoc(t_shell *data)
 {
 	int	new;
-	int	count;
 
 	if (data->heredoc_index >= data->heredoc_count)
 		return (0);

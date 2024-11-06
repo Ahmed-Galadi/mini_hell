@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/05 05:36:50 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/06 07:48:59 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	handle_redirections(t_shell *data)
 int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
 {
 	int	fd_in;
-	int	pipe_fds[2];
 
 	if (!infile)
 		return (1);
@@ -70,8 +69,7 @@ int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
 	return (0);
 }
 
-int	setup_output_redirection(const char *outfile, int is_appended,
-		t_shell *data)
+int	setup_output_redirection(const char *outfile, int is_appended)
 {
 	int	fd_out;
 	int	stdout_copy;

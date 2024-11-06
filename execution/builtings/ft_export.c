@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 23:14:43 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 07:45:04 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	export_manager(char *str, t_shell *data, char *crud_operation)
 	char	*key;
 	char	*value;
 
+	key = NULL;
+	value = NULL;
 	if (!str || !crud_operation)
 		return (1);
 	if (!ft_strcmp(crud_operation, "Invalid"))
