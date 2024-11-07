@@ -3,18 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 00:52:15 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 18:37:10 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/04 22:26:44 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+void	copy_non_space(t_expand_data *exp_data, char *output, int *i)
+{
+	while ((*(exp_data->token_val))[*i]
+		&& !ft_isspace((*(exp_data->token_val))[*i]))
+		output[exp_data->j++] = (*(exp_data->token_val))[(*i)++];
+}
+
 // Function to initialize variables and calculate size
-int	initialize_expansion(t_expand_data *exp_data, int *j,
-		bool *in_double_q, bool *in_single_q)
+int	initialize_expansion(t_expand_data *exp_data)
 {
 	int	size;
 
@@ -22,71 +28,44 @@ int	initialize_expansion(t_expand_data *exp_data, int *j,
 			exp_data->env, exp_data->exit_status);
 	if (size < 0)
 		return (-1);
-	*j = 0;
-	*in_double_q = false;
-	*in_single_q = false;
+	exp_data->j = 0;
+	exp_data->in_double_q = false;
+	exp_data->in_single_q = false;
 	return (size);
 }
 
-// Function to handle the main expansion loop
-void	handle_expansion_loop(t_expand_data *exp_data, char *output)
+// Main expand function
+void	expand(char **token_val, t_env *env, int *exit_status, bool is_herdoc)
 {
-	char	*to_ex;
-	bool	in_double_q;
-	bool	in_single_q;
-	int		i;
-	int		j;
+	t_expand_data	*exp_data;
+	char			*output;
+	int				size;
 
-	i = 0;
-	j = 0;
-	in_double_q = false;
-	in_single_q = false;
-	while ((*(exp_data->token_val))[i])
+	exp_data = (t_expand_data *)gc_malloc(sizeof(t_expand_data), LOCAL);
+	if (!exp_data)
+		return ;
+	exp_data->token_val = token_val;
+	exp_data->exit_status = *exit_status;
+	exp_data->env = env;
+	size = initialize_expansion(exp_data);
+	if (size < 0)
+		return ;
+	output = (char *)gc_malloc(size * 2, LOCAL);
+	if (!output)
+		return ;
+	handle_expansion_loop(exp_data, output, is_herdoc);
+	*token_val = output;
+}
+
+void	expand_tokens(t_token *token, t_env *env, int *exit_status)
+{
+	t_token	*current;
+
+	current = token;
+	while (current)
 	{
-		handle_quotes_state((*(exp_data->token_val))[i],
-			&in_single_q, &in_double_q);
-		if ((*(exp_data->token_val))[i] == '$'
-				&& (in_double_q || (!in_double_q && !in_single_q)))
-		{
-			to_ex = get_expand_val(*(exp_data->token_val),
-					exp_data->env, &i, exp_data->exit_status);
-			if (to_ex)
-				while (*to_ex)
-					output[j++] = *to_ex++;
-		}
-		else 
-			output[j++] = (*(exp_data->token_val))[i++];
+		if (current->type != HERE_DOC && current->type != HERE_DOC_EXP)
+			expand(&(current->value), env, exit_status, false);
+		current = current->next;
 	}
-	output[j] = '\0';
 }
-
-// Main function to expand environment variables
-void expand(char **token_val, t_env *env, int exit_status) {
-    int j;
-    t_expand_data exp_data = { token_val, env, exit_status };
-
-    int size = initialize_expansion(&exp_data, &j, &(bool){false}, &(bool){false});
-    if (size < 0)
-		return ;
-    char *output = (char *)gc_malloc(size, LOCAL);
-    if (!output)
-		return ;
-    handle_expansion_loop(&exp_data, output);
-    *token_val = output;
-}
-
-/*// Iterates through a list of tokens and applies variable expansion to each one*/
-/*void	expand_str(t_token **token, t_env *env, int exit_status)*/
-/*{*/
-/*	t_token *current_token;*/
-/**/
-/*	current_token = *token;*/
-/*	if (!env)*/
-/*		return ;*/
-/*	while (current_token)*/
-/*	{*/
-/*		expand(&(current_token->value), env, exit_status);*/
-/*		current_token = current_token->next;*/
-/*	}*/
-/*}*/
-

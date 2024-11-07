@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:03:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:52 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/05 04:05:01 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int	check_redirection(t_token *token)
 	current = token;
 	while (current)
 	{
+		if (is_red(current->type) && cstm_strcmp(current->value, ""))
+			return (-1);
 		if (is_red(current->type) && is_rederection(current->value))
 			return (0);
-		if (!current->value && is_red(current->type))	
+		if (!current->value && is_red(current->type))
 			return (0);
 		if (is_red(current->type))
 		{
@@ -76,34 +78,45 @@ bool	check_quote_syntax(char *input)
 	return (!single_quote_open && !double_quote_open);
 }
 
-int	syntax_error(t_token *token)
+int	is_valid_quotes(t_token *token)
 {
 	t_token	*current;
+
+	current = token;
+	while (current)
+	{
+		if (!check_quote_syntax(current->value))
+		{
+			ft_printf(2, RED BOLD"Syntax Error:"RESET \
+				PINK" invalid quotes !\n"RESET);
+			return (0);
+		}
+		current = current->next;
+	}
+	return (1);
+}
+
+int	syntax_error(t_token *token)
+{
 	int		output;
 
-	output = 1;
+	output = 0;
 	if (!token)
 		return (1);
 	if (!check_pipes(token) || !check_redirection(token)
 		|| check_redirection(token) == -1)
 	{
 		if (!check_pipes(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid pipes!\n"RESET);
+			ft_printf(2, RED BOLD"Syntax Error:"RESET \
+				PINK" invalid pipes!\n"RESET);
 		if (!check_redirection(token))
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid file!\n"RESET);
+			ft_printf(2, RED BOLD"Syntax Error:"RESET \
+				PINK" invalid file!\n"RESET);
 		if (check_redirection(token) == -1)
-			printf(RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
+			return (-1);
 		return (0);
 	}
-	current = token;
-	while (current)
-	{
-		if (!check_quote_syntax(current->value))
-		{
-			printf(RED BOLD"Syntax Error:"RESET PINK" invalid quotes !\n"RESET);
-			return (0);
-		}
-		current = current->next;
-	}
+	if (!is_valid_quotes(token))
+		return (0);
 	return (1);
 }

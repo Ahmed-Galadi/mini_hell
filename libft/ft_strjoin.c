@@ -38,4 +38,3 @@ char	*ft_strjoin(char const *s1, char const *s2, t_type type)
 	strjoin[j] = '\0';
 	return (strjoin);
 }
-

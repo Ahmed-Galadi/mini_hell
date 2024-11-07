@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 20:17:26 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/09/16 14:27:03 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:47:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	unset_var(t_env **env, char *var_to_unset)
 	if (curr_env && (ft_strcmp(var_to_unset, curr_env->key) == 0))
 	{
 		*env = curr_env->next;
-		free(curr_env->key);
-		free(curr_env->value);
-		free(curr_env);
 		return (0);
 	}
 	while (curr_env)
@@ -33,9 +30,6 @@ int	unset_var(t_env **env, char *var_to_unset)
 		{
 			node_to_delete = curr_env->next;
 			curr_env->next = node_to_delete->next;
-			free(node_to_delete->key);
-			free(node_to_delete->value);
-			free(node_to_delete);
 			return (0);
 		}
 		curr_env = curr_env->next;
@@ -46,15 +40,28 @@ int	unset_var(t_env **env, char *var_to_unset)
 int	ft_unset(char **args, t_shell *data)
 {
 	char	**tmp_var;
+	int		err;
 
-	tmp_var = args;
-	if (!(*args) || !(data->export))
+	(1 && (err = 0), (tmp_var = args));
+	if (!(data->export))
 		return (1);
+	if (!(*args))
+		return (0);
 	while (*tmp_var)
 	{
-		unset_var(&data->export, *tmp_var);
-		unset_var(&data->env, *tmp_var);
+		if (ft_check_key(*tmp_var, NULL) == 1)
+		{
+			unset_var(&data->export, *tmp_var);
+			unset_var(&data->env, *tmp_var);
+		}
+		else
+		{
+			err = 1;
+			ft_printf(2, "Error: " "export:"\
+				" \'%s\': not a valid identifier\n",
+				*tmp_var);
+		}
 		tmp_var++;
 	}
-	return (0);
+	return (err);
 }

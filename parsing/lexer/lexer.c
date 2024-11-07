@@ -38,7 +38,8 @@ t_com	*new_com(t_token *token)
 	output = (t_com *)gc_malloc(sizeof(t_com), LOCAL);
 	if (!output)
 		return (NULL);
-	out_args = (char **)gc_malloc(sizeof(char *) * (args_count(token) + 1), LOCAL);
+	out_args = (char **)gc_malloc(
+			sizeof(char *) * (args_count(token) + 1), LOCAL);
 	if (!out_args)
 		return (NULL);
 	i = 0;

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:46:44 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:40:32 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/03 20:43:58 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_putstr(char *str)
+// Checks if the character is a numeric digit
+int	ft_isnum(char c)
 {
-	while (*str)
-		write(1, str++, 1);
+	return (c >= '0' && c <= '9');
 }
 
 // Check if a char is "|" or "<" or ">"  

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:39:13 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/07 19:47:15 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/06 00:26:27 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// Checks if the character is a numeric digit
-static int	ft_isnum(char c)
-{
-	return (c >= '0' && c <= '9');
-}
 
 // Extracts a key from the string after a '$' sign, updating the index
 static char	*get_key(char *str, int *i)
@@ -29,15 +23,14 @@ static char	*get_key(char *str, int *i)
 		return (NULL);
 	(*i)++;
 	if (ft_isnum(str[*i]))
-	{
-		(*i)++;
-		return (NULL);
-	}
+		return ((*i)++, NULL);
+	if (str[*i] == '?')
+		return ((*i)++, ft_strdup("?"));
 	while (str[*i + length] && !ft_isspace(str[*i + length])
 		&& str[*i + length] != '$' && str[*i + length] != '\''
 		&& str[*i + length] != '\"' && str[*i + length] != -1
 		&& (ft_isalnum(str[*i + length])
-			|| str[*i + length] == '_' || str[*i + length] == '?'))
+			|| str[*i + length] == '_' ))
 		length++;
 	output = (char *)gc_malloc(length + 1, LOCAL);
 	if (!output)
@@ -48,21 +41,20 @@ static char	*get_key(char *str, int *i)
 	return (output);
 }
 
-char *spec_char_quoting(char *spec_str)
+char	*spec_char_quoting(char *spec_str)
 {
-	int tracker;
+	char	*output;
+	int		tracker;
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
+	(1 && (i = 0), (j = 0));
 	while (spec_str[i])
 	{
 		if (spec_str[i] == '<' || spec_str[i] == '>' || spec_str[i] == '|')
 		{
-			tracker = i;
-			char *output = gc_malloc(ft_strlen(spec_str) + 3, LOCAL);
-			i = 0;
+			output = gc_malloc(ft_strlen(spec_str) + 3, LOCAL);
+			(1 && (tracker = i) && (i = 0));
 			while (spec_str[i])
 			{
 				if (i == tracker)
@@ -89,8 +81,9 @@ char	*get_expand_val(char *str, t_env *env, int *i, int exit_status)
 	key = get_key(str, i);
 	if (!key)
 		return (NULL);
-	if (!ft_strcmp(key, "?"))
+	if (key[0] == '?')
 		return (ft_itoa(exit_status));
+	key = ft_substr(key, 0, first_occurence(key, '?'));
 	current = env;
 	while (current)
 	{
@@ -137,5 +130,5 @@ int	calculate_size(char *str, t_env *env, int exit_status)
 		else
 			i++;
 	}
-	return (output_size);
+	return (output_size + 1);
 }
