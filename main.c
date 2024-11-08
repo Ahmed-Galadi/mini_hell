@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 07:55:51 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/08 11:57:23 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell_loop(t_shell *data, char **cmd_line_args)
 	{
 		data->heredoc_index = 0;
 		signals_init(data);
-		*cmd_line_args = readline(prompt(data));
+		*cmd_line_args = readline("mini:");
 		signals_init(data);
 		if (!*cmd_line_args)
 			break ;

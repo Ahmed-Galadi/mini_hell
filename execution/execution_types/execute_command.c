@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 07:48:04 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/08 13:13:59 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	ft_is_directory(const char *cmd)
 	i = stat(cmd, &sb);
 	if (!i && S_ISDIR(sb.st_mode))
 	{
-		ft_printf(2, "%s: ", cmd);
-		ft_printf(2, "is a directory\n");
+		ft_printf(2, "%s: is a directory\n", cmd);
 		gc_free_all(LOCAL);
 		exit(126);
 	}
@@ -72,7 +71,7 @@ static char	*get_full_path(char *path, const char *cmd)
 		i++;
 		if (!paths[i])
 		{
-			ft_printf(2, "%s: Command not found\n", cmd);
+			ft_printf(2, "%s: command not found\n", cmd);
 			return (exit (127), NULL);
 		}
 	}
@@ -88,7 +87,7 @@ const char	*get_path(const char *cmd, t_env *env)
 	if (!cmd || !env)
 		return (NULL);
 	if (cmd[0] == '/')
-		return (cmd);
+		return (ft_is_directory(cmd), cmd);
 	value = ft_get_var_value(env, "PATH");
 	return (get_full_path(value, cmd));
 }
@@ -100,12 +99,14 @@ void	execute_command(t_shell *data, char **commands)
 	if (!commands[0])
 		return ;
 	full_path = get_path(commands[0], data->env);
-	if (full_path != NULL)
+	if (full_path)
 	{
-		execve(full_path, commands, NULL);
+		if (!data->env)
+			return ;
+		execve(full_path, commands, env_to_array(data->env));
 		perror("execve");
 		gc_free_all(LOCAL);
-		exit(EXIT_FAILURE);
+		exit(PERM);
 	}
 	else
 	{

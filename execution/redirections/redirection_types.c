@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 07:48:59 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/08 12:07:11 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	setup_output_redirection(const char *outfile, int is_appended)
 		return (perror("dup"), 1);
 	if (access(outfile, F_OK) == 0)
 		if (access(outfile, W_OK) != 0)
-			return (ft_printf(2, "%s: Permission denied\n", outfile), 1);
+			return (perror(outfile), 1);
 	if (is_appended)
 		fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	else
