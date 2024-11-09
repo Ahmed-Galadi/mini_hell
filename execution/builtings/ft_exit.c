@@ -6,12 +6,11 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:49:56 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/03 20:45:59 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/09 18:28:19 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <limits.h>
 
 int	custom_atoi(const char *str)
 {

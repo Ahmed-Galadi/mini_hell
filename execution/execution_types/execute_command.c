@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/08 13:13:59 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:38:41 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static char	*get_full_path(char *path, const char *cmd)
 	paths = cstm_split(path, ":");
 	i = 0;
 	ft_is_directory(cmd);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return ((char *)cmd);
 	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/", LOCAL);
