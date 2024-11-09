@@ -49,26 +49,34 @@ int	handle_red_helper(t_shell **data, t_opp **cur_op)
 
 int	handle_redirection_loop(t_shell *data, t_opp *cur_op)
 {
+	int	stdin_copy;
+	int	stdout_copy;
+
+	stdin_copy = dup(STDIN_FILENO);
+	stdout_copy = dup(STDOUT_FILENO);
 	while (cur_op)
 	{
 		if (handle_red_helper(&data, &cur_op))
-			return (data->exit_status);
+			return (restore_std_in_out(stdout_copy, stdin_copy),
+				data->exit_status);
 		else if (cur_op->operator == APPEND)
 		{
 			data->exit_status = setup_output_redirection(cur_op->arg, 1);
 			if (data->exit_status)
-				return (data->exit_status);
+				return (restore_std_in_out(stdout_copy, stdin_copy),
+					data->exit_status);
 		}
 		else if (cur_op->operator == RED_IN)
 		{
 			data->exit_status = setup_input_redirection(cur_op->arg, 0, data);
-			if (data->exit_status)
-				return (data->exit_status);
+				return (restore_std_in_out(stdout_copy, stdin_copy),
+					data->exit_status);
 		}
 		else if (cur_op->operator == HERE_DOC
 			|| cur_op->operator == HERE_DOC_EXP)
 			data->exit_status = setup_input_redirection(cur_op->arg, 1, data);
 		cur_op = cur_op->next;
 	}
+	restore_std_in_out(stdout_copy, stdin_copy);
 	return (data->exit_status);
 }

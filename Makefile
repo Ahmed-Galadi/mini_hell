@@ -44,7 +44,7 @@ parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c \
 utils/shell_utils.c utils/signals_utils.c
 
-CFLAGS = -g -fsanitize=address
+CFLAGS = -g
 CFLAGS_R = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline -lhistory
 HEADER = minishell.h
 LIB = minishell.a

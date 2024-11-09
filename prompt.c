@@ -16,8 +16,8 @@ void	init_prompt_msgs(t_msgs *prompt_data)
 {
 	prompt_data->prompt_msg1 = ft_strdup("\001"F_COLOR"\002 \001"RESET"\002" \
 "\001"YELLOW"\002 ┄─━࿅༻  \001"RESET ORANGE BOLD"\002");
-	prompt_data->prompt_msg2 = ft_strdup("\001"RESET \
-YELLOW"\002༺  ࿅━─┄\n\001"RESET"\002");
+	prompt_data->prompt_msg2 = ft_strdup("\001"RESET"\002" \
+"\001"YELLOW"\002༺  ࿅━─┄\n\001"RESET"\002");
 	prompt_data->valid_arrow = ft_strdup("\001"GREEN_FG"\002❱ \001"RESET"\002");
 	prompt_data->unvalid_arrow = ft_strdup("\001"RED"\002❱ \001"RESET"\002");
 }
@@ -45,7 +45,7 @@ char	*prompt(t_shell *data)
 	char	*output;
 	t_env	*tmp;
 
-	prompt_data = (t_msgs *)malloc(sizeof(t_msgs));
+	prompt_data = (t_msgs *)gc_malloc(sizeof(t_msgs), LOCAL);
 	if (!prompt_data)
 		return (NULL);
 	init_prompt_msgs(prompt_data);
