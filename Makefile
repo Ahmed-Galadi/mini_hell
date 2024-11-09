@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+         #
+#    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
 #    Updated: 2024/11/08 11:55:52 by bzinedda         ###   ########.fr        #
@@ -44,7 +44,7 @@ parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c \
 utils/shell_utils.c utils/signals_utils.c
 
-CFLAGS = -g #-fsanitize=address
+CFLAGS = -g
 CFLAGS_R = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline -lhistory
 HEADER = minishell.h
 LIB = minishell.a

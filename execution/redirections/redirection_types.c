@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
 /*   Updated: 2024/11/08 12:07:11 by bzinedda         ###   ########.fr       */
