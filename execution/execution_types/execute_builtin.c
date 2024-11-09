@@ -16,20 +16,11 @@ int	copy_std_in_out(t_shell *data, int *stdout_copy, int *stdin_copy)
 {
 	t_com	*command;
 
-	*stdout_copy = -1;
-	*stdin_copy = -1;
+	*stdout_copy = dup(STDOUT_FILENO);
+	*stdin_copy = dup(STDIN_FILENO);
 	command = data->command;
 	if (command->operator)
 	{
-		if (command->operator->operator == RED_OUT
-			|| command->operator->operator == APPEND)
-		{
-			*stdout_copy = dup(STDOUT_FILENO);
-		}
-		if (command->operator->operator == RED_IN)
-		{
-			*stdin_copy = dup(STDIN_FILENO);
-		}
 		data->exit_status = handle_redirections(data);
 		return (data->exit_status);
 	}
@@ -59,7 +50,6 @@ int	ft_execute_builtin(t_shell *data)
 		data->exit_status = ft_unset(&command->command[1], data);
 	else if (ft_strcmp(command->command[0], "exit") == 0)
 		data->exit_status = ft_exit(command->command, data->exit_status);
-	if (stdout_copy != -1 || stdin_copy != -1)
-		restore_std_in_out(stdout_copy, stdin_copy);
+	restore_std_in_out(stdout_copy, stdin_copy);
 	return (data->exit_status);
 }
