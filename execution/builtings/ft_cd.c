@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 03:46:50 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/09 22:17:50 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ char	*ft_get_env_var(t_env *env, const char *var_key)
 
 int	no_file_dir(const char *path)
 {
-	ftputstr_fd(2, "cd: ");
-	ftputstr_fd(2, (char *)path);
-	ftputstr_fd(2, ": No such file or directory\n");
+	ft_printf(2, "cd: %s: No such file or directory\n", path);
 	return (1);
 }
 
