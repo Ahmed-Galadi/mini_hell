@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:40:34 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/03 20:52:27 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/14 00:04:05 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	*error_handler(t_token *head, int *exit_status)
 		ft_printf(2, RED BOLD"Error:"RESET PINK" ambiguous redirect\n"RESET);
 		return (head);
 	}
-	return ("WORKING");
+	return (head);
 }

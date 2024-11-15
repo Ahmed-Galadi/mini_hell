@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 07:51:42 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 00:09:28 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,18 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 			break ;
 		if (!str || ft_strcmp(str, op->arg) == 0)
 			return (dup2(copy_stdin, STDIN_FILENO),
-				close(fd), free(str));
+				close(fd), close (copy_stdin), free(str));
 		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
 			expand(&tmp, data->env, &data->exit_status, true);
 		ft_printf(fd, "%s\n", tmp);
 		free (str);
 	}
+	close(fd);
 	dup2(copy_stdin, STDIN_FILENO);
+	close(copy_stdin);
+	if (str)
+		free (str);
 }
 
 void	ft_open_heredoc(t_shell *data)

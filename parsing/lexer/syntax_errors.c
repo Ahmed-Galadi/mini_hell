@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:03:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/05 04:05:01 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/14 00:03:56 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_redirection(t_token *token)
 	while (current)
 	{
 		if (is_red(current->type) && cstm_strcmp(current->value, ""))
-			return (-1);
+			return (-2);
 		if (is_red(current->type) && is_rederection(current->value))
 			return (0);
 		if (!current->value && is_red(current->type))
@@ -106,14 +106,14 @@ int	syntax_error(t_token *token)
 	if (!check_pipes(token) || !check_redirection(token)
 		|| check_redirection(token) == -1)
 	{
-		if (!check_pipes(token))
-			ft_printf(2, RED BOLD"Syntax Error:"RESET \
-				PINK" invalid pipes!\n"RESET);
-		if (!check_redirection(token))
-			ft_printf(2, RED BOLD"Syntax Error:"RESET \
-				PINK" invalid file!\n"RESET);
 		if (check_redirection(token) == -1)
 			return (-1);
+		else if (!check_redirection(token))
+			ft_printf(2, RED BOLD"Syntax Error:"RESET \
+				PINK" invalid file!\n"RESET);
+		else if (!check_pipes(token))
+			ft_printf(2, RED BOLD"Syntax Error:"RESET \
+				PINK" invalid pipes!\n"RESET);
 		return (0);
 	}
 	if (!is_valid_quotes(token))

@@ -6,30 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 06:42:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/09/28 20:39:34 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/14 22:57:10 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-/*void	switch_char(char **str, char to_find, char character)*/
-/*{*/
-/*	int		in_quote;*/
-/*	int		i;*/
-/**/
-/*	in_quote = 0;*/
-/*	i = 0;*/
-/*	while ((*str)[i])*/
-/*	{*/
-/*		if ((*str)[i] == '\"' && !in_quote)*/
-/*			in_quote = !in_quote;*/
-/*		else if ((*str)[i] == '\"' && in_quote)*/
-/*			in_quote = !in_quote;*/
-/*		if (in_quote && (*str)[i] == to_find)*/
-/*			(*str)[i] = character;*/
-/*		i++;*/
-/*	}*/
-/*}*/
 
 void	switch_char(char **str, char to_find, char character)
 {

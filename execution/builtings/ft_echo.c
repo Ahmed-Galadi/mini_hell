@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 07:43:39 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 00:15:30 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		ft_printf(1, "%s", args[i]);
 		if (args[i + 1])
-			printf(" ");
+			ft_printf(1, " ");
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		ft_printf(1, "\n");
 	return (0);
 }
