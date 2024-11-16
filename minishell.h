@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 02:37:04 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 05:43:24 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ typedef struct s_com
 
 typedef struct s_pipe
 {
-	int	*curr_pipe;
-	int	*prev_pipe;
-	int	num_commands;
-	int	curr_command;
-	pid_t *pids;
+	int		*curr_pipe;
+	int		*prev_pipe;
+	int		num_commands;
+	int		curr_command;
+	pid_t	*pids;
 }	t_pipe;
 // execution types - start
 typedef struct s_env
@@ -189,6 +189,8 @@ void		ft_set_mini_env_config(t_env **path, t_env **pwd,
 t_env		*create_mini_env(void);
 
 // pipes prototypes
+void		cleanup_pipes(t_pipe *pipex);
+void		killall(t_pipe *pipex);
 int			count_pipes(t_com *command);
 char		***split_commands(t_com *commands, int num_commands);
 void		free_commands(char ***commands, int num_commands);
@@ -216,6 +218,7 @@ int			handle_redirection_loop(t_shell *data, t_opp *cur_op);
 void		open_heredoc_helper(char **files, int *copy_stdin,
 				int *fd, int *count);
 void		open_heredoc(char **files, t_opp *op, int *count, t_shell *data);
+void		heredoc_cleanup(int fd, int copy_stdin, char *str);
 void		handle_heredoc(t_shell *data);
 int			ft_read_from_heredoc(t_shell *data);
 // LIBFT Prototypes

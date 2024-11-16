@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:54:38 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/08 12:07:01 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/16 05:40:56 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,14 @@ int	handle_redirection_loop(t_shell *data, t_opp *cur_op)
 		cur_op = cur_op->next;
 	}
 	return (data->exit_status);
+}
+
+// norminette for void	open_heredoc(char**, t_opp*, int*, t_shell*)
+void	heredoc_cleanup(int fd, int copy_stdin, char *str)
+{
+	close(fd);
+	dup2(copy_stdin, STDIN_FILENO);
+	close(copy_stdin);
+	if (str)
+		free(str);
 }

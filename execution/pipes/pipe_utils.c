@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:26:37 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 02:30:01 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 05:42:15 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,31 @@ char	***split_commands(t_com *commands, int num_commands)
 	return (command_list);
 }
 
-void    ft_init_pipe(t_pipe **pipe, int num_commands)
+void	ft_init_pipe(t_pipe **pipe, int num_commands)
 {
-    if (!(*pipe))
-    {
-        ft_printf(2, "error in initializing pipe\n");
-        return ;
-    }
-    *pipe = gc_malloc(sizeof(t_pipe), LOCAL);
-    if (!*pipe)
-        return ;
-    (*pipe)->curr_pipe = gc_malloc(sizeof(int) * 2, LOCAL);
-    if (!(*pipe)->curr_pipe)
-        return ;
-    (*pipe)->prev_pipe = gc_malloc(sizeof(int) * 2, LOCAL);
-    if (!(*pipe)->prev_pipe)
-        return ;
-    (*pipe)->pids = gc_malloc(sizeof(pid_t) * num_commands, GLOBAL);
-    if (!(*pipe)->pids)
-        return ;    
-    (*pipe)->curr_pipe[0] = -1;
-    (*pipe)->curr_pipe[1] = -1;
-    (*pipe)->prev_pipe[0] = -1;
-    (*pipe)->prev_pipe[1] = -1;
-    (*pipe)->num_commands = num_commands;
-    (*pipe)->curr_command = 0;
+	if (!(*pipe))
+	{
+		ft_printf(2, "error in initializing pipe\n");
+		return ;
+	}
+	*pipe = gc_malloc(sizeof(t_pipe), LOCAL);
+	if (!*pipe)
+		return ;
+	(*pipe)->curr_pipe = gc_malloc(sizeof(int) * 2, LOCAL);
+	if (!(*pipe)->curr_pipe)
+		return ;
+	(*pipe)->prev_pipe = gc_malloc(sizeof(int) * 2, LOCAL);
+	if (!(*pipe)->prev_pipe)
+		return ;
+	(*pipe)->pids = gc_malloc(sizeof(pid_t) * num_commands, GLOBAL);
+	if (!(*pipe)->pids)
+		return ;
+	(*pipe)->curr_pipe[0] = -1;
+	(*pipe)->curr_pipe[1] = -1;
+	(*pipe)->prev_pipe[0] = -1;
+	(*pipe)->prev_pipe[1] = -1;
+	(*pipe)->num_commands = num_commands;
+	(*pipe)->curr_command = 0;
 }
 
 void	update_prev_pipe(int *prev_pipe, int *curr_pipe, int is_not_last)

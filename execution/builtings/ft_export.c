@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 00:49:25 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 05:43:48 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	handle_append_operation(t_shell *data, char *key,
 
 	key = extract_key(str);
 	key = ft_substr(key, 0, ft_strlen(key) - 1);
-
 	value = extract_value(str);
 	prev_value = ft_get_var_value(data->export, key);
 	if (prev_value)
