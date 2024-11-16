@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 01:03:08 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 19:56:01 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell_loop(t_shell *data, char **cmd_line_args)
 	{
 		data->heredoc_index = 0;
 		signals_init(data);
-		*cmd_line_args = readline("mini: ");
+		*cmd_line_args = readline(prompt(data));
 		signals_init(data);
 		if (!*cmd_line_args)
 			break ;
@@ -61,5 +61,5 @@ int	main(int argc, char *argv[], char **envp)
 	minishell_loop(&data, &cmd_line_args);
 	gc_free_all(GLOBAL);
 	gc_free_all(LOCAL);
-	return (0);
+	return (data.exit_status);
 }

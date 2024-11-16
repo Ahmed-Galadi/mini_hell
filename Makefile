@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/11/16 05:54:46 by agaladi          ###   ########.fr        #
+#    Updated: 2024/11/16 19:58:59 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ utils/shell_utils.c utils/signals_utils.c
 
 CFLAGS_R = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline -lhistory
 HEADER = minishell.h
-LIB = minishell.a
 NAME = minishell
 
 PARSING_OBJS =  $(addprefix obj/, $(PARSING_SRCS:.c=.o))
@@ -59,15 +58,12 @@ all: $(NAME)
 $(NAME): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
 	$(CC) $(CFLAGS_R) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $@
 
-$(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
-	ar -rc $(LIB) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
-
 obj/%.o: %.c $(HEADER)
 	@mkdir -p $(dir $@)
 	$(CC) -c -I/Users/$(USER)/.brew/opt/readline/include $< -o $@
 
 clean:
-	rm -rf obj $(LIB)
+	rm -rf obj
 
 fclean: clean
 	rm -rf $(NAME)
