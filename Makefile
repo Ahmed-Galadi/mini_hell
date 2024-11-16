@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/11/16 02:39:04 by agaladi          ###   ########.fr        #
+#    Updated: 2024/11/16 05:54:46 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/execution_types/execute_command.c \
 				 execution/execution_types/execute_builtin.c \
 				 execution/pipes/pipe_utils.c execution/pipes/pipeline.c \
+				 execution/pipes/pipe_cleanup.c \
 				 execution/redirections/redirection_types.c \
 				 execution/redirections/redirection_utils.c \
 				 execution/redirections/heredoc_utils.c \
