@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 07:50:48 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 02:37:04 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -96,6 +94,7 @@ typedef struct s_pipe
 	int	*prev_pipe;
 	int	num_commands;
 	int	curr_command;
+	pid_t *pids;
 }	t_pipe;
 // execution types - start
 typedef struct s_env
@@ -217,7 +216,7 @@ int			handle_redirection_loop(t_shell *data, t_opp *cur_op);
 void		open_heredoc_helper(char **files, int *copy_stdin,
 				int *fd, int *count);
 void		open_heredoc(char **files, t_opp *op, int *count, t_shell *data);
-void		ft_open_heredoc(t_shell *data);
+void		handle_heredoc(t_shell *data);
 int			ft_read_from_heredoc(t_shell *data);
 // LIBFT Prototypes
 size_t		ft_strlen(const char *s);

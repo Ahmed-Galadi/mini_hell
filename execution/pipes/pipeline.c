@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/08 11:23:21 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/16 02:35:15 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,51 @@ static int	handle_child_process(t_shell *data, char ***commands, t_pipe *pipe)
 	exit (0);
 }
 
-static int	setup_pipes_and_fork(t_shell *data, char ***commands,
-	t_pipe *pipex)
+void    cleanup_pipes(t_pipe *pipex)
 {
-	pid_t	pid;
+    if (pipex->prev_pipe[0] != -1)
+        close(pipex->prev_pipe[0]);
+    if (pipex->prev_pipe[1] != -1)
+        close(pipex->prev_pipe[1]);
+    if (pipex->curr_pipe[0] != -1)
+        close(pipex->curr_pipe[0]);
+    if (pipex->curr_pipe[1] != -1)
+        close(pipex->curr_pipe[1]);
+}
 
-	if (pipex->curr_command < pipex->num_commands - 1)
-		if (pipe(pipex->curr_pipe) == -1)
-			return (perror("pipe"), 1);
-	pid = fork();
-	if (pid < 0)
-		return (perror("fork"), 1);
-	else if (pid == 0)
-		handle_child_process(data, commands, pipex);
-	return (0);
+void    killall(t_pipe *pipex)
+{
+    int    i;
+
+    i = -1;
+    cleanup_pipes(pipex);
+    while (++i < pipex->curr_command)
+    {
+        if (pipex->pids[i] > 0)
+        {
+            kill(pipex->pids[i], SIGKILL);
+            waitpid(pipex->pids[i], NULL, 0);
+        }
+    }
+}
+
+
+static int    setup_pipes_and_fork(t_shell *data, char ***commands,
+    t_pipe *pipex)
+{
+    pid_t    pid;
+
+    if (pipex->curr_command < pipex->num_commands - 1)
+        if (pipe(pipex->curr_pipe) == -1)
+            return (perror("pipe"), 1);
+    pid = fork();
+    if (pid < 0)
+        return (perror("fork"), killall(pipex), 1);
+    else if (pid == 0)
+        handle_child_process(data, commands, pipex);
+    else
+        pipex->pids[pipex->curr_command] = pid;
+    return (0);
 }
 
 int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
@@ -84,7 +115,7 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 
 	ft_init_pipe(&pipe, num_commands);
 	data->heredoc_index = 0;
-	ft_open_heredoc(data);
+	handle_heredoc(data);
 	if (data->trap_sigint)
 		return (1);
 	while (pipe->curr_command < pipe->num_commands)

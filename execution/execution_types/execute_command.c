@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/09 22:38:41 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/16 00:38:18 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ const char	*get_path(const char *cmd, t_env *env)
 
 	if (ft_strcmp(cmd, "") == 0)
 		return (NULL);
-	if (!cmd || !env)
+	if (!cmd)
 		return (NULL);
 	if (cmd[0] == '/')
 		return (ft_is_directory(cmd), cmd);
@@ -99,7 +99,7 @@ void	execute_command(t_shell *data, char **commands)
 	const char	*full_path;
 
 	if (!commands[0])
-		return ;
+		exit (data->exit_status);
 	full_path = get_path(commands[0], data->env);
 	if (full_path)
 	{
@@ -108,6 +108,8 @@ void	execute_command(t_shell *data, char **commands)
 		execve(full_path, commands, env_to_array(data->env));
 		perror("execve");
 		gc_free_all(LOCAL);
+		if (access(full_path, F_OK))
+			exit(NOENT);
 		exit(PERM);
 	}
 	else

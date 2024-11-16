@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/13 22:21:32 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 01:33:36 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_com	*set_command(t_shell *data_config, char *cmd_line_args)
 	if (!data_config || !cmd_line_args)
 		return (NULL);
 	remove_abg_command(&com);
-	if (!com)
-		return (NULL);
 	data_config->command = com;
 	return (com);
 }
@@ -54,7 +52,7 @@ int	is_spaces(char *str)
 void	disable_echo(struct termios term)
 {
 	term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	{
 		perror("tcgetattr");
 		gc_free_all(LOCAL);

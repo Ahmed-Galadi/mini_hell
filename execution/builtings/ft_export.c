@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 07:45:04 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 00:49:25 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,8 @@ static void	handle_create_operation(t_shell *data, char *key,
 	value = extract_value(str);
 	if (!is_var_exist(str, data->export))
 	{
-		if (!value)
-		{
-			ft_set_vars(&data->export, key, value);
-			ft_set_vars(&data->env, key, value);
-		}
-		else
-		{
-			ft_set_vars(&data->export, key, value);
-			ft_set_vars(&data->env, key, value);
-		}
+		ft_set_vars(&data->export, key, value);
+		ft_set_vars(&data->env, key, value);
 	}
 }
 
@@ -67,7 +59,7 @@ static void	handle_append_operation(t_shell *data, char *key,
 
 	key = extract_key(str);
 	key = ft_substr(key, 0, ft_strlen(key) - 1);
-	printf("key %s\n", key);
+
 	value = extract_value(str);
 	prev_value = ft_get_var_value(data->export, key);
 	if (prev_value)

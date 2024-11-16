@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 00:09:28 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 02:35:15 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 		free (str);
 }
 
-void	ft_open_heredoc(t_shell *data)
+void	handle_heredoc(t_shell *data)
 {
 	int		count;
 	t_com	*curr;

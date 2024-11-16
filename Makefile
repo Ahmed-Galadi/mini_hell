@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/11/08 11:55:52 by bzinedda         ###   ########.fr        #
+#    Updated: 2024/11/16 02:39:04 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ parsing/lexer/lexing_checks.c parsing/lexer/lexer.c parsing/lexer/syntax_errors.
 utils/str_utils.c utils/cstm_split.c utils/list_utils.c utils/itoa.c utils/garbage_collector.c main.c prompt.c \
 utils/shell_utils.c utils/signals_utils.c
 
-CFLAGS = -g
 CFLAGS_R = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline -lhistory
 HEADER = minishell.h
 LIB = minishell.a
@@ -57,14 +56,14 @@ LIBFT_OBJS = $(addprefix obj/, $(LIBFT_SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(CFLAGS_R) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $@
+	$(CC) $(CFLAGS_R) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS) -o $@
 
 $(LIB): $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 	ar -rc $(LIB) $(PARSING_OBJS) $(EXECUTION_OBJS) $(LIBFT_OBJS)
 
 obj/%.o: %.c $(HEADER)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -I/Users/$(USER)/.brew/opt/readline/include $< -o $@
+	$(CC) -c -I/Users/$(USER)/.brew/opt/readline/include $< -o $@
 
 clean:
 	rm -rf obj $(LIB)
