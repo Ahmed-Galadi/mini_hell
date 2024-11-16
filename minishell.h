@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 05:43:24 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 20:31:10 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int			setup_output_redirection(const char *outfile, int is_appended);
 void		restore_std_in_out(int stdout_copy, int stdin_copy);
 void		redirect_to_pipe_fds(t_shell *data, t_pipe *pipe);
 int			is_redirection_in(t_tokenType operator);
-int			is_redirection_out(t_tokenType operator);
+int			is_redirection_out(t_tokenType operator, char *file);
 int			valid_operator(t_tokenType operator_type,
 				int *flags, int *default_fd);
 void		close_all_fds(int *fds, int count);

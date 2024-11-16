@@ -6,12 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 04:28:21 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 05:43:48 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 20:05:47 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
 
 int	ft_export_command(t_env **my_export_env, const char *key, const char *value)
 {

@@ -6,13 +6,11 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 05:38:01 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 20:06:28 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 extern int	g_signal_received;
 

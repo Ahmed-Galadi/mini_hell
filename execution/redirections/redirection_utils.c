@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/06 07:50:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 20:30:06 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 
 	file = curr_op->arg;
 	flags = 0;
-	redirect_fd = 0;
+	redirect_fd = -2;
 	if (!valid_operator(curr_op->operator, & flags, &default_fd))
 		perror(file);
 	if (ft_strcmp(file, "/dev/stdout") != 0)
@@ -31,7 +31,7 @@ void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 		dup2(redirect_fd, default_fd);
 		close(redirect_fd);
 	}
-	else
+	else if (redirect_fd == -1)
 	{
 		data->exit_status = 1;
 		perror(file);
@@ -67,7 +67,7 @@ void	move_output_to_files(t_shell *data, t_opp *curr_op,
 				ft_read_from_heredoc(data);
 			else
 				handle_files_redirections(curr_op, data);
-			if (is_redirection_out(curr_op->operator))
+			if (is_redirection_out(curr_op->operator, curr_op->arg))
 				*flag_out = 1;
 			if (is_redirection_in(curr_op->operator))
 				*flag_in = 1;

@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 18:08:48 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/10/30 01:34:20 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/16 20:31:33 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ int	valid_operator(t_tokenType operator_type, int *flags, int *default_fd)
 	return (1);
 }
 
-int	is_redirection_out(t_tokenType operator)
+int	is_redirection_out(t_tokenType operator, char *file)
 {
 	if (operator == RED_OUT || operator == APPEND)
+	{
+		if (!ft_strcmp(file, "/dev/stdout"))
+			return (0);
 		return (1);
+	}
 	return (0);
 }
 
