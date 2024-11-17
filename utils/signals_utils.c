@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 01:33:36 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 09:33:14 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	disable_echo(struct termios term)
 	term.c_lflag &= ~ECHOCTL;
 	if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
 	{
-		perror("tcgetattr");
+		perror("tcsetattr");
 		gc_free_all(LOCAL);
 		gc_free_all(GLOBAL);
 		exit(EXIT_FAILURE);

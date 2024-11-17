@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 05:39:53 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/06 07:41:38 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 09:47:39 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ static int	has_spaces(t_opp *op)
 {
 	int	i;
 
+	if (!op)
+		return (-1);
 	if (op->operator == RED_IN
 		|| op->operator == RED_OUT
 		|| op->operator == APPEND)
 	{
 		i = 0;
-		while ((op->arg)[i])
+		while (op && op->arg && (op->arg)[i])
 			if (ft_isspace((op->arg)[i++]))
 				return (1);
 	}
@@ -63,6 +65,8 @@ static void	should_remove_com(t_opp *current_op, t_com *current_com,
 	{
 		if (has_spaces(current_op))
 			*should_remove = 1;
+		else if (has_spaces(current_op) == -1)
+			return ;
 		current_op = current_op->next;
 	}
 }
