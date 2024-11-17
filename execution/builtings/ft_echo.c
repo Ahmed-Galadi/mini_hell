@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 20:22:59 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 00:15:30 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 20:18:41 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	ft_check_n_flag(char *flag)
 	if (*tmp == '-')
 		tmp++;
 	else
+		return (0);
+	if (!*tmp)
 		return (0);
 	while (*tmp)
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/17 10:13:19 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 20:19:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell_loop(t_shell *data, char **cmd_line_args)
+void	minishell_loop(t_shell *data, char **cmd_line_args, struct termios *term)
 {
 	while (1)
 	{
@@ -32,6 +32,7 @@ void	minishell_loop(t_shell *data, char **cmd_line_args)
 		free(*cmd_line_args);
 		gc_free_all(LOCAL);
 		data->trap_sigint = 0;
+		disable_echo(term);
 	}
 }
 
@@ -56,9 +57,8 @@ int	main(int argc, char *argv[], char **envp)
 			gc_free_all(GLOBAL);
 			exit(EXIT_FAILURE);
 		}
-		disable_echo(term);
 	}
-	minishell_loop(&data, &cmd_line_args);
+	minishell_loop(&data, &cmd_line_args, &term);
 	gc_free_all(GLOBAL);
 	gc_free_all(LOCAL);
 	return (data.exit_status);

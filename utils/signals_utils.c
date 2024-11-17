@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/17 09:33:14 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 20:20:14 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	is_spaces(char *str)
 	return (1);
 }
 
-void	disable_echo(struct termios term)
+void	disable_echo(struct termios *term)
 {
-	term.c_lflag &= ~ECHOCTL;
-	if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	term->c_lflag &= ~ECHOCTL;
+	if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, term) == -1)
 	{
 		perror("tcsetattr");
 		gc_free_all(LOCAL);

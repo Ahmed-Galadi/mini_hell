@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_types.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 02:35:15 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 20:26:56 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,9 @@ int	setup_input_redirection(const char *infile, int is_here_doc, t_shell *data)
 int	setup_output_redirection(const char *outfile, int is_appended)
 {
 	int	fd_out;
-	int	stdout_copy;
 
 	if (!outfile || is_appended < 0)
 		return (1);
-	stdout_copy = dup(STDOUT_FILENO);
-	if (stdout_copy < 0)
-		return (perror("dup"), 1);
 	if (access(outfile, F_OK) == 0)
 		if (access(outfile, W_OK) != 0)
 			return (perror(outfile), 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 20:31:10 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/17 20:20:00 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ void		handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
 int			calculate_size(char *str, t_env *env, int exit_status);
 t_com		*set_command(t_shell *data_config, char *cmd_line_args);
 int			is_spaces(char *str);
-void		disable_echo(struct termios term);
+void		disable_echo(struct termios *term);
 void		signals_init(t_shell *data);
 
 // lexer
