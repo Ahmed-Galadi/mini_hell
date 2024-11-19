@@ -6,47 +6,49 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 00:31:36 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/17 20:19:51 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/19 04:05:02 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell_loop(t_shell *data, char **cmd_line_args, struct termios *term)
+extern int	g_signal_received;
+
+void	minishell_loop(t_shell *data, char *cmd_line_args, struct termios *term)
 {
+	(void) term;
 	while (1)
 	{
 		data->heredoc_index = 0;
-		signals_init(data);
-		*cmd_line_args = readline(prompt(data));
-		signals_init(data);
-		if (!*cmd_line_args)
+		signals_init();
+		cmd_line_args = readline(prompt(data));
+		if (g_signal_received)
+			data->exit_status = 1;
+		if (!cmd_line_args)
 			break ;
-		add_history(*cmd_line_args);
-		if (set_command(data, *cmd_line_args)
-			&& !is_spaces(*cmd_line_args))
+		g_signal_received = 0;
+		if (set_command(data, cmd_line_args)
+			&& !is_spaces(cmd_line_args))
 		{
 			if (data->command && data->command->command)
 				data->exit_status = ft_execute_command(data);
 		}
-		free(*cmd_line_args);
+		if (cmd_line_args)
+			add_history(cmd_line_args);
+		free(cmd_line_args);
 		gc_free_all(LOCAL);
-		data->trap_sigint = 0;
-		disable_echo(term);
+		disable_echoctl(term);
 	}
 }
 
 int	main(int argc, char *argv[], char **envp)
 {
-	char			*cmd_line_args;
-	char			**args;
+	char			cmd_line_args;
 	struct termios	term;
 	t_shell			data;
 
-	(void)args;
 	(void)argv;
 	(void)argc;
-	data.trap_sigint = 0;
 	init_shell_data_config(&data, envp);
 	if (isatty(STDIN_FILENO))
 	{

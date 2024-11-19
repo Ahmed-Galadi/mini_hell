@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 20:30:06 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/19 02:01:32 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,33 @@ void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 	}
 }
 
-void	close_pipe_fds(t_pipe *pipe)
+void close_pipe_fds(t_pipe *pipe)
 {
 	if (pipe->prev_pipe)
 	{
-		close(pipe->prev_pipe[0]);
-		close(pipe->prev_pipe[1]);
+		if (pipe->prev_pipe[0] != -1)
+		{
+			close(pipe->prev_pipe[0]);
+			pipe->prev_pipe[0] = -1;
+		}
+		if (pipe->prev_pipe[1] != -1)
+		{
+			close(pipe->prev_pipe[1]);
+			pipe->prev_pipe[1] = -1;
+		}
 	}
 	if (pipe->curr_pipe)
 	{
-		close(pipe->curr_pipe[0]);
-		close(pipe->curr_pipe[1]);
+		if (pipe->curr_pipe[0] != -1)
+		{
+			close(pipe->curr_pipe[0]);
+			pipe->curr_pipe[0] = -1;
+		}
+		if (pipe->curr_pipe[1] != -1)
+		{
+			close(pipe->curr_pipe[1]);
+			pipe->curr_pipe[1] = -1;
+		}
 	}
 }
 
@@ -76,17 +92,23 @@ void	move_output_to_files(t_shell *data, t_opp *curr_op,
 	}
 }
 
-void	use_pipe(t_pipe *pipe, int *flag_in, int *flag_out)
+void use_pipe(t_pipe *pipe, int *flag_in, int *flag_out)
 {
 	if (pipe->curr_command > 0 && !(*flag_in))
 	{
-		if (dup2(pipe->prev_pipe[0], STDIN_FILENO) == -1)
-			return (perror("dup2"));
+		if (pipe->prev_pipe && pipe->prev_pipe[0] != -1)
+		{
+			if (dup2(pipe->prev_pipe[0], STDIN_FILENO) == -1)
+				return (perror("dup2"), exit(1));
+		}
 	}
 	if (pipe->curr_command < pipe->num_commands - 1 && !(*flag_out))
 	{
-		if (dup2(pipe->curr_pipe[1], STDOUT_FILENO) == -1)
-			return (perror("dup2"));
+		if (pipe->curr_pipe && pipe->curr_pipe[1] != -1)
+		{
+			if (dup2(pipe->curr_pipe[1], STDOUT_FILENO) == -1)
+				return (perror("dup2"), exit(1));
+		}
 	}
 	*flag_in = 0;
 	*flag_out = 0;

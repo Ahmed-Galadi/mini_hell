@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:26:37 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 05:42:15 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/19 00:17:12 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,14 @@ void	update_prev_pipe(int *prev_pipe, int *curr_pipe, int is_not_last)
 	{
 		close(prev_pipe[0]);
 		close(prev_pipe[1]);
+		prev_pipe[0] = -1;
+		prev_pipe[1] = -1;
 	}
-	if (is_not_last)
+	if (is_not_last && curr_pipe)
 	{
 		prev_pipe[0] = curr_pipe[0];
 		prev_pipe[1] = curr_pipe[1];
+		curr_pipe[0] = -1;
+		curr_pipe[1] = -1;
 	}
 }

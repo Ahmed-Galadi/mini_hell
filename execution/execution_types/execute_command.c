@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:40 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 00:38:18 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/18 01:37:35 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void	execute_command(t_shell *data, char **commands)
 	full_path = get_path(commands[0], data->env);
 	if (full_path)
 	{
-		if (!data->env)
-			return ;
 		execve(full_path, commands, env_to_array(data->env));
 		perror("execve");
 		gc_free_all(LOCAL);

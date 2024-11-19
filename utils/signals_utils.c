@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:40:16 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/17 20:20:14 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/19 04:04:54 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	is_spaces(char *str)
 	return (1);
 }
 
-void	disable_echo(struct termios *term)
+void	disable_echoctl(struct termios *term)
 {
-	term->c_lflag &= ~ECHOCTL;
 	if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, term) == -1)
 	{
 		perror("tcsetattr");
@@ -61,27 +60,19 @@ void	disable_echo(struct termios *term)
 	}
 }
 
-static void	handle_sig(int sig)
+void	handle_sig(int sig)
 {
-	if (sig == SIGINT)
-	{
-		g_signal_received = 1;
-		rl_catch_signals = 0;
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+	(void) sig;
+	g_signal_received = 1;
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void	signals_init(t_shell *data)
+void	signals_init(void)
 {
+	rl_catch_signals = 0;
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
-	if (g_signal_received == 1)
-	{
-		data->trap_sigint = 1;
-		data->exit_status = 1;
-	}
-	g_signal_received = 0;
 }

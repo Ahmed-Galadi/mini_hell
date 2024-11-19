@@ -6,7 +6,7 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/17 20:20:00 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/19 04:02:53 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ typedef struct s_data
 	char	*pwd;
 	char	**heredoc_files;
 	int		exit_status;
-	int		trap_sigint;
 	int		heredoc_count;
 	int		heredoc_index;
 	char	*last_exec_cmd;
+	struct termios term;
 }	t_shell;
 // execution types - end
 
@@ -215,12 +215,12 @@ int			heredoc_count(t_com *command);
 char		**fill_heredoc_files(int count);
 void		ftputstr_fd(int fd, char *s);
 int			handle_redirection_loop(t_shell *data, t_opp *cur_op);
-void		open_heredoc_helper(char **files, int *copy_stdin,
-				int *fd, int *count);
+void		open_heredoc_helper(char **files, int *fd, int *count);
 void		open_heredoc(char **files, t_opp *op, int *count, t_shell *data);
-void		heredoc_cleanup(int fd, int copy_stdin, char *str);
+void		heredoc_cleanup(int *fd, char *str);
 void		handle_heredoc(t_shell *data);
 int			ft_read_from_heredoc(t_shell *data);
+void		handle_sig(int sig);
 // LIBFT Prototypes
 size_t		ft_strlen(const char *s);
 char		*ft_strchr(const char *s, int c);
@@ -272,8 +272,9 @@ void		handle_quotes_state(char c, bool *in_single_q, bool *in_double_q);
 int			calculate_size(char *str, t_env *env, int exit_status);
 t_com		*set_command(t_shell *data_config, char *cmd_line_args);
 int			is_spaces(char *str);
-void		disable_echo(struct termios *term);
-void		signals_init(t_shell *data);
+void		disable_echoctl(struct termios *term);
+void		signals_init(void);
+void	setup_signal_handlers();
 
 // lexer
 void		trim_quotes(t_token **token);

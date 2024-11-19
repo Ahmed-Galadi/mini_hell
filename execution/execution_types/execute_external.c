@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:51:20 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/17 10:04:55 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/18 23:58:51 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static void	run_child_ps(int *count_hd, t_shell *data, char **args)
 	{
 		handle_redirections(data);
 		gc_free_all(LOCAL);
+		if (g_signal_received)
+			exit (1);
 		exit(0);
 	}
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (handle_redirections(data))
 		(gc_free_all(LOCAL)), (exit(ERROR));
-	if (g_signal_received)
-		(gc_free_all(LOCAL)), (exit(1));
 	execute_command(data, args);
 }
 

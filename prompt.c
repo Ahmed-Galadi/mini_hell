@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 01:14:55 by agaladi           #+#    #+#             */
-/*   Updated: 2024/10/30 01:15:03 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/19 04:04:36 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_signal_received;
 
 void	init_prompt_msgs(t_msgs *prompt_data)
 {

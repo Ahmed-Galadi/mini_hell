@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:32:42 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 20:06:28 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/19 00:27:49 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	**fill_heredoc_files(int count)
 void	handle_heredoc_sig(int sig)
 {
 	(void)sig;
-	g_signal_received = 1;
 	close(0);
+	g_signal_received = 1;
 }
 
 void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
@@ -44,33 +44,39 @@ void	open_heredoc(char **files, t_opp *op, int *count, t_shell *data)
 	char	*str;
 	char	*tmp;
 	int		fd;
-	int		copy_stdin;
 
-	open_heredoc_helper(files, &copy_stdin, &fd, count);
-	signal(SIGINT, handle_heredoc_sig);
+	open_heredoc_helper(files, &fd, count);
 	signal(SIGQUIT, SIG_IGN);
-	while (g_signal_received == 0)
+	while (1)
 	{
+		signal(SIGINT, handle_heredoc_sig);
+		rl_catch_signals = 1;
 		str = readline("> ");
-		data->trap_sigint = g_signal_received;
-		if (g_signal_received)
+		if (!str && g_signal_received)
+		{
+			if (open("/dev/tty", O_RDONLY) == -1)
+			{
+				perror("open");
+				exit (1);
+			}
 			break ;
+		}
 		if (!str || ft_strcmp(str, op->arg) == 0)
-			return (dup2(copy_stdin, STDIN_FILENO),
-				close(fd), close (copy_stdin), free(str));
+			return (close(fd), free(str));
 		tmp = str;
 		if (op->operator == HERE_DOC_EXP)
 			expand(&tmp, data->env, &data->exit_status, true);
 		ft_printf(fd, "%s\n", tmp);
 		free (str);
 	}
-	heredoc_cleanup(fd, copy_stdin, str);
+	heredoc_cleanup(&fd, str);
 }
 
 void	handle_heredoc(t_shell *data)
 {
 	int		count;
 	t_com	*curr;
+	int		file_index;
 	t_opp	*op;
 
 	count = heredoc_count(data->command);
@@ -81,7 +87,7 @@ void	handle_heredoc(t_shell *data)
 		exit(2);
 	}
 	data->heredoc_files = fill_heredoc_files(count);
-	(1 && (curr = data->command), (count = 0));
+	(1 && (curr = data->command), (count = 0), (file_index = 0));
 	while (curr)
 	{
 		op = curr->operator;
@@ -89,9 +95,17 @@ void	handle_heredoc(t_shell *data)
 		{
 			if (op->operator == HERE_DOC || op->operator == HERE_DOC_EXP)
 				open_heredoc(data->heredoc_files, op, &count, data);
+			if (g_signal_received)
+				break ;
 			op = op->next;
 		}
 		curr = curr->next;
+	}
+	while (data->heredoc_files[file_index])
+	{
+		if (g_signal_received && data->heredoc_files[file_index])
+			unlink(data->heredoc_files[file_index]);
+		file_index++;
 	}
 }
 

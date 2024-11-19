@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   helper_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 04:54:38 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/16 05:40:56 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/19 02:02:53 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_signal_received;
 
 void	ftputstr_fd(int fd, char *s)
 {
@@ -23,20 +25,9 @@ void	ftputstr_fd(int fd, char *s)
 	}
 }
 
-void	open_heredoc_helper(char **files, int *copy_stdin, int *fd, int *count)
-{
-	*copy_stdin = dup(STDIN_FILENO);
-	*fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (*fd < 0)
-		return (perror("open"));
-	(*count)++;
-}
-
-//	trap_sigint: to not redirect output to files when signaled(ctrl-c).
-
 int	handle_red_helper(t_shell *data, t_opp **cur_op)
 {
-	if (data->trap_sigint)
+	if (g_signal_received)
 		return (data->exit_status);
 	if ((*cur_op)->operator == RED_OUT)
 	{
@@ -75,12 +66,22 @@ int	handle_redirection_loop(t_shell *data, t_opp *cur_op)
 	return (data->exit_status);
 }
 
-// norminette for void	open_heredoc(char**, t_opp*, int*, t_shell*)
-void	heredoc_cleanup(int fd, int copy_stdin, char *str)
+void	open_heredoc_helper(char **files, int *fd, int *count)
 {
-	close(fd);
-	dup2(copy_stdin, STDIN_FILENO);
-	close(copy_stdin);
+	*fd = open(files[*count], O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (*fd < 0)
+		return (perror("open"));
+	(*count)++;
+}
+
+void	heredoc_cleanup(int *fd, char *str)
+{
+	if (*fd >= 0)
+	{
+		close(*fd);
+		*fd = -1;
+	}
 	if (str)
 		free(str);
+	rl_catch_signals = 0;
 }

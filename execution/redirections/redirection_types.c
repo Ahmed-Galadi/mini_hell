@@ -6,11 +6,13 @@
 /*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:16:36 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/17 20:26:56 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/19 00:00:02 by bzinedda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_signal_received;
 
 void	restore_std_in_out(int stdout_copy, int stdin_copy)
 {
@@ -42,6 +44,8 @@ int	handle_redirections(t_shell *data)
 		return (0);
 	cur_op = command->operator;
 	handle_heredoc(data);
+	if (g_signal_received)
+		(gc_free_all(LOCAL)), (exit(1));
 	return (handle_redirection_loop(data, cur_op));
 }
 
