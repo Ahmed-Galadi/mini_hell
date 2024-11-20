@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:40:40 by agaladi           #+#    #+#             */
-/*   Updated: 2024/11/19 04:02:53 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/20 02:46:11 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_com	*command;
-	t_env	*env;
-	t_env	*export;
-	char	*pwd;
-	char	**heredoc_files;
-	int		exit_status;
-	int		heredoc_count;
-	int		heredoc_index;
-	char	*last_exec_cmd;
-	struct termios term;
+	t_com			*command;
+	t_env			*env;
+	t_env			*export;
+	char			*pwd;
+	char			**heredoc_files;
+	int				exit_status;
+	int				heredoc_count;
+	int				heredoc_index;
+	char			*last_exec_cmd;
+	struct termios	term;
 }	t_shell;
 // execution types - end
 
@@ -221,6 +221,12 @@ void		heredoc_cleanup(int *fd, char *str);
 void		handle_heredoc(t_shell *data);
 int			ft_read_from_heredoc(t_shell *data);
 void		handle_sig(int sig);
+void		rm_heredoc_files(t_shell *data);
+void		heredoc_count_check(int count);
+void		open_tty(void);
+void		close_pipe_fds(t_pipe *pipe);
+void		close_afrer_fork(t_pipe *pipex);
+int			heredoc_one_pipe(t_com *command);
 // LIBFT Prototypes
 size_t		ft_strlen(const char *s);
 char		*ft_strchr(const char *s, int c);
@@ -274,8 +280,7 @@ t_com		*set_command(t_shell *data_config, char *cmd_line_args);
 int			is_spaces(char *str);
 void		disable_echoctl(struct termios *term);
 void		signals_init(void);
-void	setup_signal_handlers();
-
+void		setup_signal_handlers(void);
 // lexer
 void		trim_quotes(t_token **token);
 int			check_pipes(t_token *token);

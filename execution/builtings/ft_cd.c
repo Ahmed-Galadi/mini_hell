@@ -6,7 +6,7 @@
 /*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:49:02 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/16 19:32:14 by agaladi          ###   ########.fr       */
+/*   Updated: 2024/11/20 01:54:42 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ int	ft_cd(char **args, t_shell *data)
 	{
 		if (change_directory(ft_get_env_var(data->env, "OLDPWD"), data))
 			return (ft_printf(2, "cd: OLDPWD not set\n"), 1);
-		ft_printf(1, "%s\n", data->pwd);
+		else
+			ft_printf(1, "%s\n", data->pwd);
 	}
 	else
 		return (change_directory(args[0], data));

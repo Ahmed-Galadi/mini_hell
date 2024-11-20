@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:25:49 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/19 00:00:54 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/20 02:45:39 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ int	set_exit_status(int *status)
 		return (128 + WTERMSIG(*status));
 	}
 	return (WEXITSTATUS(*status));
-}
-
-int	heredoc_one_pipe(t_com *command)
-{
-	t_opp	*curr_op;
-	int		count_heredocs;
-
-	if (!command)
-		return (0);
-	curr_op = command->operator;
-	count_heredocs = 0;
-	while (curr_op)
-	{
-		if (curr_op->operator == HERE_DOC || curr_op->operator == HERE_DOC_EXP)
-			count_heredocs++;
-		curr_op = curr_op->next;
-	}
-	return (count_heredocs);
 }
 
 static void	close_pipe(int *pipe_fd)
@@ -79,41 +61,29 @@ static int	handle_child_process(t_shell *data, char ***commands, t_pipe *pipe)
 	exit (0);
 }
 
-static int setup_pipes_and_fork(t_shell *data, char ***commands, t_pipe *pipex)
+static int	setup_pipes_and_fork(t_shell *data, char ***commands, t_pipe *pipex)
 {
-	pid_t	pid;	
-	// Create new pipe for all but the last command
+	pid_t	pid;
+
 	if (pipex->curr_command < pipex->num_commands - 1)
 	{
 		if (pipe(pipex->curr_pipe) == -1)
 			return (perror("pipe"), 1);
 	}
-
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"), killall(pipex), 1);
 	else if (pid == 0)
 	{
 		if (pipex->curr_command == 0)
-		    pipex->prev_pipe = NULL;  // First command doesn't need prev_pipe
+			pipex->prev_pipe = NULL;
 		if (pipex->curr_command == pipex->num_commands - 1)
-		    pipex->curr_pipe = NULL;  // Last command doesn't need curr_pipe
-		
+			pipex->curr_pipe = NULL;
 		handle_child_process(data, commands, pipex);
 		exit(1);
 	}
-	
 	pipex->pids[pipex->curr_command] = pid;
-	
-	// Parent process closes previous pipe after fork
-	if (pipex->curr_command > 0 && pipex->prev_pipe)
-	{
-	    close(pipex->prev_pipe[0]);
-	    close(pipex->prev_pipe[1]);
-	    pipex->prev_pipe[0] = -1;
-	    pipex->prev_pipe[1] = -1;
-	}
-	
+	close_afrer_fork(pipex);
 	return (0);
 }
 
@@ -138,7 +108,7 @@ int	ft_execute_pipeline(char ***commands, int num_commands, t_shell *data)
 		pipe->curr_command++;
 	}
 	close_pipe(pipe->prev_pipe);
-    close_pipe(pipe->curr_pipe);
+	close_pipe(pipe->curr_pipe);
 	while (wait(&status) > 0)
 		;
 	return (set_exit_status(&status));

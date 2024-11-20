@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzinedda <bzinedda@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 15:26:33 by bzinedda          #+#    #+#             */
-/*   Updated: 2024/11/19 02:01:32 by bzinedda         ###   ########.fr       */
+/*   Updated: 2024/11/20 00:00:29 by agaladi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,6 @@ void	handle_files_redirections(t_opp *curr_op, t_shell *data)
 	}
 }
 
-void close_pipe_fds(t_pipe *pipe)
-{
-	if (pipe->prev_pipe)
-	{
-		if (pipe->prev_pipe[0] != -1)
-		{
-			close(pipe->prev_pipe[0]);
-			pipe->prev_pipe[0] = -1;
-		}
-		if (pipe->prev_pipe[1] != -1)
-		{
-			close(pipe->prev_pipe[1]);
-			pipe->prev_pipe[1] = -1;
-		}
-	}
-	if (pipe->curr_pipe)
-	{
-		if (pipe->curr_pipe[0] != -1)
-		{
-			close(pipe->curr_pipe[0]);
-			pipe->curr_pipe[0] = -1;
-		}
-		if (pipe->curr_pipe[1] != -1)
-		{
-			close(pipe->curr_pipe[1]);
-			pipe->curr_pipe[1] = -1;
-		}
-	}
-}
-
 void	move_output_to_files(t_shell *data, t_opp *curr_op,
 	int *flag_in, int *flag_out)
 {
@@ -92,7 +62,7 @@ void	move_output_to_files(t_shell *data, t_opp *curr_op,
 	}
 }
 
-void use_pipe(t_pipe *pipe, int *flag_in, int *flag_out)
+void	use_pipe(t_pipe *pipe, int *flag_in, int *flag_out)
 {
 	if (pipe->curr_command > 0 && !(*flag_in))
 	{

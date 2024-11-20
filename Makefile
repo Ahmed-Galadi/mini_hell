@@ -6,7 +6,7 @@
 #    By: agaladi <agaladi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/10 23:26:11 by agaladi           #+#    #+#              #
-#    Updated: 2024/11/17 10:10:42 by agaladi          ###   ########.fr        #
+#    Updated: 2024/11/20 00:09:28 by agaladi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ EXECUTION_SRCS = execution/builtings/ft_echo.c execution/builtings/ft_env.c \
 				 execution/redirections/heredoc_utils.c \
 				 execution/redirections/helper.c \
 				 execution/redirections/helper_1.c \
+				 execution/redirections/open_herdc_utils.c \
+				 execution/redirections/close_fds.c \
 				 execution/builtings/builtings_utils/env_utils.c \
 				 execution/builtings/builtings_utils/export_utils.c \
 				 printf/ft_print_chr.c printf/ft_print_hex.c printf/ft_print_nbr.c printf/ft_print_percentage.c printf/ft_print_ptr.c printf/ft_print_str.c printf/ft_print_un_nbr.c printf/ft_printf.c printf/ft_ptr_len.c printf/ft_putchar.c printf/ft_putnbr.c printf/ft_putnbr_base.c printf/ft_putstr.c printf/ft_space.c
